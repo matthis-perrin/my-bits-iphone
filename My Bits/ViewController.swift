@@ -27,24 +27,24 @@ class ViewController: UIViewController {
     
     func layoutComponents() {
         let testButtonXConstraint = NSLayoutConstraint(
-            item: self.testButton!, attribute: NSLayoutAttribute.CenterX,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: self.view, attribute: NSLayoutAttribute.CenterX,
+            item: self.testButton!, attribute: .CenterX,
+            relatedBy: .Equal,
+            toItem: self.view, attribute: .CenterX,
             multiplier: 1.0, constant: 0.0)
         let testButtonYConstraint = NSLayoutConstraint(
-            item: self.testButton!, attribute: NSLayoutAttribute.CenterY,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: self.view, attribute: NSLayoutAttribute.CenterY,
+            item: self.testButton!, attribute: .CenterY,
+            relatedBy: .Equal,
+            toItem: self.view, attribute: .CenterY,
             multiplier: 1.0, constant: 0.0)
         let testButtonWConstraint = NSLayoutConstraint(
-            item: self.testButton!, attribute: NSLayoutAttribute.Width,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: nil, attribute: NSLayoutAttribute.Width,
+            item: self.testButton!, attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil, attribute: .Width,
             multiplier: 1.0, constant: 150)
         let testButtonHConstraint = NSLayoutConstraint(
-            item: self.testButton!, attribute: NSLayoutAttribute.Height,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: nil, attribute: NSLayoutAttribute.Height,
+            item: self.testButton!, attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil, attribute: .Height,
             multiplier: 1.0, constant: 50)
         testButton?.translatesAutoresizingMaskIntoConstraints = false
         

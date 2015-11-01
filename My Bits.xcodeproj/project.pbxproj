@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B791BE6756300C959A9 /* MainTabBarController.swift */; };
+		2D067B7F1BE69C1D00C959A9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D067B811BE69C1D00C959A9 /* Localizable.strings */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF21BE5B47C000BA8EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF11BE5B47C000BA8EC /* ViewController.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
@@ -33,6 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D067B791BE6756300C959A9 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		2D067B801BE69C1D00C959A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2D067B831BE69C3E00C959A9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* My Bits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Bits.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DF9BCF11BE5B47C000BA8EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,10 +101,12 @@
 			isa = PBXGroup;
 			children = (
 				2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */,
+				2D067B791BE6756300C959A9 /* MainTabBarController.swift */,
 				2DF9BCF11BE5B47C000BA8EC /* ViewController.swift */,
 				2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */,
 				2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */,
 				2DF9BCFB1BE5B47C000BA8EC /* Info.plist */,
+				2D067B811BE69C1D00C959A9 /* Localizable.strings */,
 			);
 			path = "My Bits";
 			sourceTree = "<group>";
@@ -208,6 +215,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 2DF9BCE31BE5B47C000BA8EC;
 			productRefGroup = 2DF9BCED1BE5B47C000BA8EC /* Products */;
@@ -227,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */,
+				2D067B7F1BE69C1D00C959A9 /* Localizable.strings in Resources */,
 				2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +263,7 @@
 			files = (
 				2DF9BCF21BE5B47C000BA8EC /* ViewController.swift in Sources */,
 				2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */,
+				2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +299,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2D067B811BE69C1D00C959A9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D067B801BE69C1D00C959A9 /* en */,
+				2D067B831BE69C3E00C959A9 /* fr */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -470,6 +490,7 @@
 				2DF9BD161BE5B47C000BA8EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2DF9BD171BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "My BitsTests" */ = {
 			isa = XCConfigurationList;
@@ -478,6 +499,7 @@
 				2DF9BD191BE5B47C000BA8EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2DF9BD1A1BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "My BitsUITests" */ = {
 			isa = XCConfigurationList;
@@ -486,6 +508,7 @@
 				2DF9BD1C1BE5B47C000BA8EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
