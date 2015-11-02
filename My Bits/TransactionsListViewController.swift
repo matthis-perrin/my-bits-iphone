@@ -8,18 +8,37 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol, PricePr
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navBarCustomization()
+        self.navBarCustomization()
         PrivacyManager.register(self)
         PriceManager.register(self)
 
-        createComponents()
-        configureComponents()
-        layoutComponents()
+        self.createComponents()
+        self.configureComponents()
+        self.layoutComponents()
     }
 
     override func viewDidDisappear(animated: Bool) {
         PrivacyManager.unregister(self)
+        PriceManager.unregister(self)
     }
+
+    func privacyDidChange() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.navBarCustomization()
+            self.configureComponents()
+        }
+    }
+
+    func priceDidChange() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.navBarCustomization()
+        }
+    }
+
+    func onHideCurrencyButtonTap() {
+        PrivacyManager.setPrivacy(!PrivacyManager.getPrivacy())
+    }
+
 
     func navBarCustomization() {
         // Left item (Privacy)
@@ -28,23 +47,11 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol, PricePr
         self.navigationItem.leftBarButtonItem?.tintColor = PrivacyManager.getPrivacy() ? UIColor.redColor() : UIColor.blackColor()
 
         // Right item (Bitcoin price)
+        let price = PriceManager.getPrice()
         let label = UILabel(frame: CGRectMake(0, 0, 100, 20))
         label.textAlignment = .Right
-        label.text = NSString(format: "$%.2f", PriceManager.getPrice()) as String
+        label.text = price != nil ? NSString(format: "$%.2f", price!) as String : ""
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: label)
-    }
-
-    func privacyDidChange() {
-        navBarCustomization()
-        configureComponents()
-    }
-
-    func priceDidChange() {
-        navBarCustomization()
-    }
-
-    func onHideCurrencyButtonTap() {
-        PrivacyManager.setPrivacy(!PrivacyManager.getPrivacy())
     }
 
     func createComponents() {
@@ -91,6 +98,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol, PricePr
             testButtonHConstraint
             ])
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
