@@ -48,9 +48,18 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol, PricePr
 
         // Right item (Bitcoin price)
         let price = PriceManager.getPrice()
+        let currency = PriceManager.getCurrency()
         let label = UILabel(frame: CGRectMake(0, 0, 100, 20))
         label.textAlignment = .Right
-        label.text = price != nil ? NSString(format: "$%.2f", price!) as String : ""
+        if (price != nil && currency != nil) {
+            let numberFormatter = NSNumberFormatter()
+            numberFormatter.locale = NSLocale.currentLocale()
+            numberFormatter.currencyCode = currency
+            numberFormatter.numberStyle = .CurrencyStyle
+            label.text = numberFormatter.stringFromNumber(price!)
+        } else {
+            label.text = ""
+        }
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: label)
     }
 
@@ -96,7 +105,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol, PricePr
             testButtonYConstraint,
             testButtonWConstraint,
             testButtonHConstraint
-            ])
+        ])
     }
 
 

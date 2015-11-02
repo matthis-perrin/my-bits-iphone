@@ -2,9 +2,8 @@ import Foundation
 
 class BitcoinAveragePriceProvider: PriceProviderProtocol {
 
-    func getPrice(callback: (Double, NSDate) -> Void) {
-        let url = NSURL(string: "https://api.bitcoinaverage.com/ticker/global/USD/")
-
+    func getPrice(currency: String, callback: (Double, NSDate) -> Void) {
+        let url = NSURL(string: "https://api.bitcoinaverage.com/ticker/global/\(currency)/")
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
             if (error != nil) {
                 print("Error while downloading data:\n \(error)")

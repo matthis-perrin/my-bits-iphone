@@ -2,6 +2,6 @@ import Foundation
 
 protocol PriceProviderProtocol {
 
-    func getPrice(callback: (Double, NSDate) -> Void)
+    func getPrice(currency: String, callback: (Double, NSDate) -> Void)
 
 }
