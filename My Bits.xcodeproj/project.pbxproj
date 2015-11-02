@@ -13,6 +13,9 @@
 		2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */; };
 		2D067B8B1BE6D8E000C959A9 /* PrivacyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8A1BE6D8E000C959A9 /* PrivacyProtocol.swift */; };
 		2D067B8D1BE6DA4200C959A9 /* PrivacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8C1BE6DA4200C959A9 /* PrivacyManager.swift */; };
+		2D067B901BE6FAB400C959A9 /* PriceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8F1BE6FAB400C959A9 /* PriceManager.swift */; };
+		2D067B921BE6FACF00C959A9 /* PriceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B911BE6FACF00C959A9 /* PriceProtocol.swift */; };
+		2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */; };
@@ -45,6 +48,9 @@
 		2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsListViewController.swift; sourceTree = "<group>"; };
 		2D067B8A1BE6D8E000C959A9 /* PrivacyProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyProtocol.swift; sourceTree = "<group>"; };
 		2D067B8C1BE6DA4200C959A9 /* PrivacyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyManager.swift; sourceTree = "<group>"; };
+		2D067B8F1BE6FAB400C959A9 /* PriceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceManager.swift; sourceTree = "<group>"; };
+		2D067B911BE6FACF00C959A9 /* PriceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceProtocol.swift; sourceTree = "<group>"; };
+		2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceFetcher.swift; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* My Bits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Bits.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,6 +105,18 @@
 			name = Addresses;
 			sourceTree = "<group>";
 		};
+		2D067B8E1BE6FA9700C959A9 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2D067B8C1BE6DA4200C959A9 /* PrivacyManager.swift */,
+				2D067B8A1BE6D8E000C959A9 /* PrivacyProtocol.swift */,
+				2D067B8F1BE6FAB400C959A9 /* PriceManager.swift */,
+				2D067B911BE6FACF00C959A9 /* PriceProtocol.swift */,
+				2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		2DF9BCE31BE5B47C000BA8EC = {
 			isa = PBXGroup;
 			children = (
@@ -122,12 +140,11 @@
 		2DF9BCEE1BE5B47C000BA8EC /* My Bits */ = {
 			isa = PBXGroup;
 			children = (
+				2D067B8E1BE6FA9700C959A9 /* Managers */,
 				2D067B851BE6C4A900C959A9 /* Addresses */,
 				2D067B841BE6C49800C959A9 /* Transactions */,
 				2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */,
 				2D067B791BE6756300C959A9 /* MainTabBarController.swift */,
-				2D067B8A1BE6D8E000C959A9 /* PrivacyProtocol.swift */,
-				2D067B8C1BE6DA4200C959A9 /* PrivacyManager.swift */,
 				2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */,
 				2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */,
 				2DF9BCFB1BE5B47C000BA8EC /* Info.plist */,
@@ -288,9 +305,12 @@
 			files = (
 				2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */,
 				2D067B8B1BE6D8E000C959A9 /* PrivacyProtocol.swift in Sources */,
+				2D067B901BE6FAB400C959A9 /* PriceManager.swift in Sources */,
+				2D067B921BE6FACF00C959A9 /* PriceProtocol.swift in Sources */,
 				2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */,
 				2D067B871BE6C4F000C959A9 /* TransactionsViewController.swift in Sources */,
 				2D067B8D1BE6DA4200C959A9 /* PrivacyManager.swift in Sources */,
+				2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */,
 				2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

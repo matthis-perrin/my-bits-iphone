@@ -1,6 +1,7 @@
+import Foundation
 import UIKit
 
-class TransactionsListViewController: UIViewController, PrivacyProtocol {
+class TransactionsListViewController: UIViewController, PrivacyProtocol, PriceProtocol {
 
     var testButton: UIButton?
 
@@ -9,6 +10,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
 
         navBarCustomization()
         PrivacyManager.register(self)
+        PriceManager.register(self)
 
         createComponents()
         configureComponents()
@@ -20,14 +22,25 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
     }
 
     func navBarCustomization() {
+        // Left item (Privacy)
         let icon = UIImage(named: "TopBar_Privacy.png")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "onHideCurrencyButtonTap")
-        self.navigationItem.leftBarButtonItem?.tintColor = PrivacyManager.getPrivacy() ? UIColor.redColor() : UIColor.darkGrayColor()
-}
+        self.navigationItem.leftBarButtonItem?.tintColor = PrivacyManager.getPrivacy() ? UIColor.redColor() : UIColor.blackColor()
+
+        // Right item (Bitcoin price)
+        let label = UILabel(frame: CGRectMake(0, 0, 100, 20))
+        label.textAlignment = .Right
+        label.text = NSString(format: "$%.2f", PriceManager.getPrice()) as String
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: label)
+    }
 
     func privacyDidChange() {
         navBarCustomization()
         configureComponents()
+    }
+
+    func priceDidChange() {
+        navBarCustomization()
     }
 
     func onHideCurrencyButtonTap() {
