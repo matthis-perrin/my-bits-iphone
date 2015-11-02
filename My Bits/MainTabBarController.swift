@@ -6,13 +6,13 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegate = self
+        self.delegate = self
     }
 
     override func viewWillAppear(animated: Bool) {
 
         // Tab 1 - Transactions
-        transactionsController = ViewController()
+        transactionsController = TransactionsViewController()
         let transactionsTitle = NSLocalizedString("transactions", comment: "Tab bar menu to the main screen where the bitcoin transactions are listed.")
         let transactionsIcon = UIImage(named: "TabBar_Transactions")
         let transactionsTabBarItem = UITabBarItem(title: transactionsTitle, image: transactionsIcon,
@@ -47,7 +47,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        return viewController == transactionsController
+        return viewController == transactionsController || true
     }
 
 }

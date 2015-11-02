@@ -1,30 +1,53 @@
 import UIKit
 
-class ViewController: UIViewController {
+class TransactionsListViewController: UIViewController, PrivacyProtocol {
 
     var testButton: UIButton?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navBarCustomization()
+        PrivacyManager.register(self)
 
         createComponents()
         configureComponents()
         layoutComponents()
     }
 
+    override func viewDidDisappear(animated: Bool) {
+        PrivacyManager.unregister(self)
+    }
+
+    func navBarCustomization() {
+        let icon = UIImage(named: "TopBar_Privacy.png")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "onHideCurrencyButtonTap")
+        self.navigationItem.leftBarButtonItem?.tintColor = PrivacyManager.getPrivacy() ? UIColor.redColor() : UIColor.darkGrayColor()
+}
+
+    func privacyDidChange() {
+        navBarCustomization()
+        configureComponents()
+    }
+
+    func onHideCurrencyButtonTap() {
+        PrivacyManager.setPrivacy(!PrivacyManager.getPrivacy())
+    }
+
     func createComponents() {
         self.testButton = UIButton(type: UIButtonType.RoundedRect)
         self.view.addSubview(self.testButton!);
     }
-    
+
     func configureComponents() {
-        self.testButton?.setTitle("Test Button", forState: UIControlState.Normal)
+        let text = "Privacy " + (PrivacyManager.getPrivacy() ? "On" : "Off")
+        self.testButton?.setTitle(text, forState: UIControlState.Normal)
         self.testButton?.layer.borderColor = self.testButton?.titleColorForState(UIControlState.Normal)?.CGColor
         self.testButton?.layer.borderWidth = 1.0
         self.testButton?.layer.cornerRadius = 4.0
         self.view.backgroundColor = UIColor.whiteColor()
     }
-    
+
     func layoutComponents() {
         let testButtonXConstraint = NSLayoutConstraint(
             item: self.testButton!, attribute: .CenterX,
@@ -47,15 +70,15 @@ class ViewController: UIViewController {
             toItem: nil, attribute: .Height,
             multiplier: 1.0, constant: 50)
         testButton?.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activateConstraints([
             testButtonXConstraint,
             testButtonYConstraint,
             testButtonWConstraint,
             testButtonHConstraint
-        ])
+            ])
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
