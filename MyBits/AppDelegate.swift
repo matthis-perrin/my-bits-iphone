@@ -1,6 +1,6 @@
 import UIKit
-import Fabric
-import Crashlytics
+//import Fabric
+//import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,7 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Fabric.with([Crashlytics.self]) // Initialize Crashlytics
+//        Fabric.with([Crashlytics.self]) // Initialize Crashlytics
         PriceFetcher().start()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         if let window = window {

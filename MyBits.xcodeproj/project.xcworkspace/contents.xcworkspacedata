@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:My Bits.xcodeproj">
+      location = "self:/Users/matthis/git/misc/my-bits/my-bits-iphone/MyBits.xcodeproj">
    </FileRef>
 </Workspace>

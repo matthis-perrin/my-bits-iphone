@@ -1,7 +1,7 @@
 import XCTest
-@testable import My_Bits
+@testable import MyBits
 
-class My_BitsTests: XCTestCase {
+class MyBitsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
