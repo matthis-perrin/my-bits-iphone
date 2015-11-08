@@ -18,12 +18,13 @@
 		2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */; };
 		2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B971BE7064100C959A9 /* PriceProviderProtocol.swift */; };
 		2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B9A1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift */; };
+		2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E5191BEFE7790045FA98 /* UserKeychain.swift */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */; };
 		2DF9BD051BE5B47C000BA8EC /* MyBitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BD041BE5B47C000BA8EC /* MyBitsTests.swift */; };
 		2DF9BD101BE5B47C000BA8EC /* MyBitsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BD0F1BE5B47C000BA8EC /* MyBitsUITests.swift */; };
-		B378B45E6F67912FD144E5B1 /* libPods-MyBits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6757FC4A398D46644BBC2E01 /* libPods-MyBits.a */; };
+		32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B896E21C4F568C82550F056 /* Pods_MyBits.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceFetcher.swift; sourceTree = "<group>"; };
 		2D067B971BE7064100C959A9 /* PriceProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceProviderProtocol.swift; sourceTree = "<group>"; };
 		2D067B9A1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAveragePriceProvider.swift; sourceTree = "<group>"; };
+		2D68E5191BEFE7790045FA98 /* UserKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserKeychain.swift; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +70,7 @@
 		2DF9BD0B1BE5B47C000BA8EC /* MyBits.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBits.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BD0F1BE5B47C000BA8EC /* MyBitsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBitsUITests.swift; sourceTree = "<group>"; };
 		2DF9BD111BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6757FC4A398D46644BBC2E01 /* libPods-MyBits.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBits.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B896E21C4F568C82550F056 /* Pods_MyBits.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBits.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B378B45E6F67912FD144E5B1 /* libPods-MyBits.a in Frameworks */,
+				32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +154,14 @@
 			name = PriceProvider;
 			sourceTree = "<group>";
 		};
+		2D68E5181BEFE76A0045FA98 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				2D68E5191BEFE7790045FA98 /* UserKeychain.swift */,
+			);
+			name = Keychain;
+			sourceTree = "<group>";
+		};
 		2DF9BCE31BE5B47C000BA8EC = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +187,7 @@
 		2DF9BCEE1BE5B47C000BA8EC /* MyBits */ = {
 			isa = PBXGroup;
 			children = (
+				2D68E5181BEFE76A0045FA98 /* Keychain */,
 				2D067B8E1BE6FA9700C959A9 /* Managers */,
 				2D067B851BE6C4A900C959A9 /* Addresses */,
 				2D067B841BE6C49800C959A9 /* Transactions */,
@@ -220,7 +231,7 @@
 		37B5B736C12C67EABAEA754E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6757FC4A398D46644BBC2E01 /* libPods-MyBits.a */,
+				6B896E21C4F568C82550F056 /* Pods_MyBits.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -428,6 +439,7 @@
 				2D067B8B1BE6D8E000C959A9 /* PrivacyProtocol.swift in Sources */,
 				2D067B901BE6FAB400C959A9 /* PriceManager.swift in Sources */,
 				2D067B921BE6FACF00C959A9 /* PriceProtocol.swift in Sources */,
+				2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */,
 				2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */,
 				2D067B871BE6C4F000C959A9 /* TransactionsViewController.swift in Sources */,
 				2D067B8D1BE6DA4200C959A9 /* PrivacyManager.swift in Sources */,

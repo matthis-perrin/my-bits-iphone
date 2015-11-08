@@ -10,6 +10,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Fabric.with([Crashlytics.self]) // Initialize Crashlytics
+        do {
+            let userId = try UserKeychain.getUserId()
+            if userId != nil {
+                NSLog(userId!)
+            } else {
+                NSLog("No user_id found")
+                do {
+                    try UserKeychain.setUserId("2374237469")
+                } catch {
+                    NSLog("Error while storing user_id")
+                }
+            }
+        } catch  {
+            NSLog("Error while reading user_id")
+        }
         PriceFetcher().start()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         if let window = window {

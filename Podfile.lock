@@ -4,13 +4,16 @@ PODS:
   - Fabric (1.6.0):
     - Fabric/Base (= 1.6.0)
   - Fabric/Base (1.6.0)
+  - KeychainAccess (2.3.1)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
+  - KeychainAccess
 
 SPEC CHECKSUMS:
   Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
   Fabric: d737eda3a26ac940a5430230eedb35f16b226131
+  KeychainAccess: d54b31c75745cfa595b3654590e8cb491a75d411
 
 COCOAPODS: 0.39.0
