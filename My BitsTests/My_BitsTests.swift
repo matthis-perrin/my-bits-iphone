@@ -1,11 +1,3 @@
-//
-//  My_BitsTests.swift
-//  My BitsTests
-//
-//  Created by Matthis Perrin on 10/31/15.
-//  Copyright © 2015 MP Solutions. All rights reserved.
-//
-
 import XCTest
 @testable import My_Bits
 

@@ -1,11 +1,3 @@
-//
-//  My_BitsUITests.swift
-//  My BitsUITests
-//
-//  Created by Matthis Perrin on 10/31/15.
-//  Copyright © 2015 MP Solutions. All rights reserved.
-//
-
 import XCTest
 
 class My_BitsUITests: XCTestCase {
