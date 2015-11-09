@@ -19,6 +19,7 @@
 		2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B971BE7064100C959A9 /* PriceProviderProtocol.swift */; };
 		2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B9A1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift */; };
 		2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E5191BEFE7790045FA98 /* UserKeychain.swift */; };
+		2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E51C1BEFF4E50045FA98 /* Server.swift */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */; };
@@ -59,6 +60,7 @@
 		2D067B971BE7064100C959A9 /* PriceProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceProviderProtocol.swift; sourceTree = "<group>"; };
 		2D067B9A1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAveragePriceProvider.swift; sourceTree = "<group>"; };
 		2D68E5191BEFE7790045FA98 /* UserKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserKeychain.swift; sourceTree = "<group>"; };
+		2D68E51C1BEFF4E50045FA98 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -162,6 +164,14 @@
 			name = Keychain;
 			sourceTree = "<group>";
 		};
+		2D68E51B1BEFF4D00045FA98 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				2D68E51C1BEFF4E50045FA98 /* Server.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		2DF9BCE31BE5B47C000BA8EC = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 		2DF9BCEE1BE5B47C000BA8EC /* MyBits */ = {
 			isa = PBXGroup;
 			children = (
+				2D68E51B1BEFF4D00045FA98 /* API */,
 				2D68E5181BEFE76A0045FA98 /* Keychain */,
 				2D067B8E1BE6FA9700C959A9 /* Managers */,
 				2D067B851BE6C4A900C959A9 /* Addresses */,
@@ -445,6 +456,7 @@
 				2D067B8D1BE6DA4200C959A9 /* PrivacyManager.swift in Sources */,
 				2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */,
 				2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */,
+				2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */,
 				2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

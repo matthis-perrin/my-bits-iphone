@@ -5,4 +5,5 @@ target 'MyBits' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'KeychainAccess'
+  pod 'Alamofire'
 end

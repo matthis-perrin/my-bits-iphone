@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch  {
             NSLog("Error while reading user_id")
         }
+        Server.registerUser { userId, error in
+            if (userId != nil) {
+                NSLog(userId!)
+            } else if (error != nil) {
+                NSLog(String(error!.description))
+            }
+        }
         PriceFetcher().start()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         if let window = window {
