@@ -6,4 +6,5 @@ target 'MyBits' do
   pod 'Crashlytics'
   pod 'KeychainAccess'
   pod 'Alamofire'
+  pod 'RealmSwift'
 end

@@ -1,6 +1,7 @@
 import UIKit
 import Fabric
 import Crashlytics
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,17 +17,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let userId = try UserKeychain.getUserId()
             if userId != nil {
-                NSLog("User id: \(userId!)")
-                Server.registerDevice(userId!, callback: { deviceId, error in
-                    if (deviceId != nil) {
-                        NSLog("Device id: \(deviceId!)")
-                    } else if (error != nil) {
-                        NSLog(String(error!.description))
-                    }
-                })
+                NSLog("User id (from keychain): \(userId!)")
+                let realm = try! RealmSwift.Realm()
+                let localData = realm.objects(LocalData).first
+                if (localData != nil && localData.deviceId != nil) {
+                    NSLog("Device id (from cache): \(localData?.deviceId!)")
+                } else {
+                    Server.registerDevice(userId!, callback: { deviceId, error in
+                        if (deviceId != nil) {
+                            NSLog("Device id (from api): \(deviceId!)")
+                        } else if (error != nil) {
+                            NSLog(String(error!.description))
+                        }
+                    })
+                }
             } else {
                 Server.registerUser { userId, error in
                     if (userId != nil) {
+                        NSLog("User id (from api): \(userId!)")
                         do {
                             try UserKeychain.setUserId(userId!)
                         } catch {
