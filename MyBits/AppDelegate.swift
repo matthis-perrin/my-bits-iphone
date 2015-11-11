@@ -10,28 +10,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Fabric.with([Crashlytics.self]) // Initialize Crashlytics
+
+        // ------------------------------
+        // TODO: Move this somewhere else
         do {
             let userId = try UserKeychain.getUserId()
             if userId != nil {
-                NSLog(userId!)
+                NSLog("User id: \(userId!)")
+                Server.registerDevice(userId!, callback: { deviceId, error in
+                    if (deviceId != nil) {
+                        NSLog("Device id: \(deviceId!)")
+                    } else if (error != nil) {
+                        NSLog(String(error!.description))
+                    }
+                })
             } else {
-                NSLog("No user_id found")
-                do {
-                    try UserKeychain.setUserId("2374237469")
-                } catch {
-                    NSLog("Error while storing user_id")
+                Server.registerUser { userId, error in
+                    if (userId != nil) {
+                        do {
+                            try UserKeychain.setUserId(userId!)
+                        } catch {
+                            NSLog("Error while storing user_id %s", userId!)
+                        }
+                        NSLog(userId!)
+                    } else if (error != nil) {
+                        NSLog(String(error!.description))
+                    }
                 }
             }
         } catch  {
-            NSLog("Error while reading user_id")
+            NSLog("Can't access keychain")
         }
-        Server.registerUser { userId, error in
-            if (userId != nil) {
-                NSLog(userId!)
-            } else if (error != nil) {
-                NSLog(String(error!.description))
-            }
-        }
+        // ------------------------------
+
         PriceFetcher().start()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         if let window = window {
