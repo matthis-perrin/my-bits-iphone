@@ -10,7 +10,7 @@ class BitcoinAveragePriceProvider: PriceProviderProtocol {
             } else {
                 do {
                     // Try parsing some valid JSON
-                    let parsed = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                    let parsed = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
 
                     // Bitcoin Average a use custom date format
                     let dateString = parsed["timestamp"] as! String

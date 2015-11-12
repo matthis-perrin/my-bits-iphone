@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if userId != nil {
                 NSLog("User id (from keychain): \(userId!)")
                 let realm = try! RealmSwift.Realm()
-                let localData = realm.objects(LocalData).first
-                if (localData != nil && localData.deviceId != nil) {
+                let localData = realm.objects(LocalData.self).first
+                if (localData != nil && localData?.deviceId != nil) {
                     NSLog("Device id (from cache): \(localData?.deviceId!)")
                 } else {
                     Server.registerDevice(userId!, callback: { deviceId, error in

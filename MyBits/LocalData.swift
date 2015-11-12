@@ -1,5 +1,5 @@
-import Foundation
+import RealmSwift
 
-class LocalData {
+class LocalData: Object {
     var deviceId: String?
 }
