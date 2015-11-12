@@ -19,7 +19,9 @@ class PriceFetcher: NSObject {
         let currency = userCurrency != nil && self.SUPPORTED_CURRENCY.contains(userCurrency as! String) ? userCurrency as! String : self.DEFAULT_CURRENCY
 
         let provider = BitcoinAveragePriceProvider()
-        provider.getPrice(currency, callback: { price, date in PriceManager.setPrice(price, currency: currency, lastUpdate: date) })
+        provider.getPrice(currency, callback: { price, date in
+            PriceManager.setPrice(price, currency: currency, lastUpdate: date)
+        })
     }
 
 }

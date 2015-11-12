@@ -10,10 +10,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Fabric.with([Crashlytics.self]) // Initialize Crashlytics
+        // Initialize Crashlytics
+        Fabric.with([Crashlytics.self])
 
-        // ------------------------------
+        // Initialize user data (user_id and device_id)
         // TODO: Move this somewhere else
+        // --------------------------------------------
         do {
             let userId = try UserKeychain.getUserId()
             if userId != nil {
@@ -49,9 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch  {
             NSLog("Can't access keychain")
         }
-        // ------------------------------
+        // --------------------------------------------
 
+        // Starts the price fetcher that will pull the bitcoin price on a
+        // regular basis and broadcast price changes to all listeners
         PriceFetcher().start()
+
+        // Initialize the application (Mostly, the MainTabBarController)
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         if let window = window {
             window.backgroundColor = UIColor.whiteColor()

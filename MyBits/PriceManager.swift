@@ -23,7 +23,9 @@ class PriceManager {
         self.price = price
         self.currency = currency
         self.lastUpdate = lastUpdate
-        self._delegates.forEach({ delegate in delegate.priceDidChange() })
+        self._delegates.forEach({ delegate in
+            delegate.priceDidChange()
+        })
     }
 
     static func register(delegate: PriceProtocol) {
