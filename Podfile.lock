@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (3.1.2)
   - Crashlytics (3.4.0):
     - Fabric (~> 1.6.0)
   - Fabric (1.6.0):
@@ -13,14 +12,12 @@ PODS:
     - Realm (= 0.96.2)
 
 DEPENDENCIES:
-  - Alamofire
   - Crashlytics
   - Fabric
   - KeychainAccess
   - RealmSwift
 
 SPEC CHECKSUMS:
-  Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
   Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
   Fabric: d737eda3a26ac940a5430230eedb35f16b226131
   KeychainAccess: d54b31c75745cfa595b3654590e8cb491a75d411
