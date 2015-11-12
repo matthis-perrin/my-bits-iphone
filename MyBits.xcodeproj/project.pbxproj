@@ -24,27 +24,8 @@
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */; };
-		2DF9BD051BE5B47C000BA8EC /* MyBitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BD041BE5B47C000BA8EC /* MyBitsTests.swift */; };
-		2DF9BD101BE5B47C000BA8EC /* MyBitsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BD0F1BE5B47C000BA8EC /* MyBitsUITests.swift */; };
 		32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B896E21C4F568C82550F056 /* Pods_MyBits.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		2DF9BD011BE5B47C000BA8EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2DF9BCE41BE5B47C000BA8EC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2DF9BCEB1BE5B47C000BA8EC;
-			remoteInfo = MyBits;
-		};
-		2DF9BD0C1BE5B47C000BA8EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2DF9BCE41BE5B47C000BA8EC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2DF9BCEB1BE5B47C000BA8EC;
-			remoteInfo = MyBits;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0513EC81E4B365A46AD1BFB7 /* Pods-MyBits.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.release.xcconfig"; sourceTree = "<group>"; };
@@ -68,12 +49,6 @@
 		2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DF9BCF91BE5B47C000BA8EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2DF9BCFB1BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2DF9BD001BE5B47C000BA8EC /* MyBits.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBits.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2DF9BD041BE5B47C000BA8EC /* MyBitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBitsTests.swift; sourceTree = "<group>"; };
-		2DF9BD061BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2DF9BD0B1BE5B47C000BA8EC /* MyBits.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBits.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2DF9BD0F1BE5B47C000BA8EC /* MyBitsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBitsUITests.swift; sourceTree = "<group>"; };
-		2DF9BD111BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B896E21C4F568C82550F056 /* Pods_MyBits.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBits.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,20 +59,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2DF9BCFD1BE5B47C000BA8EC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2DF9BD081BE5B47C000BA8EC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,8 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				2DF9BCEE1BE5B47C000BA8EC /* MyBits */,
-				2DF9BD031BE5B47C000BA8EC /* MyBitsTests */,
-				2DF9BD0E1BE5B47C000BA8EC /* MyBitsUITests */,
 				2DF9BCED1BE5B47C000BA8EC /* Products */,
 				3214B3CD4B44F4E24D5C77F2 /* Pods */,
 				37B5B736C12C67EABAEA754E /* Frameworks */,
@@ -198,8 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */,
-				2DF9BD001BE5B47C000BA8EC /* MyBits.xctest */,
-				2DF9BD0B1BE5B47C000BA8EC /* MyBits.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,24 +178,6 @@
 				2D067B811BE69C1D00C959A9 /* Localizable.strings */,
 			);
 			path = MyBits;
-			sourceTree = "<group>";
-		};
-		2DF9BD031BE5B47C000BA8EC /* MyBitsTests */ = {
-			isa = PBXGroup;
-			children = (
-				2DF9BD041BE5B47C000BA8EC /* MyBitsTests.swift */,
-				2DF9BD061BE5B47C000BA8EC /* Info.plist */,
-			);
-			path = MyBitsTests;
-			sourceTree = "<group>";
-		};
-		2DF9BD0E1BE5B47C000BA8EC /* MyBitsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2DF9BD0F1BE5B47C000BA8EC /* MyBitsUITests.swift */,
-				2DF9BD111BE5B47C000BA8EC /* Info.plist */,
-			);
-			path = MyBitsUITests;
 			sourceTree = "<group>";
 		};
 		3214B3CD4B44F4E24D5C77F2 /* Pods */ = {
@@ -282,42 +221,6 @@
 			productReference = 2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2DF9BCFF1BE5B47C000BA8EC /* MyBitsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2DF9BD171BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "MyBitsTests" */;
-			buildPhases = (
-				2DF9BCFC1BE5B47C000BA8EC /* Sources */,
-				2DF9BCFD1BE5B47C000BA8EC /* Frameworks */,
-				2DF9BCFE1BE5B47C000BA8EC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2DF9BD021BE5B47C000BA8EC /* PBXTargetDependency */,
-			);
-			name = MyBitsTests;
-			productName = MyBitsTests;
-			productReference = 2DF9BD001BE5B47C000BA8EC /* MyBits.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		2DF9BD0A1BE5B47C000BA8EC /* MyBitsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2DF9BD1A1BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "MyBitsUITests" */;
-			buildPhases = (
-				2DF9BD071BE5B47C000BA8EC /* Sources */,
-				2DF9BD081BE5B47C000BA8EC /* Frameworks */,
-				2DF9BD091BE5B47C000BA8EC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2DF9BD0D1BE5B47C000BA8EC /* PBXTargetDependency */,
-			);
-			name = MyBitsUITests;
-			productName = MyBitsUITests;
-			productReference = 2DF9BD0B1BE5B47C000BA8EC /* MyBits.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -331,14 +234,6 @@
 					2DF9BCEB1BE5B47C000BA8EC = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 49ND9TC5D4;
-					};
-					2DF9BCFF1BE5B47C000BA8EC = {
-						CreatedOnToolsVersion = 7.1;
-						TestTargetID = 2DF9BCEB1BE5B47C000BA8EC;
-					};
-					2DF9BD0A1BE5B47C000BA8EC = {
-						CreatedOnToolsVersion = 7.1;
-						TestTargetID = 2DF9BCEB1BE5B47C000BA8EC;
 					};
 				};
 			};
@@ -357,8 +252,6 @@
 			projectRoot = "";
 			targets = (
 				2DF9BCEB1BE5B47C000BA8EC /* MyBits */,
-				2DF9BCFF1BE5B47C000BA8EC /* MyBitsTests */,
-				2DF9BD0A1BE5B47C000BA8EC /* MyBitsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -371,20 +264,6 @@
 				2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */,
 				2D067B7F1BE69C1D00C959A9 /* Localizable.strings in Resources */,
 				2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2DF9BCFE1BE5B47C000BA8EC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2DF9BD091BE5B47C000BA8EC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,36 +353,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2DF9BCFC1BE5B47C000BA8EC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2DF9BD051BE5B47C000BA8EC /* MyBitsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2DF9BD071BE5B47C000BA8EC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2DF9BD101BE5B47C000BA8EC /* MyBitsUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2DF9BD021BE5B47C000BA8EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2DF9BCEB1BE5B47C000BA8EC /* MyBits */;
-			targetProxy = 2DF9BD011BE5B47C000BA8EC /* PBXContainerItemProxy */;
-		};
-		2DF9BD0D1BE5B47C000BA8EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2DF9BCEB1BE5B47C000BA8EC /* MyBits */;
-			targetProxy = 2DF9BD0C1BE5B47C000BA8EC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2D067B811BE69C1D00C959A9 /* Localizable.strings */ = {
@@ -546,7 +396,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -638,54 +488,6 @@
 			};
 			name = Release;
 		};
-		2DF9BD181BE5B47C000BA8EC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = MyBitsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.raccoonzninja.mybits;
-				PRODUCT_NAME = MyBits;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyBits.app/MyBits";
-			};
-			name = Debug;
-		};
-		2DF9BD191BE5B47C000BA8EC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = MyBitsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.raccoonzninja.mybits;
-				PRODUCT_NAME = MyBits;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyBits.app/MyBits";
-			};
-			name = Release;
-		};
-		2DF9BD1B1BE5B47C000BA8EC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = MyBitsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.raccoonzninja.mybits;
-				PRODUCT_NAME = MyBits;
-				TEST_TARGET_NAME = MyBits;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		2DF9BD1C1BE5B47C000BA8EC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = MyBitsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.raccoonzninja.mybits;
-				PRODUCT_NAME = MyBits;
-				TEST_TARGET_NAME = MyBits;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -703,24 +505,6 @@
 			buildConfigurations = (
 				2DF9BD151BE5B47C000BA8EC /* Debug */,
 				2DF9BD161BE5B47C000BA8EC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2DF9BD171BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "MyBitsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2DF9BD181BE5B47C000BA8EC /* Debug */,
-				2DF9BD191BE5B47C000BA8EC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2DF9BD1A1BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "MyBitsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2DF9BD1B1BE5B47C000BA8EC /* Debug */,
-				2DF9BD1C1BE5B47C000BA8EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
