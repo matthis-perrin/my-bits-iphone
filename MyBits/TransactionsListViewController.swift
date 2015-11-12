@@ -9,12 +9,14 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol, PricePr
         super.viewDidLoad()
 
         self.navBarCustomization()
-        PrivacyManager.register(self)
-        PriceManager.register(self)
-
         self.createComponents()
         self.configureComponents()
         self.layoutComponents()
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        PrivacyManager.register(self)
+        PriceManager.register(self)
     }
 
     override func viewDidDisappear(animated: Bool) {
