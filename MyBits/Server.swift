@@ -2,7 +2,7 @@ import Foundation
 import UIKit // For UIDevice
 
 let API_VERSION = 1
-let API_BASE_URL = "https://raccoonz.ninja/api/v\(API_VERSION)"
+let API_BASE_URL = "https://mybits.raccoonz.ninja/api/v\(API_VERSION)"
 
 let SERVER_ERROR_DOMAIN = "ServerError"
 struct ServerError {
