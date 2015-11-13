@@ -1,5 +1,5 @@
 import RealmSwift
 
 class LocalData: Object {
-    var deviceId: String?
+    dynamic var deviceId: String? = nil
 }

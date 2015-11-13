@@ -17,34 +17,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: Move this somewhere else
         // --------------------------------------------
         do {
-            let userId = try UserKeychain.getUserId()
-            if userId != nil {
-                NSLog("User id (from keychain): \(userId!)")
-                let realm = try! RealmSwift.Realm()
-                let localData = realm.objects(LocalData.self).first
-                if (localData != nil && localData?.deviceId != nil) {
-                    NSLog("Device id (from cache): \(localData?.deviceId!)")
+            if let userId = try UserKeychain.getUserId() {
+                NSLog("User id (from keychain): \(userId)")
+                let realm = try! Realm()
+                let localData = realm.objects(LocalData).first
+                if let deviceId = localData?.deviceId {
+                    NSLog("Device id (from cache): \(deviceId)")
                 } else {
-                    Server.registerDevice(userId!, callback: { deviceId, error in
-                        if (deviceId != nil) {
-                            NSLog("Device id (from api): \(deviceId!)")
-                        } else if (error != nil) {
-                            NSLog(String(error!.description))
+                    Server.registerDevice(userId) { deviceId, error in
+                        if let deviceId = deviceId {
+                            NSLog("Device id (from api): \(deviceId)")
+                        } else if let error = error {
+                            NSLog(String(error.description))
                         }
-                    })
+                    }
                 }
             } else {
-                Server.registerUser { userId, error in
-                    if (userId != nil) {
-                        NSLog("User id (from api): \(userId!)")
+                Server.registerUser() { userId, error in
+                    if let userId = userId {
+                        NSLog("User id (from api): \(userId)")
                         do {
-                            try UserKeychain.setUserId(userId!)
+                            try UserKeychain.setUserId(userId)
                         } catch {
-                            NSLog("Error while storing user_id %s", userId!)
+                            NSLog("Error while storing user_id %s", userId)
                         }
-                        NSLog(userId!)
-                    } else if (error != nil) {
-                        NSLog(String(error!.description))
+                    } else if let error = error {
+                        NSLog(String(error.description))
                     }
                 }
             }

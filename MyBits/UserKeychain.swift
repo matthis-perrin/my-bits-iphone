@@ -1,7 +1,7 @@
 import KeychainAccess
 
 
-let keychain = Keychain(service: "com.raccoonzninja.mybits")
+let keychain = Keychain(service: NSBundle.mainBundle().bundleIdentifier!)
 let USER_ID_KEY = "user_id"
 
 struct UserKeychain {

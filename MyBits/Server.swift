@@ -2,7 +2,7 @@ import Foundation
 import UIKit // For UIDevice
 
 let API_VERSION = 1
-let API_BASE_URL = "https://mybits.raccoonz.ninja/api/v\(API_VERSION)"
+let API_BASE_URL = "https://raccoonz.ninja/mybits/api/v\(API_VERSION)"
 
 let SERVER_ERROR_DOMAIN = "ServerError"
 struct ServerError {
@@ -12,38 +12,45 @@ struct ServerError {
     static var REMOTE_ERROR = 3
 }
 
-func _getServerError(serverError: Int, message: String? = nil) -> NSError {
-    let userInfo: [NSObject: AnyObject]? = message == nil ? nil : ["error": message!]
+func _getServerError(serverError: Int, _ message: String? = nil) -> NSError {
+    var userInfo: [NSObject: AnyObject]? = nil
+    if let message = message {
+        userInfo = ["error": message]
+    }
     return NSError(domain: SERVER_ERROR_DOMAIN, code: serverError, userInfo: userInfo)
 }
 
-func _postRequest(url: String, data: NSDictionary, callback: (json: NSDictionary?, error: NSError?) -> Void) {
-    let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+func _postRequest(url: String, _ data: NSDictionary = NSDictionary(), _ callback: (NSDictionary?, NSError?) -> Void) {
+    guard let url = NSURL(string: url) else {
+        callback(nil, NSError(domain: SERVER_ERROR_DOMAIN, code: 0, userInfo: ["error": "Wrong URL format"]))
+        return
+    }
+    let request = NSMutableURLRequest(URL: url)
     request.HTTPMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(data, options: [])
 
     let session = NSURLSession.sharedSession()
-    let task = session.dataTaskWithRequest(request) {(data, response, error) in
-        if (error != nil) {
-            callback(json: nil, error: error)
+    let task = session.dataTaskWithRequest(request) { data, response, error in
+        if let error = error {
+            callback(nil, error)
             return
         }
-        if (data == nil) {
-            callback(json: nil, error: _getServerError(ServerError.NO_DATA_RECEIVED))
+        guard let data = data else {
+            callback(nil, _getServerError(ServerError.NO_DATA_RECEIVED))
             return
         }
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! [String: AnyObject]
-            if let error = json["error"] as! String? {
-                callback(json: nil, error: _getServerError(ServerError.REMOTE_ERROR, message: error))
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as! [String: AnyObject]
+            if let error = json["error"] as? String {
+                callback(nil, _getServerError(ServerError.REMOTE_ERROR, error))
             } else {
-                callback(json: json, error: nil)
+                callback(json, nil)
             }
         } catch {
-            let dataAsString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-            callback(json: nil, error: _getServerError(ServerError.JSON_SERIALIZATION_ERROR, message: "Received \(dataAsString)"))
+            let dataAsString = NSString(data: data, encoding: NSUTF8StringEncoding) as! String
+            callback(nil, _getServerError(ServerError.JSON_SERIALIZATION_ERROR, "Received \(dataAsString)"))
         }
     }
 
@@ -52,23 +59,22 @@ func _postRequest(url: String, data: NSDictionary, callback: (json: NSDictionary
 
 struct Server {
 
-    static func registerUser(callback: (userId: String?, error: NSError?) -> Void) {
+    static func registerUser(callback: (String?, NSError?) -> Void) {
         let url = API_BASE_URL + "/user/register"
-        _postRequest(url, data: NSDictionary(), callback: { json, error in
-            if (json != nil) {
-                if let userId = json!["user_id"] as! String? {
-                    NSLog(json!.description)
-                    callback(userId: userId, error: nil)
+        _postRequest(url) { json, error in
+            if let json = json {
+                if let userId = json["user_id"] as? NSNumber {
+                    callback(userId.stringValue, nil)
                 } else {
-                    callback(userId: nil, error: _getServerError(ServerError.UNEXPECTED_JSON, message: "Received \(json!.description)"))
+                    callback(nil, _getServerError(ServerError.UNEXPECTED_JSON, "Received \(json.description)"))
                 }
             } else {
-                callback(userId: nil, error: error)
+                callback(nil, error)
             }
-        })
+        }
     }
 
-    static func registerDevice(userId: String, callback: (deviceId: String?, error: NSError?) -> Void) {
+    static func registerDevice(userId: String, _ callback: (String?, NSError?) -> Void) {
         let url = API_BASE_URL + "/user/\(userId)/device/register"
         // Device platform (device model)
         var systemInfo = utsname()
@@ -92,18 +98,17 @@ struct Server {
             "app_version": appVersion,
             "push_token": pushToken
         ]
-        _postRequest(url, data: data, callback: { json, error in
-            if (json != nil) {
-                if let deviceId = json!["deviceId"] as! String? {
-                    NSLog(json!.description)
-                    callback(deviceId: deviceId, error: nil)
+        _postRequest(url, data) { json, error in
+            if let json = json {
+                if let deviceId = json["deviceId"] as? NSNumber {
+                    callback(deviceId.stringValue, nil)
                 } else {
-                    callback(deviceId: nil, error: _getServerError(ServerError.UNEXPECTED_JSON, message: "Received \(json!.description)"))
+                    callback(nil, _getServerError(ServerError.UNEXPECTED_JSON, "Received \(json.description)"))
                 }
             } else {
-                callback(deviceId: nil, error: error)
+                callback(nil, error)
             }
-        })
+        }
     }
 
 }
