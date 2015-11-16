@@ -77,6 +77,14 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
         self.testButton?.layer.borderWidth = 1.0
         self.testButton?.layer.cornerRadius = 4.0
 
+        let TEST_BALANCE_LABELS = [self.testBalancePrefixLabel!,
+            self.testBalanceLabel!,
+            self.testBalanceSuffixLabel!,
+            self.testBalanceLabel2!]
+        for label in TEST_BALANCE_LABELS {
+            label.font = UIFont(name: label.font.familyName, size: 20)
+        }
+
         self.testBalancePrefixLabel?.text = "Balance: "
         self.testBalanceSuffixLabel?.text = " = "
 
@@ -157,7 +165,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
             item: self.testBalanceContainer!, attribute: .Height,
             relatedBy: .Equal,
             toItem: nil, attribute: .Height,
-            multiplier: 1.0, constant: 30.0))
+            multiplier: 1.0, constant: 50.0))
 
         // Center the labels container
         constraints.append(NSLayoutConstraint(

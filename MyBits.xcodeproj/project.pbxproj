@@ -22,6 +22,7 @@
 		2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E5191BEFE7790045FA98 /* UserKeychain.swift */; };
 		2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E51C1BEFF4E50045FA98 /* Server.swift */; };
 		2DC4945E1BF2F169005E4C6B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC4945D1BF2F169005E4C6B /* LocalData.swift */; };
+		2DCF40041BF98E6300C92CDF /* btc-symbol-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */; };
 		2DDC86BD1BF598A5004F86CC /* CurrencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDC86BC1BF598A5004F86CC /* CurrencyType.swift */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		2D68E5191BEFE7790045FA98 /* UserKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserKeychain.swift; sourceTree = "<group>"; };
 		2D68E51C1BEFF4E50045FA98 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		2DC4945D1BF2F169005E4C6B /* LocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
+		2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "btc-symbol-regular.ttf"; sourceTree = "<group>"; };
 		2DDC86BC1BF598A5004F86CC /* CurrencyType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyType.swift; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,22 @@
 			name = LocalStorage;
 			sourceTree = "<group>";
 		};
+		2DCF3FFB1BF7DB1800C92CDF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2DCF3FFC1BF7DB1F00C92CDF /* BitcoinSymbol */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		2DCF3FFC1BF7DB1F00C92CDF /* BitcoinSymbol */ = {
+			isa = PBXGroup;
+			children = (
+				2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */,
+			);
+			name = BitcoinSymbol;
+			sourceTree = "<group>";
+		};
 		2DF9BCE31BE5B47C000BA8EC = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +195,7 @@
 		2DF9BCEE1BE5B47C000BA8EC /* MyBits */ = {
 			isa = PBXGroup;
 			children = (
+				2DCF3FFB1BF7DB1800C92CDF /* Fonts */,
 				2D1D843D1BF58E4600E73142 /* Components */,
 				2DC4945C1BF2F06F005E4C6B /* LocalStorage */,
 				2D68E51B1BEFF4D00045FA98 /* API */,
@@ -276,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */,
+				2DCF40041BF98E6300C92CDF /* btc-symbol-regular.ttf in Resources */,
 				2D067B7F1BE69C1D00C959A9 /* Localizable.strings in Resources */,
 				2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */,
 			);

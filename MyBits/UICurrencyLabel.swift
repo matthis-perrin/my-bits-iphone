@@ -82,7 +82,43 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
             numberFormatter.locale = NSLocale.currentLocale()
             numberFormatter.currencyCode = currency
             numberFormatter.numberStyle = .CurrencyStyle
-            self.text = numberFormatter.stringFromNumber(amount)
+            let amountString = numberFormatter.stringFromNumber(amount)
+
+            if let amountString = amountString {
+
+                // If the currency is "BTC" we have some extra work to do to display the bitcoin symbol
+                if currency == "BTC" {
+                    // Safety in case the substring "BTC" is not there
+                    if let currencyRange = amountString.rangeOfString(currency) {
+                        // Get the range for the "BTC" symbol
+                        let start = amountString.startIndex.distanceTo(currencyRange.startIndex)
+                        let amountWithSymbol = amountString.stringByReplacingCharactersInRange(currencyRange, withString: "A")
+                        let symbolRange = NSMakeRange(start, 1)
+                        // Create an attributed string for the amount
+                        let attributedAmount = NSMutableAttributedString(string: amountWithSymbol)
+                        // Customize the font of the "BTC" symbol to use our "btc-symbol" font
+                        if let font = UIFont(name: "btc-symbol-regular", size: self.font.pointSize) {
+                            attributedAmount.addAttribute(NSFontAttributeName, value: font, range: symbolRange)
+                            // Use the default system font for the rest of the string
+                            attributedAmount.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(self.font.pointSize), range: NSMakeRange(1, amountWithSymbol.startIndex.distanceTo(amountWithSymbol.endIndex) - 1))
+
+
+
+                            self.attributedText = attributedAmount
+                        } else {
+                            self.text = amountString
+                        }
+                    } else {
+                        self.text = amountString
+                    }
+                } else {
+                    self.text = amountString
+                }
+            } else {
+                self.text = ""
+            }
+
+
         } else {
             self.text = ""
         }
@@ -112,6 +148,21 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
             self.updateText()
         }
     }
+
+
+    // UILabel override
+    // ----------------
+
+    override internal var font: UIFont! {
+        get {
+            return super.font
+        }
+        set {
+            super.font = newValue
+            self.updateText()
+        }
+    }
+
 
 
 }
