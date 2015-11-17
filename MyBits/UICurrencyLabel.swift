@@ -10,41 +10,43 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
     private var amountCurrencyType: CurrencyType
     private var displayCurrencyType: CurrencyType
     private var respectPrivacy: Bool
+    private var prefix: String = ""
+    private var suffix: String = ""
 
 
     // Constructors
     // ------------
 
     required convenience init?(coder: NSCoder) {
-        self.init(frame: CGRectZero)
+        self.init()
     }
 
-    override convenience init(frame: CGRect) {
-        self.init(frame: frame, amount: 0, amountCurrency: .Fiat, displayCurrency: .Fiat)
+    convenience init() {
+        self.init(amount: 0, amountCurrency: .Fiat, displayCurrency: .Fiat)
     }
 
-    convenience init(frame: CGRect, fromFiat amount: Double) {
-        self.init(frame: frame, amount: amount, amountCurrency: .Fiat, displayCurrency: .Fiat)
+    convenience init(fromFiat amount: Double) {
+        self.init(amount: amount, amountCurrency: .Fiat, displayCurrency: .Fiat)
     }
 
-    convenience init(frame: CGRect, fromBtc amount: Double) {
-        self.init(frame: frame, amount: amount, amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
+    convenience init(fromBtc amount: Double) {
+        self.init(amount: amount, amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
     }
 
-    convenience init(frame: CGRect, fromFiat amount: Double, displayCurrency: CurrencyType) {
-        self.init(frame: frame, amount: amount, amountCurrency: .Fiat, displayCurrency: displayCurrency)
+    convenience init(fromFiat amount: Double, displayCurrency: CurrencyType) {
+        self.init(amount: amount, amountCurrency: .Fiat, displayCurrency: displayCurrency)
     }
 
-    convenience init(frame: CGRect, fromBitcoin amount: Double, displayCurrency: CurrencyType) {
-        self.init(frame: frame, amount: amount, amountCurrency: .Bitcoin, displayCurrency: displayCurrency)
+    convenience init(fromBitcoin amount: Double, displayCurrency: CurrencyType) {
+        self.init(amount: amount, amountCurrency: .Bitcoin, displayCurrency: displayCurrency)
     }
 
-    init (frame: CGRect, amount: Double, amountCurrency: CurrencyType, displayCurrency: CurrencyType) {
+    init (amount: Double, amountCurrency: CurrencyType, displayCurrency: CurrencyType) {
         self.amount = amount
         self.amountCurrencyType = amountCurrency
         self.displayCurrencyType = displayCurrency
         self.respectPrivacy = true
-        super.init(frame: frame)
+        super.init(frame: CGRectZero)
         PrivacyManager.register(self)
         PriceManager.register(self)
         updateText()
@@ -85,14 +87,16 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
             let amountString = numberFormatter.stringFromNumber(amount)
 
             if let amountString = amountString {
+                // Prepend and append the prefix and suffix
+                let fullAmountString = self.prefix + amountString + self.suffix
 
                 // If the currency is "BTC" we have some extra work to do to display the bitcoin symbol
                 if currency == "BTC" {
                     // Safety in case the substring "BTC" is not there
-                    if let currencyRange = amountString.rangeOfString(currency) {
+                    if let currencyRange = fullAmountString.rangeOfString(currency) {
                         // Get the range for the "BTC" symbol
-                        let start = amountString.startIndex.distanceTo(currencyRange.startIndex)
-                        let amountWithSymbol = amountString.stringByReplacingCharactersInRange(currencyRange, withString: "A")
+                        let start = fullAmountString.startIndex.distanceTo(currencyRange.startIndex)
+                        let amountWithSymbol = fullAmountString.stringByReplacingCharactersInRange(currencyRange, withString: "A")
                         let symbolRange = NSMakeRange(start, 1)
                         // Create an attributed string for the amount
                         let attributedAmount = NSMutableAttributedString(string: amountWithSymbol)
@@ -100,16 +104,19 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
                         if let font = UIFont(name: "btc-symbol-regular", size: self.font.pointSize) {
                             attributedAmount.addAttribute(NSFontAttributeName, value: font, range: symbolRange)
                             // Use the default system font for the rest of the string
-                            attributedAmount.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(self.font.pointSize), range: NSMakeRange(1, amountWithSymbol.startIndex.distanceTo(amountWithSymbol.endIndex) - 1))
+                            let preRange = NSMakeRange(0, start)
+                            let postRange = NSMakeRange(start + 1, amountWithSymbol.startIndex.distanceTo(amountWithSymbol.endIndex) - start - 1)
+                            attributedAmount.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(self.font.pointSize), range: preRange)
+                            attributedAmount.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(self.font.pointSize), range: postRange)
                             self.attributedText = attributedAmount
                         } else {
-                            self.text = amountString
+                            self.text = fullAmountString
                         }
                     } else {
-                        self.text = amountString
+                        self.text = fullAmountString
                     }
                 } else {
-                    self.text = amountString
+                    self.text = fullAmountString
                 }
             } else {
                 self.text = ""
@@ -128,6 +135,22 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
 
     func setRespectPrivacy(respectPrivacy: Bool) {
         self.respectPrivacy = respectPrivacy
+        self.updateText()
+    }
+
+    func setFontSize(pointSize: CGFloat) {
+        self.font = UIFont(name: self.font.familyName, size: pointSize)
+        self.updateText()
+    }
+
+    func setPrefix(prefix: String) {
+        self.prefix = prefix
+        self.updateText()
+    }
+
+    func setSuffix(suffix: String) {
+        self.suffix = suffix
+        self.updateText()
     }
 
 
