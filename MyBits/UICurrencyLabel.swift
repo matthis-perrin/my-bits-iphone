@@ -60,7 +60,7 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
         // If we respect the privacy settings and if it's enabled, don't show
         // the amount, show a placeholder instead.
         if self.respectPrivacy && PrivacyManager.getPrivacy() {
-            self.text = "xxxx"
+            self.text = self.prefix + "XXXX" + self.suffix
             return
         }
 

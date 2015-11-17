@@ -42,6 +42,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
 
         // Right item (Bitcoin price)
         let label = UICurrencyLabel(fromBitcoin: 1.0, displayCurrency: .Fiat)
+        label.frame = CGRectMake(0, 0, 100, 20)
         label.setRespectPrivacy(false)
         label.textAlignment = .Right
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: label)
