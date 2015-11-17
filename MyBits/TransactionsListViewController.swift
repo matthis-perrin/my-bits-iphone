@@ -82,7 +82,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
             self.testBalanceSuffixLabel!,
             self.testBalanceLabel2!]
         for label in TEST_BALANCE_LABELS {
-            label.font = UIFont(name: label.font.familyName, size: 20)
+            label.font = UIFont(name: label.font.familyName, size: 16)
         }
 
         self.testBalancePrefixLabel?.text = "Balance: "
@@ -165,7 +165,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
             item: self.testBalanceContainer!, attribute: .Height,
             relatedBy: .Equal,
             toItem: nil, attribute: .Height,
-            multiplier: 1.0, constant: 50.0))
+            multiplier: 1.0, constant: 100.0))
 
         // Center the labels container
         constraints.append(NSLayoutConstraint(

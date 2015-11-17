@@ -101,9 +101,6 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
                             attributedAmount.addAttribute(NSFontAttributeName, value: font, range: symbolRange)
                             // Use the default system font for the rest of the string
                             attributedAmount.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(self.font.pointSize), range: NSMakeRange(1, amountWithSymbol.startIndex.distanceTo(amountWithSymbol.endIndex) - 1))
-
-
-
                             self.attributedText = attributedAmount
                         } else {
                             self.text = amountString
