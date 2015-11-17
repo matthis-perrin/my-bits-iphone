@@ -1,6 +1,12 @@
 import Foundation
 
-class PriceManager {
+protocol PriceProtocol: class {
+
+    func priceDidChange()
+
+}
+
+class PriceStore {
 
     private static var _delegates = [PriceProtocol]()
     private static var price: Double?
@@ -19,10 +25,10 @@ class PriceManager {
         return self.lastUpdate
     }
 
-    static func setPrice(price: Double, currency: String, lastUpdate: NSDate = NSDate()) {
+    static func setPrice(price: Double, currency: String, time: NSDate = NSDate()) {
         self.price = price
         self.currency = currency
-        self.lastUpdate = lastUpdate
+        self.lastUpdate = time
         self._delegates.forEach({ delegate in
             delegate.priceDidChange()
         })

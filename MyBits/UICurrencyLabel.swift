@@ -1,6 +1,10 @@
 import Foundation
 import UIKit
 
+enum CurrencyType {
+    case Fiat, Bitcoin
+}
+
 class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
 
     // Data
@@ -47,8 +51,8 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
         self.displayCurrencyType = displayCurrency
         self.respectPrivacy = true
         super.init(frame: CGRectZero)
-        PrivacyManager.register(self)
-        PriceManager.register(self)
+        PrivacyStore.register(self)
+        PriceStore.register(self)
         updateText()
     }
 
@@ -59,7 +63,7 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
     private func updateText() {
         // If we respect the privacy settings and if it's enabled, don't show
         // the amount, show a placeholder instead.
-        if self.respectPrivacy && PrivacyManager.getPrivacy() {
+        if self.respectPrivacy && PrivacyStore.getPrivacy() {
             self.text = self.prefix + "XXXX" + self.suffix
             return
         }
@@ -69,7 +73,7 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
         var amountToDisplay: Double?
         var currencyToDisplay: String?
         if self.amountCurrencyType != self.displayCurrencyType {
-            if let price = PriceManager.getPrice(), currency = PriceManager.getCurrency() {
+            if let price = PriceStore.getPrice(), currency = PriceStore.getCurrency() {
                 currencyToDisplay = self.displayCurrencyType == .Bitcoin ? "BTC" : currency
                 amountToDisplay = self.displayCurrencyType == .Bitcoin ? self.amount / price : self.amount * price
             }

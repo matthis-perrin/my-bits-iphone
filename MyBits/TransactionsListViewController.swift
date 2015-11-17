@@ -15,12 +15,12 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
     }
 
     override func viewWillAppear(animated: Bool) {
-        PrivacyManager.register(self)
+        PrivacyStore.register(self)
         self.configureComponents()
     }
 
     override func viewDidDisappear(animated: Bool) {
-        PrivacyManager.unregister(self)
+        PrivacyStore.unregister(self)
     }
 
     func privacyDidChange() {
@@ -30,7 +30,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
     }
 
     func onHideCurrencyButtonTap() {
-        PrivacyManager.setPrivacy(!PrivacyManager.getPrivacy())
+        PrivacyStore.setPrivacy(!PrivacyStore.getPrivacy())
     }
 
 
@@ -38,7 +38,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
         // Left item (Privacy)
         let icon = UIImage(named: "TopBar_Privacy.png")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "onHideCurrencyButtonTap")
-        self.navigationItem.leftBarButtonItem?.tintColor = PrivacyManager.getPrivacy() ? UIColor.redColor() : UIColor.blackColor()
+        self.navigationItem.leftBarButtonItem?.tintColor = PrivacyStore.getPrivacy() ? UIColor.redColor() : UIColor.blackColor()
 
         // Right item (Bitcoin price)
         let label = UICurrencyLabel(fromBitcoin: 1.0, displayCurrency: .Fiat)
@@ -57,7 +57,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
     }
 
     func configureComponents() {
-        let text = "Privacy " + (PrivacyManager.getPrivacy() ? "On" : "Off")
+        let text = "Privacy " + (PrivacyStore.getPrivacy() ? "On" : "Off")
         self.testButton.setTitle(text, forState: UIControlState.Normal)
         self.testButton.layer.borderColor = self.testButton.titleColorForState(UIControlState.Normal)?.CGColor
         self.testButton.layer.borderWidth = 1.0

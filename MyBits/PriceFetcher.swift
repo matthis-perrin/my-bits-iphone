@@ -20,7 +20,7 @@ class PriceFetcher: NSObject {
 
         let provider = BitcoinAveragePriceProvider()
         provider.getPrice(currency, callback: { price, date in
-            PriceManager.setPrice(price, currency: currency, lastUpdate: date)
+            PriceStore.setPrice(price, currency: currency, time: date)
         })
     }
 

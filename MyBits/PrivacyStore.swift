@@ -1,4 +1,10 @@
-class PrivacyManager {
+protocol PrivacyProtocol: class {
+
+    func privacyDidChange()
+
+}
+
+class PrivacyStore {
 
     private static var _delegates = [PrivacyProtocol]()
     private static var hideAmounts = false
