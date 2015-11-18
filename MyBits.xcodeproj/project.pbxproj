@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B791BE6756300C959A9 /* MainTabBarController.swift */; };
 		2D067B7F1BE69C1D00C959A9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D067B811BE69C1D00C959A9 /* Localizable.strings */; };
-		2D067B871BE6C4F000C959A9 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B861BE6C4F000C959A9 /* TransactionsViewController.swift */; };
 		2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */; };
 		2D067B8D1BE6DA4200C959A9 /* PrivacyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8C1BE6DA4200C959A9 /* PrivacyStore.swift */; };
 		2D067B901BE6FAB400C959A9 /* PriceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8F1BE6FAB400C959A9 /* PriceStore.swift */; };
@@ -25,6 +24,9 @@
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */; };
 		32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B896E21C4F568C82550F056 /* Pods_MyBits.framework */; };
+		B58A0C721BFBDD850051C28F /* AccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */; };
+		B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */; };
+		B58A0C761BFBEFBF0051C28F /* AccountNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +34,6 @@
 		2D067B791BE6756300C959A9 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		2D067B801BE69C1D00C959A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2D067B831BE69C3E00C959A9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2D067B861BE6C4F000C959A9 /* TransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsListViewController.swift; sourceTree = "<group>"; };
 		2D067B8C1BE6DA4200C959A9 /* PrivacyStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyStore.swift; sourceTree = "<group>"; };
 		2D067B8F1BE6FAB400C959A9 /* PriceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceStore.swift; sourceTree = "<group>"; };
@@ -51,6 +52,9 @@
 		2DF9BCFB1BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B896E21C4F568C82550F056 /* Pods_MyBits.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBits.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.debug.xcconfig"; sourceTree = "<group>"; };
+		B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
+		B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,17 +72,18 @@
 		2D067B841BE6C49800C959A9 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
-				2D067B861BE6C4F000C959A9 /* TransactionsViewController.swift */,
 				2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */,
 			);
 			name = Transactions;
 			sourceTree = "<group>";
 		};
-		2D067B851BE6C4A900C959A9 /* Addresses */ = {
+		2D067B851BE6C4A900C959A9 /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
+				B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */,
+				B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */,
 			);
-			name = Addresses;
+			name = Accounts;
 			sourceTree = "<group>";
 		};
 		2D067B991BE7064A00C959A9 /* BitcoinPrice */ = {
@@ -103,9 +108,10 @@
 		2D5A750A1BFBB6CB00F7C927 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2D067B851BE6C4A900C959A9 /* Addresses */,
+				2D067B851BE6C4A900C959A9 /* Accounts */,
 				2D067B841BE6C49800C959A9 /* Transactions */,
 				2D067B791BE6756300C959A9 /* MainTabBarController.swift */,
+				B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -371,11 +377,13 @@
 			files = (
 				2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */,
 				2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */,
+				B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */,
 				2D067B901BE6FAB400C959A9 /* PriceStore.swift in Sources */,
+				B58A0C761BFBEFBF0051C28F /* AccountNameViewController.swift in Sources */,
 				2D1D843F1BF58E5500E73142 /* UICurrencyLabel.swift in Sources */,
 				2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */,
 				2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */,
-				2D067B871BE6C4F000C959A9 /* TransactionsViewController.swift in Sources */,
+				B58A0C721BFBDD850051C28F /* AccountsTableViewController.swift in Sources */,
 				2D067B8D1BE6DA4200C959A9 /* PrivacyStore.swift in Sources */,
 				2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */,
 				2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */,

@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 class TransactionsListViewController: UIViewController, PrivacyProtocol {
@@ -9,7 +8,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navBarCustomization()
+        self.title = NSLocalizedString("transactions", comment: "")
         self.createComponents()
         self.layoutComponents()
     }
@@ -27,25 +26,6 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
         dispatch_async(dispatch_get_main_queue()) {
             self.configureComponents()
         }
-    }
-
-    func onHideCurrencyButtonTap() {
-        PrivacyStore.setPrivacy(!PrivacyStore.getPrivacy())
-    }
-
-
-    func navBarCustomization() {
-        // Left item (Privacy)
-        let icon = UIImage(named: "TopBar_Privacy.png")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "onHideCurrencyButtonTap")
-        self.navigationItem.leftBarButtonItem?.tintColor = PrivacyStore.getPrivacy() ? UIColor.redColor() : UIColor.blackColor()
-
-        // Right item (Bitcoin price)
-        let label = UICurrencyLabel(fromBitcoin: 1.0, displayCurrency: .Fiat)
-        label.frame = CGRectMake(0, 0, 100, 20)
-        label.setRespectPrivacy(false)
-        label.textAlignment = .Right
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: label)
     }
 
     func createComponents() {
@@ -111,13 +91,5 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
 
         NSLayoutConstraint.activateConstraints(constraints)
     }
-
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 

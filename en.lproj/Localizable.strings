@@ -1,5 +1,8 @@
 // Tab bar titles
 "transactions" = "Transactions";
-"addresses" = "Addresses";
+"accounts" = "Accounts";
 "settings" = "Settings";
 "more" = "More";
+"new account" = "New Account";
+"create new account" = "Create New Account";
+"create new account description" = "An account contains public addresse(s)";

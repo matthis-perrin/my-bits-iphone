@@ -3,8 +3,8 @@ import UIKit
 // Main tab bar of the application
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
+    var accountsController: UIViewController?
     var transactionsController: UIViewController?
-    var addressesController: UIViewController?
     var settingsController: UIViewController?
     var moreController: UIViewController?
 
@@ -15,21 +15,20 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewWillAppear(animated: Bool) {
 
-        // Tab 1 - Transactions
-        self.transactionsController = TransactionsViewController()
+        // Tab 1 - Accounts
+        self.accountsController = MainNavigationController(rootViewController: AccountsTableViewController())
+        let accountsTitle = NSLocalizedString("accounts", comment: "Tab bar menu to the accounts screen where the user manages its accounts.")
+        let accountIcon = UIImage(named: "TabBar_Accounts")
+        let accountsTabBarItem = UITabBarItem(title: accountsTitle, image: accountIcon, selectedImage: accountIcon)
+        self.accountsController?.tabBarItem = accountsTabBarItem
+
+        // Tab 2 - Transactions
+        self.transactionsController = MainNavigationController(rootViewController: TransactionsListViewController())
         let transactionsTitle = NSLocalizedString("transactions", comment: "Tab bar menu to the main screen where the bitcoin transactions are listed.")
         let transactionsIcon = UIImage(named: "TabBar_Transactions")
         let transactionsTabBarItem = UITabBarItem(title: transactionsTitle, image: transactionsIcon,
             selectedImage: transactionsIcon)
         self.transactionsController?.tabBarItem = transactionsTabBarItem
-
-        // Tab 2 - Addresses
-        self.addressesController = UIViewController()
-        let addressesTitle = NSLocalizedString("addresses", comment: "Tab bar menu to the addresses screen where the user manages his addresses/xpub.")
-        let addressIcon = UIImage(named: "TabBar_Addresses")
-        let addressesTabBarItem = UITabBarItem(title: addressesTitle, image: addressIcon,
-            selectedImage: addressIcon)
-        self.addressesController?.tabBarItem = addressesTabBarItem
 
         // Tab 3 - Settings
         self.settingsController = UIViewController()
@@ -48,8 +47,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
         // Attach the tabs
         self.viewControllers = [
+            self.accountsController!,
             self.transactionsController!,
-            self.addressesController!,
             self.settingsController!,
             self.moreController!
         ]
@@ -57,8 +56,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         let enabledTabs = [
-            self.transactionsController,
-            self.addressesController
+            self.accountsController,
+            self.transactionsController
         ]
         return enabledTabs.contains({ controller in
             return controller != nil && controller == viewController

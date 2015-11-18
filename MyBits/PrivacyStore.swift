@@ -1,3 +1,5 @@
+import UIKit
+
 protocol PrivacyProtocol: class {
 
     func privacyDidChange()
@@ -7,10 +9,14 @@ protocol PrivacyProtocol: class {
 class PrivacyStore {
 
     private static var _delegates = [PrivacyProtocol]()
-    private static var hideAmounts = false
+    private static var hideAmounts = true
 
     static func getPrivacy() -> Bool {
         return self.hideAmounts
+    }
+
+    static func getPrivacyColor() -> UIColor {
+        return self.getPrivacy() ? UIColor.blackColor() : UIColor.redColor()
     }
 
     static func setPrivacy(showAmounts: Bool) {
