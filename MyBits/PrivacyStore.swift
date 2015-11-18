@@ -15,10 +15,6 @@ class PrivacyStore {
         return self.hideAmounts
     }
 
-    static func getPrivacyColor() -> UIColor {
-        return self.getPrivacy() ? UIColor.blackColor() : UIColor.redColor()
-    }
-
     static func setPrivacy(showAmounts: Bool) {
         self.hideAmounts = showAmounts
         self._delegates.forEach({ delegate in delegate.privacyDidChange() })

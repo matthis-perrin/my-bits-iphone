@@ -16,7 +16,7 @@ class MainNavigationController : UINavigationController {
         if !vc.respondsToSelector(Selector("shouldDisplayBackButton")) || !(vc.valueForKey("shouldDisplayBackButton") as! Bool) {
             let icon = UIImage(named: "TopBar_Privacy.png")
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "togglePrivacy")
-            vc.navigationItem.leftBarButtonItem?.tintColor = PrivacyStore.getPrivacyColor()
+            vc.navigationItem.leftBarButtonItem?.tintColor = self.getPrivacyColor()
         }
 
         // Right item (Bitcoin price)
@@ -30,8 +30,12 @@ class MainNavigationController : UINavigationController {
     @objc private func togglePrivacy() {
         PrivacyStore.setPrivacy(!PrivacyStore.getPrivacy())
         if let vc = self.visibleViewController {
-            vc.navigationItem.leftBarButtonItem?.tintColor = PrivacyStore.getPrivacyColor()
+            vc.navigationItem.leftBarButtonItem?.tintColor = self.getPrivacyColor()
         }
+    }
+
+    private func getPrivacyColor() -> UIColor {
+        return PrivacyStore.getPrivacy() ? UIColor.blackColor() : UIColor.redColor()
     }
 
 }
