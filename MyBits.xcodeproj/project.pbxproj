@@ -16,6 +16,11 @@
 		2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B971BE7064100C959A9 /* PriceProviderProtocol.swift */; };
 		2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B9A1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift */; };
 		2D1D843F1BF58E5500E73142 /* UICurrencyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1D843E1BF58E5500E73142 /* UICurrencyLabel.swift */; };
+		2D5558E41BFC0695001FD68E /* BitcoinAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558E31BFC0695001FD68E /* BitcoinAmount.swift */; };
+		2D5558E61BFC0AC4001FD68E /* BitcoinCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558E51BFC0AC4001FD68E /* BitcoinCore.swift */; };
+		2D5558EA1BFC0D5F001FD68E /* TxInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558E91BFC0D5F001FD68E /* TxInput.swift */; };
+		2D5558EC1BFC1117001FD68E /* TxOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558EB1BFC1117001FD68E /* TxOutput.swift */; };
+		2D5558EE1BFC12EC001FD68E /* BitcoinTx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */; };
 		2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E5191BEFE7790045FA98 /* UserKeychain.swift */; };
 		2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E51C1BEFF4E50045FA98 /* Server.swift */; };
 		2DC4945E1BF2F169005E4C6B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC4945D1BF2F169005E4C6B /* LocalData.swift */; };
@@ -41,6 +46,11 @@
 		2D067B971BE7064100C959A9 /* PriceProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceProviderProtocol.swift; sourceTree = "<group>"; };
 		2D067B9A1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAveragePriceProvider.swift; sourceTree = "<group>"; };
 		2D1D843E1BF58E5500E73142 /* UICurrencyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICurrencyLabel.swift; sourceTree = "<group>"; };
+		2D5558E31BFC0695001FD68E /* BitcoinAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAmount.swift; sourceTree = "<group>"; };
+		2D5558E51BFC0AC4001FD68E /* BitcoinCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinCore.swift; sourceTree = "<group>"; };
+		2D5558E91BFC0D5F001FD68E /* TxInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxInput.swift; sourceTree = "<group>"; };
+		2D5558EB1BFC1117001FD68E /* TxOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxOutput.swift; sourceTree = "<group>"; };
+		2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTx.swift; sourceTree = "<group>"; };
 		2D68E5191BEFE7790045FA98 /* UserKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserKeychain.swift; sourceTree = "<group>"; };
 		2D68E51C1BEFF4E50045FA98 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		2DC4945D1BF2F169005E4C6B /* LocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
@@ -94,6 +104,18 @@
 				2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */,
 			);
 			name = BitcoinPrice;
+			sourceTree = "<group>";
+		};
+		2D5558E21BFC0685001FD68E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2D5558E31BFC0695001FD68E /* BitcoinAmount.swift */,
+				2D5558E51BFC0AC4001FD68E /* BitcoinCore.swift */,
+				2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */,
+				2D5558E91BFC0D5F001FD68E /* TxInput.swift */,
+				2D5558EB1BFC1117001FD68E /* TxOutput.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		2D5A75091BFBB6C100F7C927 /* Stores */ = {
@@ -204,6 +226,7 @@
 		2DF9BCEE1BE5B47C000BA8EC /* MyBits */ = {
 			isa = PBXGroup;
 			children = (
+				2D5558E21BFC0685001FD68E /* Model */,
 				2D5A750B1BFBB6D200F7C927 /* Components */,
 				2D5A750A1BFBB6CB00F7C927 /* Controllers */,
 				2D5A750D1BFBB6EB00F7C927 /* Resources */,
@@ -377,14 +400,19 @@
 			files = (
 				2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */,
 				2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */,
+				2D5558E61BFC0AC4001FD68E /* BitcoinCore.swift in Sources */,
 				B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */,
 				2D067B901BE6FAB400C959A9 /* PriceStore.swift in Sources */,
 				B58A0C761BFBEFBF0051C28F /* AccountNameViewController.swift in Sources */,
+				2D5558EE1BFC12EC001FD68E /* BitcoinTx.swift in Sources */,
+				2D5558EC1BFC1117001FD68E /* TxOutput.swift in Sources */,
 				2D1D843F1BF58E5500E73142 /* UICurrencyLabel.swift in Sources */,
 				2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */,
 				2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */,
 				B58A0C721BFBDD850051C28F /* AccountsTableViewController.swift in Sources */,
+				2D5558EA1BFC0D5F001FD68E /* TxInput.swift in Sources */,
 				2D067B8D1BE6DA4200C959A9 /* PrivacyStore.swift in Sources */,
+				2D5558E41BFC0695001FD68E /* BitcoinAmount.swift in Sources */,
 				2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */,
 				2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */,
 				2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */,
