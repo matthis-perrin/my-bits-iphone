@@ -1,7 +1,18 @@
-class BitcoinAmount {
+import Foundation
+
+
+class BitcoinAmount: CustomStringConvertible {
 
     private let satoshi: Int
     private static let SatoshiInBitcoin: Double = 1e8
+
+    private static var satoshiNumberFormater: NSNumberFormatter {
+        let formattedNumber = NSNumberFormatter()
+        formattedNumber.numberStyle = .DecimalStyle
+        formattedNumber.groupingSeparator = ","
+        formattedNumber.decimalSeparator = "."
+        return formattedNumber
+    }
 
 
     // Constructors
@@ -23,6 +34,16 @@ class BitcoinAmount {
 
     func getSatoshiAmount() -> Int {
         return self.satoshi
+    }
+
+    var description: String {
+        if self.getSatoshiAmount() < 100000 {
+            let satoshString = BitcoinAmount.satoshiNumberFormater.stringFromNumber(self.getSatoshiAmount())!
+            return "BitcoinAmount(\(satoshString) Satoshis)"
+        } else {
+            let bitcoinString = NSString(format: "%.08f", self.getBitcoinAmount())
+            return "BitcoinAmount(\(bitcoinString) BTC)"
+        }
     }
 
 }

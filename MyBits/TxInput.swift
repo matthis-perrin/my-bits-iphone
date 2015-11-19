@@ -1,6 +1,6 @@
 import Foundation
 
-class TxInput {
+class TxInput: CustomStringConvertible {
 
     let previousTxHash: TxHash
     let linkedOutputIndex: Int
@@ -38,6 +38,18 @@ class TxInput {
             sourceAddresses: (json["addresses"] as! [String]).map({ value in
                 return BitcoinAddress(value: value)
             }))
+    }
+
+    var description: String {
+        return [
+            "Previous Tx Hash: " + self.previousTxHash.description,
+            "Linked Output Index: " + self.linkedOutputIndex.description,
+            "Linked Output Value: " + self.linkedOutputValue.description,
+            "Script: " + self.script.description,
+            "Script Type: " + self.scriptType.description,
+            "Sequence: " + self.sequence.description,
+            "Source Addresses: " + sourceAddresses.description
+        ].joinWithSeparator("\n")
     }
 
 }

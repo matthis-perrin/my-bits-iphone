@@ -1,6 +1,6 @@
 import Foundation
 
-class TxOutput {
+class TxOutput: CustomStringConvertible {
 
     let value: BitcoinAmount
     let script: BitcoinScript
@@ -32,6 +32,19 @@ class TxOutput {
             spentBy: (json["spent_by"] as! String?).map({ value in
                 return TxHash(value: value)
             }))
+    }
+
+    var description: String {
+        var strings = [
+            "Value: " + self.value.description,
+            "Script: " + self.script.description,
+            "Script Type: " + self.scriptType.description,
+            "Source Addresses: " + destinationAddresses.description
+        ]
+        if let spentBy = self.spentBy {
+            strings.append("Spent By Tx: " + spentBy.description)
+        }
+        return strings.joinWithSeparator("\n")
     }
 
 }

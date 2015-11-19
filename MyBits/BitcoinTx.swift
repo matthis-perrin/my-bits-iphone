@@ -1,6 +1,6 @@
 import Foundation
 
-class BitcoinTx {
+class BitcoinTx: CustomStringConvertible {
 
     let blockHash: BlockHash
     let blockHeight: BlockHeight
@@ -46,7 +46,6 @@ class BitcoinTx {
     }
 
     static func loadFromJson(json: NSDictionary) -> BitcoinTx {
-        print(json)
         return BitcoinTx(
             blockHash: BlockHash(value: json["block_hash"] as! String),
             blockHeight: BlockHeight(value: json["block_height"] as! Int),
@@ -64,6 +63,29 @@ class BitcoinTx {
             outputs: (json["outputs"] as! [NSDictionary]).map({ outputJson in
                 return TxOutput.loadFromJson(outputJson)
             }))
+    }
+
+    var description: String {
+        var strings = [String]()
+        strings.append("Block Hash: \(self.blockHash.description)")
+        strings.append("Block Height: \(self.blockHeight.description)")
+        strings.append("Hash: \(self.hash.description)")
+        strings.append("Fees: \(self.fees.description)")
+        strings.append("Size: \(self.size.description)")
+        strings.append("Confirmation Time: \(self.confirmationTime.description)")
+        strings.append("Reception Time: \(self.receptionTime.description)")
+        strings.append("Lock Time: \(self.lockTime.description)")
+        strings.append("Double Spent: \(self.isDoubleSpent ? "true" : "false")")
+        strings.append("Confidence: \(self.confidence.description)")
+        for (index, input) in self.inputs.enumerate() {
+            strings.append("Input #\(index): ")
+            strings.append("  " + input.description.stringByReplacingOccurrencesOfString("\n", withString: "\n  "))
+        }
+        for (index, output) in self.outputs.enumerate() {
+            strings.append("Output #\(index): ")
+            strings.append("  " + output.description.stringByReplacingOccurrencesOfString("\n", withString: "\n  "))
+        }
+        return strings.joinWithSeparator("\n")
     }
 
 }
