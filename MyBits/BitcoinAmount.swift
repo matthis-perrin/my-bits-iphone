@@ -3,8 +3,8 @@ import Foundation
 
 class BitcoinAmount: CustomStringConvertible {
 
-    private let satoshi: Int
-    private static let SatoshiInBitcoin: Double = 1e8
+    private let satoshis: Int
+    private static let SatoshisInBitcoin: Double = 1e8
 
     private static var satoshiNumberFormater: NSNumberFormatter {
         let formattedNumber = NSNumberFormatter()
@@ -18,22 +18,22 @@ class BitcoinAmount: CustomStringConvertible {
     // Constructors
 
     convenience init() {
-        self.init(satoshi: 0)
+        self.init(satoshis: 0)
     }
 
-    init(satoshi: Int) {
-        self.satoshi = satoshi
+    init(satoshis: Int) {
+        self.satoshis = satoshis
     }
 
 
     // Public methods
 
     func getBitcoinAmount() -> Double {
-        return Double(self.satoshi) / BitcoinAmount.SatoshiInBitcoin
+        return Double(self.satoshis) / BitcoinAmount.SatoshiInBitcoin
     }
 
     func getSatoshiAmount() -> Int {
-        return self.satoshi
+        return self.satoshis
     }
 
     var description: String {
@@ -52,17 +52,17 @@ class BitcoinAmount: CustomStringConvertible {
 // Operator overloading
 
 func +(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshi + right.satoshi)
+    return BitcoinAmount(satoshi: left.satoshis + right.satoshis)
 }
 
 func -(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshi - right.satoshi)
+    return BitcoinAmount(satoshi: left.satoshis - right.satoshis)
 }
 
 func *(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshi * right.satoshi)
+    return BitcoinAmount(satoshi: left.satoshis * right.satoshis)
 }
 
 func /(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshi / right.satoshi)
+    return BitcoinAmount(satoshi: left.satoshis / right.satoshis)
 }
