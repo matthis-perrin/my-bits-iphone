@@ -1,6 +1,6 @@
 import UIKit
 
-class TransactionsListViewController: UIViewController, PrivacyProtocol {
+class TransactionsListViewController: UIViewController {
 
     var testButton: UIButton!
     var testBalanceLabel: UICurrencyLabel!
@@ -13,21 +13,6 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
         self.layoutComponents()
     }
 
-    override func viewWillAppear(animated: Bool) {
-        PrivacyStore.register(self)
-        self.configureComponents()
-    }
-
-    override func viewDidDisappear(animated: Bool) {
-        PrivacyStore.unregister(self)
-    }
-
-    func privacyDidChange() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.configureComponents()
-        }
-    }
-
     func createComponents() {
         let bitcoinBalance = 3.14
         self.testButton = UIButton(type: UIButtonType.RoundedRect)
@@ -37,7 +22,7 @@ class TransactionsListViewController: UIViewController, PrivacyProtocol {
     }
 
     func configureComponents() {
-        let text = "Privacy " + (PrivacyStore.getPrivacy() ? "On" : "Off")
+        let text = "Test Button"
         self.testButton.setTitle(text, forState: UIControlState.Normal)
         self.testButton.layer.borderColor = self.testButton.titleColorForState(UIControlState.Normal)?.CGColor
         self.testButton.layer.borderWidth = 1.0

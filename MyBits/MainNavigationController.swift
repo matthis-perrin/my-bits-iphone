@@ -4,7 +4,7 @@ protocol BackButton {
     var shouldDisplayBackButton: Bool { get }
 }
 
-class MainNavigationController : UINavigationController {
+class MainNavigationController : UINavigationController, PrivacyProtocol {
 
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         self.setNavigationButtonsToViewController(viewController)
@@ -16,7 +16,6 @@ class MainNavigationController : UINavigationController {
         if !vc.respondsToSelector(Selector("shouldDisplayBackButton")) || !(vc.valueForKey("shouldDisplayBackButton") as! Bool) {
             let icon = UIImage(named: "TopBar_Privacy.png")
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "togglePrivacy")
-            vc.navigationItem.leftBarButtonItem?.tintColor = self.getPrivacyColor()
         }
 
         // Right item (Bitcoin price)
@@ -27,15 +26,29 @@ class MainNavigationController : UINavigationController {
         vc.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: label)
     }
 
-    @objc private func togglePrivacy() {
-        PrivacyStore.setPrivacy(!PrivacyStore.getPrivacy())
-        if let vc = self.visibleViewController {
-            vc.navigationItem.leftBarButtonItem?.tintColor = self.getPrivacyColor()
-        }
+    override func viewWillAppear(animated: Bool) {
+        PrivacyStore.register(self)
+        updatePrivacyButton()
     }
 
-    private func getPrivacyColor() -> UIColor {
-        return PrivacyStore.getPrivacy() ? UIColor.blackColor() : UIColor.redColor()
+    override func viewDidDisappear(animated: Bool) {
+        PrivacyStore.unregister(self)
+        updatePrivacyButton()
+    }
+
+    func privacyDidChange() {
+        updatePrivacyButton()
+    }
+
+    @objc private func togglePrivacy() {
+        PrivacyStore.setPrivacy(!PrivacyStore.getPrivacy())
+    }
+
+    private func updatePrivacyButton() {
+        if let vc = self.visibleViewController {
+            let color = PrivacyStore.getPrivacy() ? UIColor.blackColor() : UIColor.redColor()
+            vc.navigationItem.leftBarButtonItem?.tintColor = color
+        }
     }
 
 }
