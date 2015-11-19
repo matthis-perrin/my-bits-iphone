@@ -12,43 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
-        // Initialize user data (user_id and device_id)
-        // TODO: Move this somewhere else
-        // --------------------------------------------
-//        do {
-//            if let userId = try UserKeychain.getUserId() {
-//                NSLog("User id (from keychain): \(userId)")
-//                let realm = try! Realm()
-//                let localData = realm.objects(LocalData).first
-//                if let deviceId = localData?.deviceId {
-//                    NSLog("Device id (from cache): \(deviceId)")
-//                } else {
-//                    Server.registerDevice(userId) { deviceId, error in
-//                        if let deviceId = deviceId {
-//                            NSLog("Device id (from api): \(deviceId)")
-//                        } else if let error = error {
-//                            NSLog(String(error.description))
-//                        }
-//                    }
-//                }
-//            } else {
-//                Server.registerUser() { userId, error in
-//                    if let userId = userId {
-//                        NSLog("User id (from api): \(userId)")
-//                        do {
-//                            try UserKeychain.setUserId(userId)
-//                        } catch {
-//                            NSLog("Error while storing user_id %s", userId)
-//                        }
-//                    } else if let error = error {
-//                        NSLog(String(error.description))
-//                    }
-//                }
-//            }
-//        } catch  {
-//            NSLog("Can't access keychain")
-//        }
-        // --------------------------------------------
+        BlockCypher.loadTransactions(BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
 
         // Starts the price fetcher that will pull the bitcoin price on a
         // regular basis and broadcast price changes to all listeners

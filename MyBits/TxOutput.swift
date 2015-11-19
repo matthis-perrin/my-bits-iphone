@@ -1,3 +1,5 @@
+import Foundation
+
 class TxOutput {
 
     let value: BitcoinAmount
@@ -17,6 +19,19 @@ class TxOutput {
         self.scriptType = scriptType
         self.destinationAddresses = destinationAddresses
         self.spentBy = spentBy
+    }
+
+    static func loadFromJson(json: NSDictionary) -> TxOutput {
+        return TxOutput(
+            value: BitcoinAmount(satoshi: json["value"] as! Int),
+            script: BitcoinScript(value: json["script"] as! String),
+            scriptType: BitcoinScriptType.fromString(json["script_type"] as! String),
+            destinationAddresses: (json["addresses"] as! [String]).map() { value in
+                return BitcoinAddress(value: value)
+            },
+            spentBy: (json["spent_by"] as! String?).map({ value in
+                return TxHash(value: value)
+            }))
     }
 
 }
