@@ -12,7 +12,6 @@ class BitcoinTx: CustomStringConvertible {
     let lockTime: TxLockTime
     let isDoubleSpent: Bool
     let confirmations: TxConfirmations
-    let confidence: TxConfidence
     let inputs: [TxInput]
     let outputs: [TxOutput]
 
@@ -26,7 +25,6 @@ class BitcoinTx: CustomStringConvertible {
          lockTime: TxLockTime = TxLockTime(),
          isDoubleSpent: Bool = false,
          confirmations: TxConfirmations = TxConfirmations(),
-         confidence: TxConfidence = TxConfidence(),
          inputs: [TxInput] = [],
          outputs: [TxOutput] = []) {
 
@@ -40,7 +38,6 @@ class BitcoinTx: CustomStringConvertible {
         self.lockTime = lockTime
         self.isDoubleSpent = isDoubleSpent
         self.confirmations = confirmations
-        self.confidence = confidence
         self.inputs = inputs
         self.outputs = outputs
     }
@@ -50,13 +47,12 @@ class BitcoinTx: CustomStringConvertible {
             blockHash: BlockHash(value: json["block_hash"] as! String),
             blockHeight: BlockHeight(value: json["block_height"] as! Int),
             hash: TxHash(value: json["hash"] as! String),
-            fees: TxFee(satoshi: json["fees"] as! Int),
+            fees: TxFee(satoshis: json["fees"] as! Int),
             size: TxSize(value: json["size"] as! Int),
             confirmationTime: TxConfirmationTime(value: json["confirmed"] as! String),
             receptionTime: TxReceptionTime(value: json["received"] as! String),
             lockTime: TxLockTime(value: json["lock_time"] as! Int),
             isDoubleSpent: json["double_spend"] as! Bool,
-            confidence: TxConfidence(value: json["confidence"] as! Int),
             inputs: (json["inputs"] as! [NSDictionary]).map({ inputJson in
                 return TxInput.loadFromJson(inputJson)
             }),
@@ -76,7 +72,6 @@ class BitcoinTx: CustomStringConvertible {
         strings.append("Reception Time: \(self.receptionTime.description)")
         strings.append("Lock Time: \(self.lockTime.description)")
         strings.append("Double Spent: \(self.isDoubleSpent ? "true" : "false")")
-        strings.append("Confidence: \(self.confidence.description)")
         for (index, input) in self.inputs.enumerate() {
             strings.append("Input #\(index): ")
             strings.append("  " + input.description.stringByReplacingOccurrencesOfString("\n", withString: "\n  "))

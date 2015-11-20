@@ -40,15 +40,6 @@ class BitcoinScript: CustomStringConvertible {
         return "BitcoinScript(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
     }
 }
-class TxConfidence: CustomStringConvertible {
-    var value: Int
-    init(value: Int = 0) {
-        self.value = value
-    }
-    var description: String {
-        return "TxConfidence(\(self.value))"
-    }
-}
 class TxConfirmations: CustomStringConvertible {
     var value: Int
     init(value: Int = 0) {
@@ -100,7 +91,7 @@ class TxReceptionTime: TxTime {
         return super.description.stringByReplacingOccurrencesOfString("TxTime", withString: "TxReceptionTime")
     }
 }
-class TxHash: CustomStringConvertible {
+class TxHash: CustomStringConvertible, Hashable {
     var value: String
     init(value: String = "") {
         self.value = value
@@ -109,6 +100,14 @@ class TxHash: CustomStringConvertible {
         let suffix = self.value.characters.count > MaxSizeForHashDescription ? "..." : ""
         return "TxHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
     }
+    var hashValue: Int {
+        get {
+            return value.hashValue
+        }
+    }
+}
+func ==(lhs: TxHash, rhs: TxHash) -> Bool {
+    return lhs.value == rhs.value
 }
 class TxSize: CustomStringConvertible {
     var value: Int

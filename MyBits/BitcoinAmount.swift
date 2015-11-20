@@ -29,7 +29,7 @@ class BitcoinAmount: CustomStringConvertible {
     // Public methods
 
     func getBitcoinAmount() -> Double {
-        return Double(self.satoshis) / BitcoinAmount.SatoshiInBitcoin
+        return Double(self.satoshis) / BitcoinAmount.SatoshisInBitcoin
     }
 
     func getSatoshiAmount() -> Int {
@@ -52,17 +52,17 @@ class BitcoinAmount: CustomStringConvertible {
 // Operator overloading
 
 func +(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshis + right.satoshis)
+    return BitcoinAmount(satoshis: left.satoshis + right.satoshis)
 }
 
 func -(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshis - right.satoshis)
+    return BitcoinAmount(satoshis: left.satoshis - right.satoshis)
 }
 
 func *(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshis * right.satoshis)
+    return BitcoinAmount(satoshis: left.satoshis * right.satoshis)
 }
 
 func /(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
-    return BitcoinAmount(satoshi: left.satoshis / right.satoshis)
+    return BitcoinAmount(satoshis: left.satoshis / right.satoshis)
 }

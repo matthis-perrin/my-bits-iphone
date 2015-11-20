@@ -31,7 +31,7 @@ class TxInput: CustomStringConvertible {
         return TxInput(
             previousTxHash: TxHash(value: json["prev_hash"] as! String),
             linkedOutputIndex: json["output_index"] as! Int,
-            linkedOutputValue: BitcoinAmount(satoshi: json["output_value"] as! Int),
+            linkedOutputValue: BitcoinAmount(satoshis: json["output_value"] as! Int),
             script: BitcoinScript(value: json["script"] as! String),
             scriptType: BitcoinScriptType.fromString(json["script_type"] as! String),
             sequence: json["sequence"] as! Int,
