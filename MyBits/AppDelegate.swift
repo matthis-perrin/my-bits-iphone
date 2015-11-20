@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
+        TransactionStoreTestClass().load()
         BlockCypher.loadTransactions(BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
 
         // Starts the price fetcher that will pull the bitcoin price on a

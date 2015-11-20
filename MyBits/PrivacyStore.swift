@@ -8,24 +8,24 @@ protocol PrivacyProtocol: class {
 
 class PrivacyStore {
 
-    private static var _delegates = [PrivacyProtocol]()
+    private static var delegates = [PrivacyProtocol]()
     private static var hideAmounts = true
 
     static func getPrivacy() -> Bool {
-        return self.hideAmounts
+        return PrivacyStore.hideAmounts
     }
 
     static func setPrivacy(showAmounts: Bool) {
-        self.hideAmounts = showAmounts
-        self._delegates.forEach({ delegate in delegate.privacyDidChange() })
+        PrivacyStore.hideAmounts = showAmounts
+        PrivacyStore.delegates.forEach({ delegate in delegate.privacyDidChange() })
     }
 
     static func register(delegate: PrivacyProtocol) {
-        self._delegates.append(delegate)
+        PrivacyStore.delegates.append(delegate)
     }
 
     static func unregister(delegate: PrivacyProtocol) {
-        self._delegates = self._delegates.filter({
+        PrivacyStore.delegates = PrivacyStore.delegates.filter({
             d in return d !== delegate
         })
     }

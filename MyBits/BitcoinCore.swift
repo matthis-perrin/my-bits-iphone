@@ -22,7 +22,8 @@ class BlockHash: CustomStringConvertible, Equatable {
     }
     var description: String {
         let suffix = self.value.characters.count > MaxSizeForHashDescription ? "..." : ""
-        return "BlockHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
+        let end = min(MaxSizeForHashDescription, self.value.characters.count)
+        return "BlockHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(end)) + suffix))"
     }
 }
 func ==(left: BlockHash, right: BlockHash) -> Bool {
@@ -49,7 +50,8 @@ class BitcoinScript: CustomStringConvertible, Equatable {
     }
     var description: String {
         let suffix = self.value.characters.count > MaxSizeForHashDescription ? "..." : ""
-        return "BitcoinScript(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
+        let end = min(MaxSizeForHashDescription, self.value.characters.count)
+        return "BitcoinScript(\(self.value.substringToIndex(self.value.startIndex.advancedBy(end)) + suffix))"
     }
 }
 func ==(left: BitcoinScript, right: BitcoinScript) -> Bool {
@@ -124,7 +126,8 @@ class TxHash: CustomStringConvertible, Hashable {
     }
     var description: String {
         let suffix = self.value.characters.count > MaxSizeForHashDescription ? "..." : ""
-        return "TxHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
+        let end = min(MaxSizeForHashDescription, self.value.characters.count)
+        return "TxHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(end)) + suffix))"
     }
     var hashValue: Int {
         get {
