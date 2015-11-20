@@ -28,6 +28,10 @@ class AccountStore {
         }
     }
 
+    static func getAccounts() -> [Account] {
+        return AccountStore.accounts
+    }
+
     static func addAccount(account: Account) {
         if !AccountStore.accounts.contains({ acct in return acct.accountId == account.accountId }) {
             AccountStore.accounts.append(account)
@@ -37,6 +41,7 @@ class AccountStore {
     // TODO - throw AddressAlreadyInXpub
     static func addAddress(account: Account, accountAddress: AccountAddress) throws {
         try account.addAddress(accountAddress)
+        AddressManager.rebuildAddressPool()
         if let delegates = AccountStore.delegates[account.getId()] {
             for delegate in delegates {
                 delegate.accountReceivedNewAddress(account, newAccountAddress: accountAddress)

@@ -12,7 +12,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
-        TransactionStoreTestClass().load()
+        do {
+            let testAccount1 = Account(accountName: "Test Account 1")
+            let testAccount2 = Account(accountName: "Test Account 2")
+            AccountStore.addAccount(testAccount1)
+            AccountStore.addAccount(testAccount2)
+            try AccountStore.addAddress(testAccount1, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #1")))
+            try AccountStore.addAddress(testAccount2, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #1")))
+            try AccountStore.addAddress(testAccount1, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #2")))
+            try AccountStore.addAddress(testAccount2, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #2")))
+        } catch let e {
+            print(e)
+        }
         BlockCypher.loadTransactions(BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
 
         // Starts the price fetcher that will pull the bitcoin price on a

@@ -84,25 +84,3 @@ class TransactionStore {
     }
 
 }
-
-
-class TransactionStoreTestClass: TransactionProtocol {
-
-    func load() {
-        let time = "2015-11-19T18:08:40Z"
-        let testTx1 = BitcoinTx(blockHash: BlockHash(), blockHeight: BlockHeight(), hash: TxHash(value: "11"), fees: TxFee(), size: TxSize(), confirmationTime: TxConfirmationTime(value: time), receptionTime: TxReceptionTime(value: time), lockTime: TxLockTime(), isDoubleSpent: false, confirmations: TxConfirmations(), inputs: [], outputs: [])
-        let testTx2 = BitcoinTx(blockHash: BlockHash(), blockHeight: BlockHeight(), hash: TxHash(value: "22"), fees: TxFee(), size: TxSize(), confirmationTime: TxConfirmationTime(value: time), receptionTime: TxReceptionTime(value: time), lockTime: TxLockTime(), isDoubleSpent: false, confirmations: TxConfirmations(), inputs: [], outputs: [])
-        let testTx1WithoutUpdate = BitcoinTx(blockHash: BlockHash(), blockHeight: BlockHeight(), hash: TxHash(value: "11"), fees: TxFee(), size: TxSize(), confirmationTime: TxConfirmationTime(value: time), receptionTime: TxReceptionTime(value: time), lockTime: TxLockTime(), isDoubleSpent: false, confirmations: TxConfirmations(), inputs: [], outputs: [])
-        let testTx1WithUpdate = BitcoinTx(blockHash: BlockHash(value: "11"), blockHeight: BlockHeight(), hash: TxHash(value: "11"), fees: TxFee(), size: TxSize(), confirmationTime: TxConfirmationTime(value: time), receptionTime: TxReceptionTime(value: time), lockTime: TxLockTime(), isDoubleSpent: false, confirmations: TxConfirmations(), inputs: [], outputs: [])
-        TransactionStore.register(self, forTx: testTx1)
-        TransactionStore.addTransaction(testTx1)
-        TransactionStore.addTransaction(testTx2)
-        TransactionStore.addTransaction(testTx1WithoutUpdate)
-        TransactionStore.addTransaction(testTx1WithUpdate)
-    }
-
-    func transactionDidUpdate(newTx: BitcoinTx) {
-        print("Transaction \(newTx.hash) updated! Block hash: \(newTx.blockHash)")
-    }
-
-}
