@@ -26,7 +26,7 @@ class AddressStore {
     }
 
     static func addAddress(address: AccountAddress) {
-        if !accountAddresses.contains({ addr in return addr.bitcoinAddress == address.bitcoinAddress }) {
+        if !AddressStore.accountAddresses.contains({ addr in return addr.bitcoinAddress == address.bitcoinAddress }) {
             AddressStore.accountAddresses.append(address)
         }
     }
@@ -50,6 +50,10 @@ class AccountAddress {
 
     init(bitcoinAddress: BitcoinAddress) {
         self.bitcoinAddress = bitcoinAddress
+    }
+
+    func getBitcoinAddress() -> BitcoinAddress {
+        return self.bitcoinAddress
     }
 
 }

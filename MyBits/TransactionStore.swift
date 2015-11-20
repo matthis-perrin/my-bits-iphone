@@ -4,10 +4,21 @@ protocol TransactionProtocol: class {
 
 }
 
+protocol AllTransactionsProtocol: class {
+
+    func transactionReceived(tx: BitcoinTx)
+
+}
+
 class TransactionStore {
 
     private static var delegates = [TxHash: [TransactionProtocol]]()
+    private static var globalDelegates = [AllTransactionsProtocol]()
     private static var transactions = [TxHash: BitcoinTx]()
+
+    static func register(delegate: AllTransactionsProtocol) {
+        TransactionStore.globalDelegates.append(delegate)
+    }
 
     static func register(delegate: TransactionProtocol, forTx: BitcoinTx) {
         if var delegatesForTx = TransactionStore.delegates[forTx.hash] {
@@ -15,6 +26,12 @@ class TransactionStore {
         } else {
             TransactionStore.delegates[forTx.hash] = [delegate]
         }
+    }
+
+    static func unregister(delegate: AllTransactionsProtocol) {
+        TransactionStore.globalDelegates = TransactionStore.globalDelegates.filter({ d in
+            return d !== delegate
+        })
     }
 
     static func unregister(delegate: TransactionProtocol) {
@@ -40,6 +57,11 @@ class TransactionStore {
         else {
             // This is a new transaction
             TransactionStore.transactions[tx.hash] = tx
+            for delegate in TransactionStore.globalDelegates {
+                delegate.transactionReceived(tx)
+            }
+            // Extract the different involved addresses and store weither they are present
+            // in the inputs, the outputs or both
             var addresses = [BitcoinAddress: (Bool, Bool)]()
             for input in tx.inputs {
                 for address in input.sourceAddresses {
