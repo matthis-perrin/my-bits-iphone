@@ -1,6 +1,6 @@
 import Foundation
 
-class TxInput: CustomStringConvertible {
+class TxInput: CustomStringConvertible, Equatable {
 
     let previousTxHash: TxHash
     let linkedOutputIndex: Int
@@ -52,4 +52,15 @@ class TxInput: CustomStringConvertible {
         ].joinWithSeparator("\n")
     }
 
+}
+
+func ==(left: TxInput, right: TxInput) -> Bool {
+    return (
+        left.previousTxHash == right.previousTxHash &&
+        left.linkedOutputIndex == right.linkedOutputIndex &&
+        left.linkedOutputValue == right.linkedOutputValue &&
+        left.script == right.script &&
+        left.scriptType == right.scriptType &&
+        left.sequence == right.sequence &&
+        left.sourceAddresses == right.sourceAddresses)
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-class BitcoinTx: CustomStringConvertible {
+class BitcoinTx: CustomStringConvertible, Equatable {
 
     let blockHash: BlockHash
     let blockHeight: BlockHeight
@@ -83,4 +83,20 @@ class BitcoinTx: CustomStringConvertible {
         return strings.joinWithSeparator("\n")
     }
 
+}
+
+func ==(left: BitcoinTx, right: BitcoinTx) -> Bool {
+    return (
+        left.blockHash == right.blockHash &&
+        left.blockHeight == right.blockHeight &&
+        left.hash == right.hash &&
+        left.fees == right.fees &&
+        left.size == right.size &&
+        left.confirmationTime == right.confirmationTime &&
+        left.receptionTime == right.receptionTime &&
+        left.lockTime == right.lockTime &&
+        left.isDoubleSpent == right.isDoubleSpent &&
+        left.confirmations == right.confirmations &&
+        left.inputs == right.inputs &&
+        left.outputs == right.outputs)
 }

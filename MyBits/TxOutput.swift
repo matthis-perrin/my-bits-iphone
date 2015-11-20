@@ -1,6 +1,6 @@
 import Foundation
 
-class TxOutput: CustomStringConvertible {
+class TxOutput: CustomStringConvertible, Equatable {
 
     let value: BitcoinAmount
     let script: BitcoinScript
@@ -47,4 +47,13 @@ class TxOutput: CustomStringConvertible {
         return strings.joinWithSeparator("\n")
     }
 
+}
+
+func ==(left: TxOutput, right: TxOutput) -> Bool {
+    return (
+        left.value == right.value &&
+        left.script == right.script &&
+        left.scriptType == right.scriptType &&
+        left.destinationAddresses == right.destinationAddresses &&
+        left.spentBy == right.spentBy)
 }

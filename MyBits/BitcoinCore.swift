@@ -2,7 +2,7 @@ import Foundation
 
 let MaxSizeForHashDescription = 30
 
-class BitcoinAddress: CustomStringConvertible {
+class BitcoinAddress: CustomStringConvertible, Equatable {
     var value: String
     init(value: String = "") {
         self.value = value
@@ -11,7 +11,11 @@ class BitcoinAddress: CustomStringConvertible {
         return "BitcoinAddress(\(self.value))"
     }
 }
-class BlockHash: CustomStringConvertible {
+func ==(left: BitcoinAddress, right: BitcoinAddress) -> Bool {
+    return left.value == right.value
+}
+
+class BlockHash: CustomStringConvertible, Equatable {
     var value: String
     init(value: String = "") {
         self.value = value
@@ -21,7 +25,11 @@ class BlockHash: CustomStringConvertible {
         return "BlockHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
     }
 }
-class BlockHeight: CustomStringConvertible {
+func ==(left: BlockHash, right: BlockHash) -> Bool {
+    return left.value == right.value
+}
+
+class BlockHeight: CustomStringConvertible, Equatable {
     var value: Int
     init(value: Int = 0) {
         self.value = value
@@ -30,7 +38,11 @@ class BlockHeight: CustomStringConvertible {
         return "BlockHeight(\(self.value))"
     }
 }
-class BitcoinScript: CustomStringConvertible {
+func ==(left: BlockHeight, right: BlockHeight) -> Bool {
+    return left.value == right.value
+}
+
+class BitcoinScript: CustomStringConvertible, Equatable {
     var value: String
     init(value: String = "") {
         self.value = value
@@ -40,7 +52,11 @@ class BitcoinScript: CustomStringConvertible {
         return "BitcoinScript(\(self.value.substringToIndex(self.value.startIndex.advancedBy(MaxSizeForHashDescription)) + suffix))"
     }
 }
-class TxConfirmations: CustomStringConvertible {
+func ==(left: BitcoinScript, right: BitcoinScript) -> Bool {
+    return left.value == right.value
+}
+
+class TxConfirmations: CustomStringConvertible, Equatable {
     var value: Int
     init(value: Int = 0) {
         self.value = value
@@ -49,7 +65,11 @@ class TxConfirmations: CustomStringConvertible {
         return "TxConfirmations(\(self.value))"
     }
 }
-class TxTime: CustomStringConvertible {
+func ==(left: TxConfirmations, right: TxConfirmations) -> Bool {
+    return left.value == right.value
+}
+
+class TxTime: CustomStringConvertible, Equatable {
     var value: NSDate
     private static let dateFormats = [
         "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
@@ -81,16 +101,22 @@ class TxTime: CustomStringConvertible {
         return "TxTime(\(self.value))"
     }
 }
+func ==(left: TxTime, right: TxTime) -> Bool {
+    return left.value.compare(right.value) == NSComparisonResult.OrderedSame
+}
+
 class TxConfirmationTime: TxTime {
     override var description: String {
         return super.description.stringByReplacingOccurrencesOfString("TxTime", withString: "TxConfirmationTime")
     }
 }
+
 class TxReceptionTime: TxTime {
     override var description: String {
         return super.description.stringByReplacingOccurrencesOfString("TxTime", withString: "TxReceptionTime")
     }
 }
+
 class TxHash: CustomStringConvertible, Hashable {
     var value: String
     init(value: String = "") {
@@ -106,10 +132,11 @@ class TxHash: CustomStringConvertible, Hashable {
         }
     }
 }
-func ==(lhs: TxHash, rhs: TxHash) -> Bool {
-    return lhs.value == rhs.value
+func ==(left: TxHash, right: TxHash) -> Bool {
+    return left.value == right.value
 }
-class TxSize: CustomStringConvertible {
+
+class TxSize: CustomStringConvertible, Equatable {
     var value: Int
     init(value: Int = 0) {
         self.value = value
@@ -118,7 +145,11 @@ class TxSize: CustomStringConvertible {
         return "TxSize(\(self.value))"
     }
 }
-class TxLockTime: CustomStringConvertible {
+func ==(left: TxSize, right: TxSize) -> Bool {
+    return left.value == right.value
+}
+
+class TxLockTime: CustomStringConvertible, Equatable {
     var value: Int
     init(value: Int = 0) {
         self.value = value
@@ -127,6 +158,10 @@ class TxLockTime: CustomStringConvertible {
         return "TxLockTime(\(self.value))"
     }
 }
+func ==(left: TxLockTime, right: TxLockTime) -> Bool {
+    return left.value == right.value
+}
+
 class TxFee: BitcoinAmount {
     override var description: String {
         return super.description.stringByReplacingOccurrencesOfString("BitcoinAmount", withString: "TxFee")

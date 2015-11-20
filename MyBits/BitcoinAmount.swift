@@ -1,7 +1,7 @@
 import Foundation
 
 
-class BitcoinAmount: CustomStringConvertible {
+class BitcoinAmount: CustomStringConvertible, Equatable {
 
     private let satoshis: Int
     private static let SatoshisInBitcoin: Double = 1e8
@@ -65,4 +65,8 @@ func *(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
 
 func /(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
     return BitcoinAmount(satoshis: left.satoshis / right.satoshis)
+}
+
+func ==(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
+    return left.satoshis == right.satoshis
 }
