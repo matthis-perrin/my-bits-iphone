@@ -12,19 +12,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
-        do {
-            let testAccount1 = Account(accountName: "Test Account 1")
-            let testAccount2 = Account(accountName: "Test Account 2")
-            AccountStore.addAccount(testAccount1)
-            AccountStore.addAccount(testAccount2)
-            try AccountStore.addAddress(testAccount1, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #1")))
-            try AccountStore.addAddress(testAccount2, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #1")))
-            try AccountStore.addAddress(testAccount1, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #2")))
-            try AccountStore.addAddress(testAccount2, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "Address #2")))
-        } catch let e {
-            print(e)
+
+        class TestViewController: AllTransactionsProtocol {
+            init() {
+                TransactionStore.register(self)
+            }
+            func transactionReceived(tx: BitcoinTx) {
+                print("Transaction \(tx.hash) received!")
+            }
         }
-        BlockCypher.loadTransactions(BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
+        let _ = TestViewController()
+
+        do {
+            let testAccount = Account(accountName: "Test Account")
+            let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
+            AccountStore.addAccount(testAccount)
+            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
+            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
+        } catch let e {
+            print("Error: \(e)")
+        }
+
+        TransactionFetcher().start()
+
 
         // Starts the price fetcher that will pull the bitcoin price on a
         // regular basis and broadcast price changes to all listeners

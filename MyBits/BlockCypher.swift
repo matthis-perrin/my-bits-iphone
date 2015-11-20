@@ -16,7 +16,8 @@ struct BlockCypher {
                         let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers ) as! NSDictionary
                         let txsJson = jsonData["txs"] as! [NSDictionary]
                         for txJson in txsJson {
-                            let _: BitcoinTx = BitcoinTx.loadFromJson(txJson)
+                            let tx: BitcoinTx = BitcoinTx.loadFromJson(txJson)
+                            TransactionStore.addTransaction(tx)
                         }
                     } catch let error as NSError {
                         NSLog("Error while parsing transactions for address \(forAddress.value): \(error.description). Received: \(data).")

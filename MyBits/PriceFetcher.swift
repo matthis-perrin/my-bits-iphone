@@ -2,6 +2,7 @@ import Foundation
 
 class PriceFetcher: NSObject {
 
+    private let FETCHING_INTERVAL = 10.0 // In seconds
     private var SUPPORTED_CURRENCY = ["USD", "EUR", "CNY", "GBP", "CAD",
                                       "PLN", "RUB", "AUD", "SEK", "BRL",
                                       "NZD", "SGD", "ZAR", "NOK", "ILS",
@@ -10,7 +11,7 @@ class PriceFetcher: NSObject {
 
     func start() {
         self._fetchPrice()
-        NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "_fetchPrice",
+        NSTimer.scheduledTimerWithTimeInterval(self.FETCHING_INTERVAL, target: self, selector: "_fetchPrice",
             userInfo: nil, repeats: true)
     }
 
