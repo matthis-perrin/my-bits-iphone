@@ -2,13 +2,18 @@ import Foundation
 
 let MaxSizeForHashDescription = 30
 
-class BitcoinAddress: CustomStringConvertible, Equatable {
+class BitcoinAddress: CustomStringConvertible, Hashable {
     var value: String
     init(value: String = "") {
         self.value = value
     }
     var description: String {
         return "BitcoinAddress(\(self.value))"
+    }
+    var hashValue: Int {
+        get {
+            return value.hashValue
+        }
     }
 }
 func ==(left: BitcoinAddress, right: BitcoinAddress) -> Bool {

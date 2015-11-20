@@ -27,7 +27,7 @@ class TransactionStore {
 
     static func addTransaction(tx: BitcoinTx) {
         if let localTx = TransactionStore.transactions[tx.hash] {
-            if !(localTx == tx) {
+            if localTx != tx {
                 // We already know the transaction, but it has been updated
                 TransactionStore.transactions[tx.hash] = tx
                 if let delegates = TransactionStore.delegates[tx.hash] {
@@ -40,7 +40,24 @@ class TransactionStore {
         else {
             // This is a new transaction
             TransactionStore.transactions[tx.hash] = tx
-            // TODO - Trigger the right stores
+            var addresses = [BitcoinAddress: (Bool, Bool)]()
+            for input in tx.inputs {
+                for address in input.sourceAddresses {
+                    addresses[address] = (true, false)
+                }
+            }
+            for output in tx.outputs {
+                for address in output.destinationAddresses {
+                    if let inputOutputInfo = addresses[address] {
+                        addresses[address] = (inputOutputInfo.0, true)
+                    } else {
+                        addresses[address] = (false, true)
+                    }
+                }
+            }
+            for (address, inputOutputInfo) in addresses {
+                AddressStore.triggerNewTransactionReceived(tx, forAddress: address, inInputs: inputOutputInfo.0, inOutputs: inputOutputInfo.1)
+            }
         }
     }
 
