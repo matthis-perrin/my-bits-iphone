@@ -1,9 +1,5 @@
 import UIKit
 
-protocol BackButton {
-    var shouldDisplayBackButton: Bool { get }
-}
-
 class MainNavigationController : UINavigationController, PrivacyProtocol {
 
     override func pushViewController(viewController: UIViewController, animated: Bool) {
@@ -13,7 +9,7 @@ class MainNavigationController : UINavigationController, PrivacyProtocol {
 
     private func setNavigationButtonsToViewController(vc: UIViewController) {
         // Left item (Privacy) -> only if not displaying back button
-        if !vc.respondsToSelector(Selector("shouldDisplayBackButton")) || !(vc.valueForKey("shouldDisplayBackButton") as! Bool) {
+        if self.viewControllers.count == 0 || self.viewControllers[0] == vc {
             let icon = UIImage(named: "TopBar_Privacy.png")
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, landscapeImagePhone: icon, style: .Plain, target: self, action: "togglePrivacy")
         }

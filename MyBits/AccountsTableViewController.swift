@@ -2,7 +2,7 @@ import UIKit
 
 class AccountsTableViewController : UITableViewController {
 
-    private var accounts = ["", ""]
+    private var accounts = [Account]()
 
     convenience init() {
         self.init(style: .Grouped)
@@ -12,6 +12,13 @@ class AccountsTableViewController : UITableViewController {
         super.viewDidLoad()
 
         self.title = NSLocalizedString("accounts", comment: "")
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+
+        self.accounts = AccountStore.getAccounts()
+        self.tableView.reloadData()
     }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -30,6 +37,7 @@ class AccountsTableViewController : UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // Special cell for adding new accounts
         if indexPath.section == 1 {
             var cell = tableView.dequeueReusableCellWithIdentifier("CreateAccountCell")
             if (cell == nil) {
@@ -41,18 +49,25 @@ class AccountsTableViewController : UITableViewController {
             return cell!;
         }
 
+        // Account cell
         var cell = tableView.dequeueReusableCellWithIdentifier("AccountCell")
         if (cell == nil) {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "AccountCell")
             cell!.accessoryType = .DisclosureIndicator
         }
-        cell!.textLabel?.text = "Main Cold Storage"
+
+        // Name
+        let account = self.accounts[indexPath.row];
+        cell!.textLabel?.text = account.getName()
+
+        // Amount
         cell!.viewWithTag(1)?.removeFromSuperview()
-        let currencyView = UICurrencyLabel(fromBitcoin: 100, displayCurrency: .Bitcoin)
+        let currencyView = UICurrencyLabel(fromBtcAmount: account.getAmount())
         currencyView.textAlignment = .Right
-        currencyView.frame = CGRectMake(cell!.frame.size.width - 80, 0, 80, 80)
+        currencyView.frame = CGRectMake(200, 0, 80, 80)
         currencyView.tag = 1
         cell!.addSubview(currencyView)
+
         return cell!;
     }
 

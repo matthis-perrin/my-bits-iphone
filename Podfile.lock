@@ -5,6 +5,7 @@ PODS:
     - Fabric/Base (= 1.6.0)
   - Fabric/Base (1.6.0)
   - KeychainAccess (2.3.1)
+  - QRCodeReader.swift (5.2.1)
   - Realm (0.96.2):
     - Realm/Headers (= 0.96.2)
   - Realm/Headers (0.96.2)
@@ -15,12 +16,14 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - KeychainAccess
+  - QRCodeReader.swift
   - RealmSwift
 
 SPEC CHECKSUMS:
   Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
   Fabric: d737eda3a26ac940a5430230eedb35f16b226131
   KeychainAccess: d54b31c75745cfa595b3654590e8cb491a75d411
+  QRCodeReader.swift: 671627ada6872fbdc75bc99442f53f7fd81646aa
   Realm: 3ce8448151c571e90b85002d984d7f93f54fc8a3
   RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
 

@@ -1,4 +1,4 @@
-import UIKit
+ import UIKit
 import Fabric
 import Crashlytics
 import RealmSwift
@@ -25,12 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Xpub got \(newAccountAddress)")
             }
         }
-        let testAccountXpub = AccountXpub(masterPublicKey: MasterPublicKey(value: "xpub661MyMwAqRbcEyn2XMrDPKF1vED2METavwTu647wiHQWqKVgsoexph3vV4crHp31ciGUKWB1ZrARFHZyxbEq88XXYcvzgo6mGcgzHScxBZk"))
+        let testAccountXpub = AccountXpub(masterPublicKey: MasterPublicKey(value: "xpub6DJzLL3834dPK7zDAjTEWj6vYziA4Yu2t6VhARMudW8d1jkCGF58yUrkug7MVQQB7iNCCAhBKmPGZYZVf3MmTaunA7iCZXkHC5vdUnDvyxY"))
         let _ = TestViewController(testAccountXpub: testAccountXpub)
 
         do {
             let testAccount = Account(accountName: "Test Account")
-            let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
+            let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "1GDdV6DdaBq3mH1GjG1SQM9DsJZ3U1DVoV"))
             AccountStore.addAccount(testAccount)
             try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
             try AccountStore.addXpub(testAccount, accountXpub: testAccountXpub)

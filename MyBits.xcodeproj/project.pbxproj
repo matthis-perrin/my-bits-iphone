@@ -79,6 +79,7 @@
 		B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
 		B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNameViewController.swift; sourceTree = "<group>"; };
+		B5EE23811C0218BA001408D9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +283,7 @@
 		37B5B736C12C67EABAEA754E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5EE23811C0218BA001408D9 /* AVFoundation.framework */,
 				6B896E21C4F568C82550F056 /* Pods_MyBits.framework */,
 			);
 			name = Frameworks;

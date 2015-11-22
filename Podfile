@@ -6,4 +6,5 @@ target 'MyBits' do
   pod 'Crashlytics'
   pod 'KeychainAccess'
   pod 'RealmSwift'
+  pod 'QRCodeReader.swift'
 end

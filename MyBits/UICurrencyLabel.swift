@@ -37,6 +37,10 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
         self.init(amount: amount, amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
     }
 
+    convenience init(fromBtcAmount amount: BitcoinAmount) {
+        self.init(fromBtc: amount.getBitcoinAmount())
+    }
+
     convenience init(fromFiat amount: Double, displayCurrency: CurrencyType) {
         self.init(amount: amount, amountCurrency: .Fiat, displayCurrency: displayCurrency)
     }

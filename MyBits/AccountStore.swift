@@ -180,4 +180,8 @@ class Account {
         return self.accountXpubs
     }
 
+    func getAmount() -> BitcoinAmount {
+        return BitcoinAmount(satoshis: 10000000000);
+    }
+
 }

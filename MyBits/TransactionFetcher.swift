@@ -23,7 +23,7 @@ class TransactionFetcher {
         }
     }
 
-    @objc func fetchAll() {
+    @objc private func fetchAll() {
         let addresses = AddressManager.getAddresses()
         TransactionFetcher.fetchMulti(addresses)
     }
