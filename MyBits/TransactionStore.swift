@@ -52,6 +52,7 @@ class TransactionStore {
                         delegate.transactionDidUpdate(tx)
                     }
                 }
+                AccountStore.triggerNewTransactionReceived(tx)
             }
         }
         else {

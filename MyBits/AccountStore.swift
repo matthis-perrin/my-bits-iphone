@@ -49,15 +49,45 @@ class AccountStore {
         }
     }
 
-    static func triggerNewTransactionReceived(tx: BitcoinTx, forAccount: Account) {
-        if let delegates = AccountStore.delegates[forAccount.accountId] {
-            for delegate in delegates {
-                delegate.accountReceivedNewTransaction(forAccount, newTransaction: tx)
+    // This method is called manually by the TransactionStore for each
+    // new transaction received. We do this manually instead of using the
+    // AllTransactionsProtocol because the class is static.
+    static func triggerNewTransactionReceived(tx: BitcoinTx) {
+        var accountsToNotify = [Account]()
+        for account in AccountStore.accounts {
+            var addresses = [BitcoinAddress]()
+            for input in tx.inputs {
+                for address in input.sourceAddresses {
+                    addresses.append(address)
+                }
+            }
+            for output in tx.outputs {
+                for address in output.destinationAddresses {
+                    addresses.append(address)
+                }
+            }
+            for address in account.accountAddresses {
+                if addresses.contains(address.getBitcoinAddress()) {
+                    accountsToNotify.append(account)
+                    break
+                }
             }
         }
+
+        for accountToNotify in accountsToNotify {
+            if let delegates = AccountStore.delegates[accountToNotify.accountId] {
+                for delegate in delegates {
+                    delegate.accountReceivedNewTransaction(accountToNotify, newTransaction: tx)
+                }
+            }
+        }
+
     }
 
 }
+
+
+// Models
 
 class AccountId: Hashable {
     var value: Int
@@ -81,7 +111,7 @@ enum AccountStoreException: ErrorType {
     case AddressAlreadyInAccount
 }
 
-class Account: AllTransactionsProtocol {
+class Account {
 
     private var accountId: AccountId
     private var accountName: String
@@ -98,7 +128,6 @@ class Account: AllTransactionsProtocol {
             throw AccountStoreException.AddressAlreadyInAccount
         }
         self.accountAddresses.append(accountAddress)
-        TransactionStore.register(self)
     }
 
     func getId() -> AccountId {
@@ -111,26 +140,6 @@ class Account: AllTransactionsProtocol {
 
     func getAddresses() -> [AccountAddress] {
         return self.accountAddresses
-    }
-
-    func transactionReceived(tx: BitcoinTx) {
-        var addresses = [BitcoinAddress]()
-        for input in tx.inputs {
-            for address in input.sourceAddresses {
-                addresses.append(address)
-            }
-        }
-        for output in tx.outputs {
-            for address in output.destinationAddresses {
-                addresses.append(address)
-            }
-        }
-        for address in self.accountAddresses {
-            if addresses.contains(address.getBitcoinAddress()) {
-                AccountStore.triggerNewTransactionReceived(tx, forAccount: self)
-                return
-            }
-        }
     }
 
 }

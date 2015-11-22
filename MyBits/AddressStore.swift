@@ -44,6 +44,9 @@ class AddressStore {
 
 }
 
+
+// Models
+
 class AccountAddress {
 
     private var bitcoinAddress: BitcoinAddress
