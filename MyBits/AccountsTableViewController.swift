@@ -63,7 +63,7 @@ class AccountsTableViewController : UITableViewController {
 
         // Amount
         cell!.viewWithTag(1)?.removeFromSuperview()
-        let currencyView = UICurrencyLabel(fromBtcAmount: account.getAmount())
+        let currencyView = UICurrencyLabel(fromBtcAmount: account.getBalance())
         currencyView.textAlignment = .Right
         currencyView.frame = CGRectMake(200, 0, 80, 80)
         currencyView.tag = 1

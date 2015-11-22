@@ -9,7 +9,7 @@ protocol PrivacyProtocol: class {
 class PrivacyStore {
 
     private static var delegates = [PrivacyProtocol]()
-    private static var hideAmounts = true
+    private static var hideAmounts = false
 
     static func getPrivacy() -> Bool {
         return PrivacyStore.hideAmounts

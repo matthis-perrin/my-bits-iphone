@@ -11,15 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
-        // Initialize Database
-        do {
-            try DB.initialize()
-        } catch let e {
-            print(e)
-        }
-
-        // Initialise stores
-        AccountStore.initialize()
+        // Initialize DB and load data in memory
+        DB.initialize()
 
         ///////////////////////////////////////////
         ///////////////////////////////////////////
@@ -51,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let testAccount = Account(accountName: "Test Account")
             let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "1GDdV6DdaBq3mH1GjG1SQM9DsJZ3U1DVoV"))
-            AccountStore.addAccount(testAccount)
+            try AccountStore.addAccount(testAccount)
             try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
             try AccountStore.addXpub(testAccount, accountXpub: testAccountXpub)
             try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress) // Should error

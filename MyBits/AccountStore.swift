@@ -17,8 +17,26 @@ class AccountStore {
     private static var delegates = [AccountId: [AccountProtocol]]()
     private static var accounts = [Account]()
 
-    static func initialize() {
-        AccountStore.accounts = DB.getAccounts()
+    static func initialize() throws {
+        // Accounts
+        let accounts = DB.getAccounts()
+        AccountStore.accounts = accounts
+
+        // Public addresses
+        for account in accounts {
+            for address in DB.getBitcoinAddresses(account) {
+                try AccountStore.addAddress(account, accountAddress: AccountAddress(bitcoinAddress: address), saveToDisk: false)
+            }
+        }
+
+        // Master Public Keys
+        for account in accounts {
+            for mpk in DB.getMasterPublicKeys(account) {
+                let accountXpub =  AccountXpub(masterPublicKey: mpk)
+                try AccountStore.addXpub(account, accountXpub: accountXpub, saveToDisk: false)
+                accountXpub.setAddresses(DB.getBitcoinAddresses(mpk), start: 0)
+            }
+        }
     }
 
     static func register(delegate: AccountProtocol, forAccount: Account) {
@@ -41,19 +59,19 @@ class AccountStore {
         return AccountStore.accounts
     }
 
-    static func addAccount(account: Account) -> Bool {
+    static func addAccount(account: Account) throws {
         if !AccountStore.accounts.contains({ acct in return acct.accountId == account.accountId }) {
-            if DB.insertAccount(account) {
-                AccountStore.accounts.append(account)
-                return true
-            }
+            try DB.insertAccount(account)
+            AccountStore.accounts.append(account)
         }
-        return false
     }
 
     // TODO - throw AddressAlreadyInXpub
-    static func addAddress(account: Account, accountAddress: AccountAddress) throws {
+    static func addAddress(account: Account, accountAddress: AccountAddress, saveToDisk: Bool = true) throws {
         try account.addAddress(accountAddress)
+        if saveToDisk {
+            try DB.insertBitcoinAddress(accountAddress.getBitcoinAddress(), account: account)
+        }
         AddressManager.rebuildAddressPool()
         if let delegates = AccountStore.delegates[account.getId()] {
             for delegate in delegates {
@@ -62,8 +80,11 @@ class AccountStore {
         }
     }
 
-    static func addXpub(account: Account, accountXpub: AccountXpub) throws {
+    static func addXpub(account: Account, accountXpub: AccountXpub, saveToDisk: Bool = true) throws {
         try account.addXpub(accountXpub)
+        if saveToDisk {
+            try DB.insertMasterPublicKey(accountXpub.getMasterPublicKey(), account: account)
+        }
         AddressManager.rebuildAddressPool()
         if let delegates = AccountStore.delegates[account.getId()] {
             for delegate in delegates {
@@ -126,23 +147,7 @@ class AccountStore {
 
 // Models
 
-class AccountId: Hashable {
-    var value: Int
-    init(value: Int) {
-        self.value = value
-    }
-    convenience init() {
-        self.init(value: Int(arc4random()))
-    }
-    var hashValue: Int {
-        get {
-            return value
-        }
-    }
-}
-func ==(left: AccountId, right: AccountId) -> Bool {
-    return left.value == right.value
-}
+class AccountId: GenericId {}
 
 class Account {
 

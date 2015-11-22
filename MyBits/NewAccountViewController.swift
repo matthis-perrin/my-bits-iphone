@@ -84,18 +84,21 @@ class NewAccountViewController: UIViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
 
-        let account = Account(accountName: self.nameTextField!.text!)
-
         do {
-            // TODO - add logic for XPUBs
-            try account.addAddress(AccountAddress(bitcoinAddress: BitcoinAddress(value: self.addressTextField!.text!)))
-        } catch let e {
-            print(e)
-            return
-        }
+            let account = Account(accountName: self.nameTextField!.text!)
+            try AccountStore.addAccount(account)
 
-        if !AccountStore.addAccount(account) {
-            print("Error saving object")
+            let address = self.addressTextField!.text!
+            if address.hasPrefix("xpub") {
+                try AccountStore.addXpub(account, accountXpub: AccountXpub(masterPublicKey: MasterPublicKey(value: address)))
+            } else {
+                try AccountStore.addAddress(account, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: address)))
+            }
+        } catch let e {
+//            let alertController = UIAlertController(title: NSLocalizedString("textfield error", comment: ""), message: NSLocalizedString(e.description, comment: ""), preferredStyle: .Alert)
+//            alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
+//            self.presentViewController(alertController, animated: true, completion: nil)
+            print(e)
             return
         }
 

@@ -2,10 +2,19 @@ import Foundation
 
 let MaxSizeForHashDescription = 30
 
+class BitcoinAddressId: GenericId {}
+
 class BitcoinAddress: CustomStringConvertible, Hashable {
+    var bitcoinAddressId: BitcoinAddressId
     var value: String
-    init(value: String = "") {
+
+    init(bitcoinAddressId: BitcoinAddressId, value: String) {
+        self.bitcoinAddressId = bitcoinAddressId
         self.value = value
+    }
+
+    convenience init(value: String) {
+        self.init(bitcoinAddressId: BitcoinAddressId(), value: value)
     }
 
     func getBalance() -> BitcoinAmount {
@@ -39,11 +48,21 @@ func ==(left: BitcoinAddress, right: BitcoinAddress) -> Bool {
     return left.value == right.value
 }
 
+class MasterPublicKeyId: GenericId {}
+
 class MasterPublicKey: CustomStringConvertible, Hashable {
+    var masterPublicKeyId: MasterPublicKeyId
     var value: String
-    init(value: String = "") {
+
+    init(masterPublicKeyId: MasterPublicKeyId, value: String) {
+        self.masterPublicKeyId = masterPublicKeyId
         self.value = value
     }
+
+    convenience init(value: String) {
+        self.init(masterPublicKeyId: MasterPublicKeyId(), value: value)
+    }
+
     var description: String {
         return "MasterPublicKey(\(self.value))"
     }
