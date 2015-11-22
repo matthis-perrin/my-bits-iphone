@@ -33,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "34176gxwytYnNJBk2P5JdAYQXVMtWpJNC4"))
             AccountStore.addAccount(testAccount)
             try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
-            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
+            try AccountStore.addXpub(testAccount, accountXpub: testAccountXpub)
+            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress) // Should error
         } catch let e {
             print("Error: \(e)")
         }

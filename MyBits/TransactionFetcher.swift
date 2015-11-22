@@ -16,11 +16,16 @@ class TransactionFetcher {
         }
     }
 
-    @objc func fetchAll() {
-        let addresses = AddressManager.getAddresses()
+    static func fetchMulti(addresses: [BitcoinAddress]) {
         for address in addresses {
             TransactionFetcher.fetchOne(address)
+            usleep(500000) // 0.5 second
         }
+    }
+
+    @objc func fetchAll() {
+        let addresses = AddressManager.getAddresses()
+        TransactionFetcher.fetchMulti(addresses)
     }
 
 }

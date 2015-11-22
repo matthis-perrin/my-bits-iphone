@@ -3,7 +3,7 @@ import Foundation
 protocol XpubProtocol: class {
 
     func xpubReceivedNewAddress(xpub: AccountXpub, newAccountAddress: BitcoinAddress)
-    
+
 }
 
 class XpubStore {
@@ -63,22 +63,32 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
         for (index, address) in addresses.reverse()[0...max].enumerate() {
             if txAddresses.contains(address) {
                 self.generateNextAddresses(AccountXpub.CLEAN_ADDRESSES_LENGTH - index)
+                break
             }
         }
     }
     func getMasterPublicKey() -> MasterPublicKey {
         return self.masterPublicKey
     }
+    func getAddresses() -> [BitcoinAddress] {
+        return self.addresses
+    }
     func setAddresses(addresses: [BitcoinAddress], start: Int) {
         for address in addresses {
             self.addresses.append(address)
             XpubStore.triggerXpubReceivedAddress(self, address: address)
         }
-        AddressManager.rebuildAddressPool()
         self.isGeneratingNewAddresses = false
+        AddressManager.rebuildAddressPool()
     }
     private func generateNextAddresses(count: Int) {
-        if !self.isGeneratingNewAddresses {
+        if self.isGeneratingNewAddresses {
+            // Retry in 2 seconds
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
+                self.generateNextAddresses(count)
+            });
+            NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("generateNextAddresses"), userInfo: [count], repeats: false)
+        } else {
             self.isGeneratingNewAddresses = true
             Server.generateAddresses(self, start: self.addresses.count, count: count)
         }
@@ -88,7 +98,7 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
             return masterPublicKey.hashValue
         }
     }
-    
+
 }
 func ==(left: AccountXpub, right: AccountXpub) -> Bool {
     return left.masterPublicKey == right.masterPublicKey

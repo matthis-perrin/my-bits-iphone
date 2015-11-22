@@ -1,13 +1,14 @@
 import Foundation
 
 enum AccountStoreException: ErrorType {
-    case AddressAlreadyInAccount
+    case AddressAlreadyInAccount, XpubAlreadyInAccount
 }
 
 protocol AccountProtocol: class {
 
     func accountReceivedNewTransaction(account: Account, newTransaction: BitcoinTx)
     func accountReceivedNewAddress(account: Account, newAccountAddress: AccountAddress)
+    func accountReceivedNewXpub(account: Account, newAccountXpub: AccountXpub)
 
 }
 
@@ -53,6 +54,16 @@ class AccountStore {
         }
     }
 
+    static func addXpub(account: Account, accountXpub: AccountXpub) throws {
+        try account.addXpub(accountXpub)
+        AddressManager.rebuildAddressPool()
+        if let delegates = AccountStore.delegates[account.getId()] {
+            for delegate in delegates {
+                delegate.accountReceivedNewXpub(account, newAccountXpub: accountXpub)
+            }
+        }
+    }
+
     // This method is called manually by the TransactionStore for each
     // new transaction received. We do this manually instead of using the
     // AllTransactionsProtocol because the class is static.
@@ -70,10 +81,24 @@ class AccountStore {
                     addresses.append(address)
                 }
             }
-            for address in account.accountAddresses {
+            var found = false
+            for address in account.getAddresses() {
                 if addresses.contains(address.getBitcoinAddress()) {
                     accountsToNotify.append(account)
+                    found = true
                     break
+                }
+            }
+            for xpub in account.getXpubs() {
+                if found {
+                    break
+                }
+                for address in xpub.getAddresses() {
+                    if addresses.contains(address) {
+                        accountsToNotify.append(account)
+                        found = true
+                        break
+                    }
                 }
             }
         }
@@ -116,11 +141,13 @@ class Account {
     private var accountId: AccountId
     private var accountName: String
     private var accountAddresses: [AccountAddress]
+    private var accountXpubs: [AccountXpub]
 
     init(accountName: String) {
         self.accountName = accountName
         self.accountId = AccountId.randomId()
         self.accountAddresses = [AccountAddress]()
+        self.accountXpubs = [AccountXpub]()
     }
 
     internal func addAddress(accountAddress: AccountAddress) throws {
@@ -128,6 +155,13 @@ class Account {
             throw AccountStoreException.AddressAlreadyInAccount
         }
         self.accountAddresses.append(accountAddress)
+    }
+
+    internal func addXpub(accountXpub: AccountXpub) throws {
+        if self.accountXpubs.contains(accountXpub) {
+            throw AccountStoreException.XpubAlreadyInAccount
+        }
+        self.accountXpubs.append(accountXpub)
     }
 
     func getId() -> AccountId {
@@ -140,6 +174,10 @@ class Account {
 
     func getAddresses() -> [AccountAddress] {
         return self.accountAddresses
+    }
+
+    func getXpubs() -> [AccountXpub] {
+        return self.accountXpubs
     }
 
 }

@@ -18,11 +18,19 @@ class AddressManager {
                     }
                 }
             }
+            for xpub in account.getXpubs() {
+                for bitcoinAddress in xpub.getAddresses() {
+                    if seen.updateValue(true, forKey: bitcoinAddress) == nil {
+                        all.append(bitcoinAddress)
+                        if (!AddressManager.addressPool.contains(bitcoinAddress)) {
+                            new.append(bitcoinAddress)
+                        }
+                    }
+                }
+            }
         }
         AddressManager.addressPool = all
-        for address in new {
-            TransactionFetcher.fetchOne(address)
-        }
+        TransactionFetcher.fetchMulti(new)
     }
 
     static func getAddresses() -> [BitcoinAddress] {
