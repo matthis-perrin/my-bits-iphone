@@ -5,6 +5,6 @@ target 'MyBits' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'KeychainAccess'
-  pod 'RealmSwift'
   pod 'QRCodeReader.swift'
+  pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
 end

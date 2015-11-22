@@ -1,7 +1,6 @@
- import UIKit
+import UIKit
 import Fabric
 import Crashlytics
-import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,7 +11,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
+        // Initialize Database
+        do {
+            try DB.initialize()
+        } catch let e {
+            print(e)
+        }
 
+        // Initialise stores
+        AccountStore.initialize()
+
+        ///////////////////////////////////////////
+        ///////////////////////////////////////////
+        ///////////////////////////////////////////
         class TestViewController: AllTransactionsProtocol, XpubProtocol {
             let testAccountXpub: AccountXpub
             init(testAccountXpub: AccountXpub) {
@@ -47,9 +58,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch let e {
             print("Error: \(e)")
         }
+        ///////////////////////////////////////////
+        ///////////////////////////////////////////
+        ///////////////////////////////////////////
 
+        // Starts fetching transactions details
         TransactionFetcher().start()
-
 
         // Starts the price fetcher that will pull the bitcoin price on a
         // regular basis and broadcast price changes to all listeners

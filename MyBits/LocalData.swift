@@ -1,5 +1,3 @@
-import RealmSwift
-
-class LocalData: Object {
+class LocalData {
     var deviceId: String? = nil
 }

@@ -36,9 +36,10 @@
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		2DF9BCFA1BE5B47C000BA8EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF81BE5B47C000BA8EC /* LaunchScreen.storyboard */; };
 		32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B896E21C4F568C82550F056 /* Pods_MyBits.framework */; };
+		B55723061C024F1400B5A56B /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55723051C024F1400B5A56B /* Database.swift */; };
 		B58A0C721BFBDD850051C28F /* AccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */; };
 		B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */; };
-		B58A0C761BFBEFBF0051C28F /* AccountNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */; };
+		B58A0C761BFBEFBF0051C28F /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,9 +77,10 @@
 		2DF9BCFB1BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B896E21C4F568C82550F056 /* Pods_MyBits.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBits.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.debug.xcconfig"; sourceTree = "<group>"; };
+		B55723051C024F1400B5A56B /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
 		B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
-		B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNameViewController.swift; sourceTree = "<group>"; };
+		B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		B5EE23811C0218BA001408D9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -106,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				B58A0C711BFBDD850051C28F /* AccountsTableViewController.swift */,
-				B58A0C751BFBEFBF0051C28F /* AccountNameViewController.swift */,
+				B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				2DC4945D1BF2F169005E4C6B /* LocalData.swift */,
+				B55723051C024F1400B5A56B /* Database.swift */,
 			);
 			name = LocalStorage;
 			sourceTree = "<group>";
@@ -375,7 +378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 6c13e3e11a63c57a17ffc6ce926c058d4927d4b5 5a2c0f72086f647d479edd36e5e169cc4109f45b848062a59ccdab7257b7d3b3";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 6c13e3e11a63c57a17ffc6ce926c058d4927d4b5 5a2c0f72086f647d479edd36e5e169cc4109f45b848062a59ccdab7257b7d3b3";
 		};
 		78ADBED1D8A8EA487A6E65F1 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -436,7 +439,7 @@
 				2D4B6F461BFF4025007672AD /* AddressManager.swift in Sources */,
 				B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */,
 				2D067B901BE6FAB400C959A9 /* PriceStore.swift in Sources */,
-				B58A0C761BFBEFBF0051C28F /* AccountNameViewController.swift in Sources */,
+				B58A0C761BFBEFBF0051C28F /* NewAccountViewController.swift in Sources */,
 				2D4E7DE11BFF8D1E00F04DFB /* TransactionFetcher.swift in Sources */,
 				2D5558EE1BFC12EC001FD68E /* BitcoinTx.swift in Sources */,
 				2D5558EC1BFC1117001FD68E /* TxOutput.swift in Sources */,
@@ -455,6 +458,7 @@
 				2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */,
 				2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */,
 				2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */,
+				B55723061C024F1400B5A56B /* Database.swift in Sources */,
 				2DC4945E1BF2F169005E4C6B /* LocalData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

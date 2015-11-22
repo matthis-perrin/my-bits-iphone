@@ -2,7 +2,7 @@ import UIKit
 import QRCodeReader
 import AVFoundation
 
-class AccountNameViewController: UIViewController {
+class NewAccountViewController: UIViewController {
 
     private var nameTextField: UITextField?
     private var addressTextField: UITextField?
@@ -87,13 +87,18 @@ class AccountNameViewController: UIViewController {
         let account = Account(accountName: self.nameTextField!.text!)
 
         do {
+            // TODO - add logic for XPUBs
             try account.addAddress(AccountAddress(bitcoinAddress: BitcoinAddress(value: self.addressTextField!.text!)))
         } catch let e {
             print(e)
             return
         }
 
-        AccountStore.addAccount(account)
+        if !AccountStore.addAccount(account) {
+            print("Error saving object")
+            return
+        }
+
         self.navigationController?.popViewControllerAnimated(true)
     }
 

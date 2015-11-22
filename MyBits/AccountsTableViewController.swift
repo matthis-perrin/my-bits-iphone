@@ -12,6 +12,7 @@ class AccountsTableViewController : UITableViewController {
         super.viewDidLoad()
 
         self.title = NSLocalizedString("accounts", comment: "")
+        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, 0, CGFloat.min))
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -74,7 +75,7 @@ class AccountsTableViewController : UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 1 {
-            self.navigationController?.pushViewController(AccountNameViewController(), animated: true)
+            self.navigationController?.pushViewController(NewAccountViewController(), animated: true)
             return
         }
     }

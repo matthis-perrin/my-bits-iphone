@@ -17,6 +17,10 @@ class AccountStore {
     private static var delegates = [AccountId: [AccountProtocol]]()
     private static var accounts = [Account]()
 
+    static func initialize() {
+        AccountStore.accounts = DB.getAccounts()
+    }
+
     static func register(delegate: AccountProtocol, forAccount: Account) {
         if var delegatesForAccount = AccountStore.delegates[forAccount.accountId] {
             delegatesForAccount.append(delegate)
@@ -37,10 +41,14 @@ class AccountStore {
         return AccountStore.accounts
     }
 
-    static func addAccount(account: Account) {
+    static func addAccount(account: Account) -> Bool {
         if !AccountStore.accounts.contains({ acct in return acct.accountId == account.accountId }) {
-            AccountStore.accounts.append(account)
+            if DB.insertAccount(account) {
+                AccountStore.accounts.append(account)
+                return true
+            }
         }
+        return false
     }
 
     // TODO - throw AddressAlreadyInXpub
@@ -123,8 +131,8 @@ class AccountId: Hashable {
     init(value: Int) {
         self.value = value
     }
-    static func randomId() -> AccountId {
-        return AccountId(value: Int(arc4random()))
+    convenience init() {
+        self.init(value: Int(arc4random()))
     }
     var hashValue: Int {
         get {
@@ -143,11 +151,15 @@ class Account {
     private var accountAddresses: [AccountAddress]
     private var accountXpubs: [AccountXpub]
 
-    init(accountName: String) {
+    init(accountId: AccountId, accountName: String) {
+        self.accountId = accountId
         self.accountName = accountName
-        self.accountId = AccountId.randomId()
         self.accountAddresses = [AccountAddress]()
         self.accountXpubs = [AccountXpub]()
+    }
+
+    convenience init(accountName: String) {
+        self.init(accountId: AccountId(), accountName: accountName)
     }
 
     internal func addAddress(accountAddress: AccountAddress) throws {
