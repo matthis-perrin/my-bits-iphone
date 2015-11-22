@@ -180,8 +180,15 @@ class Account {
         return self.accountXpubs
     }
 
-    func getAmount() -> BitcoinAmount {
-        return BitcoinAmount(satoshis: 10000000000);
+    func getBalance() -> BitcoinAmount {
+        var balance = BitcoinAmount(satoshis: 0)
+        for address in self.accountAddresses {
+            balance = balance + address.getBalance()
+        }
+        for xpub in self.accountXpubs {
+            balance = balance + xpub.getBalance()
+        }
+        return balance
     }
 
 }

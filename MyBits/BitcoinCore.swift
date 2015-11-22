@@ -7,6 +7,25 @@ class BitcoinAddress: CustomStringConvertible, Hashable {
     init(value: String = "") {
         self.value = value
     }
+
+    func getBalance() -> BitcoinAmount {
+        var balance = BitcoinAmount(satoshis: 0)
+        // Loop through each transactions and compute the balance
+        for tx in TransactionStore.getTransactions() {
+            for input in tx.inputs {
+                if input.sourceAddresses.contains(self) {
+                    balance = balance - input.linkedOutputValue
+                }
+            }
+            for output in tx.outputs {
+                if output.destinationAddresses.contains(self) {
+                    balance = balance + output.value
+                }
+            }
+        }
+        return balance
+    }
+
     var description: String {
         return "BitcoinAddress(\(self.value))"
     }

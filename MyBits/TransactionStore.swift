@@ -42,6 +42,14 @@ class TransactionStore {
         }
     }
 
+    static func get(txHash: TxHash) -> BitcoinTx? {
+        return self.transactions[txHash]
+    }
+
+    static func getTransactions() -> [BitcoinTx] {
+        return Array(self.transactions.values)
+    }
+
     static func addTransaction(tx: BitcoinTx) {
         if let localTx = TransactionStore.transactions[tx.hash] {
             if localTx != tx {

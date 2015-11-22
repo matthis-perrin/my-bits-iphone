@@ -73,6 +73,13 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
     func getAddresses() -> [BitcoinAddress] {
         return self.addresses
     }
+    func getBalance() -> BitcoinAmount {
+        var balance = BitcoinAmount(satoshis: 0)
+        for address in self.addresses {
+            balance = balance + address.getBalance()
+        }
+        return balance
+    }
     func setAddresses(addresses: [BitcoinAddress], start: Int) {
         for address in addresses {
             self.addresses.append(address)

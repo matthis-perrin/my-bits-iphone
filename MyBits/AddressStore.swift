@@ -59,4 +59,8 @@ class AccountAddress {
         return self.bitcoinAddress
     }
 
+    func getBalance() -> BitcoinAmount {
+        return self.bitcoinAddress.getBalance()
+    }
+
 }

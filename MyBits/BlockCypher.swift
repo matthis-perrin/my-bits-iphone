@@ -20,7 +20,7 @@ struct BlockCypher {
                             TransactionStore.addTransaction(tx)
                         }
                     } catch let error as NSError {
-                        NSLog("Error while parsing transactions for address \(forAddress.value): \(error.description). Received: \(data).")
+                        NSLog("Error while parsing transactions for address \(forAddress.value): \(error.description). Received: \(String(data: data, encoding: NSUTF8StringEncoding)).")
                     }
                 } else {
                     NSLog("No data or error received.")

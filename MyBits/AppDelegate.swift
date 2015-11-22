@@ -14,12 +14,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
         class TestViewController: AllTransactionsProtocol, XpubProtocol {
+            let testAccountXpub: AccountXpub
             init(testAccountXpub: AccountXpub) {
+                self.testAccountXpub = testAccountXpub
                 TransactionStore.register(self)
                 XpubStore.register(self, forXpub: testAccountXpub)
             }
             func transactionReceived(tx: BitcoinTx) {
                 print("Transaction \(tx.hash) received!")
+                print("Xpub balance: \(self.testAccountXpub.getBalance())")
+                for address in self.testAccountXpub.getAddresses() {
+                    let balance = address.getBalance()
+                    if balance.getSatoshiAmount() > 0 {
+                        print("\(address): \(address.getBalance())")
+                    }
+                }
             }
             func xpubReceivedNewAddress(xpub: AccountXpub, newAccountAddress: BitcoinAddress) {
                 print("Xpub got \(newAccountAddress)")

@@ -77,7 +77,7 @@ struct Server {
                         }
                         accountXpub.setAddresses(addresses, start: start)
                     } catch let error as NSError {
-                        NSLog("Error while parsing addresses generated for an xpub: \(error.description). Received: \(data).")
+                        NSLog("Error while parsing addresses generated for an xpub: \(error.description). Received: \(String(data: data, encoding: NSUTF8StringEncoding)).")
                     }
                 } else {
                     NSLog("No data or error received.")
