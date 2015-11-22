@@ -23,7 +23,7 @@ struct BlockCypher {
                         NSLog("Error while parsing transactions for address \(forAddress.value): \(error.description). Received: \(data).")
                     }
                 } else {
-                    NSLog("Not data or error received.")
+                    NSLog("No data or error received.")
                 }
             }
             task.resume()

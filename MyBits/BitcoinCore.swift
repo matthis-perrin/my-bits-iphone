@@ -20,6 +20,24 @@ func ==(left: BitcoinAddress, right: BitcoinAddress) -> Bool {
     return left.value == right.value
 }
 
+class MasterPublicKey: CustomStringConvertible, Hashable {
+    var value: String
+    init(value: String = "") {
+        self.value = value
+    }
+    var description: String {
+        return "MasterPublicKey(\(self.value))"
+    }
+    var hashValue: Int {
+        get {
+            return value.hashValue
+        }
+    }
+}
+func ==(left: MasterPublicKey, right: MasterPublicKey) -> Bool {
+    return left.value == right.value
+}
+
 class BlockHash: CustomStringConvertible, Equatable {
     var value: String
     init(value: String = "") {

@@ -1,5 +1,9 @@
 import Foundation
 
+enum AccountStoreException: ErrorType {
+    case AddressAlreadyInAccount
+}
+
 protocol AccountProtocol: class {
 
     func accountReceivedNewTransaction(account: Account, newTransaction: BitcoinTx)
@@ -105,10 +109,6 @@ class AccountId: Hashable {
 }
 func ==(left: AccountId, right: AccountId) -> Bool {
     return left.value == right.value
-}
-
-enum AccountStoreException: ErrorType {
-    case AddressAlreadyInAccount
 }
 
 class Account {

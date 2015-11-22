@@ -52,7 +52,6 @@ class TransactionStore {
                         delegate.transactionDidUpdate(tx)
                     }
                 }
-                AccountStore.triggerNewTransactionReceived(tx)
             }
         }
         else {
@@ -61,26 +60,7 @@ class TransactionStore {
             for delegate in TransactionStore.globalDelegates {
                 delegate.transactionReceived(tx)
             }
-            // Extract the different involved addresses and store weither they are present
-            // in the inputs, the outputs or both
-            var addresses = [BitcoinAddress: (Bool, Bool)]()
-            for input in tx.inputs {
-                for address in input.sourceAddresses {
-                    addresses[address] = (true, false)
-                }
-            }
-            for output in tx.outputs {
-                for address in output.destinationAddresses {
-                    if let inputOutputInfo = addresses[address] {
-                        addresses[address] = (inputOutputInfo.0, true)
-                    } else {
-                        addresses[address] = (false, true)
-                    }
-                }
-            }
-            for (address, inputOutputInfo) in addresses {
-                AddressStore.triggerNewTransactionReceived(tx, forAddress: address, inInputs: inputOutputInfo.0, inOutputs: inputOutputInfo.1)
-            }
+            AccountStore.triggerNewTransactionReceived(tx)
         }
     }
 

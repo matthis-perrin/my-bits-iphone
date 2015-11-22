@@ -59,6 +59,36 @@ func _postRequest(url: String, _ data: NSDictionary = NSDictionary(), _ callback
 
 struct Server {
 
+    static func generateAddresses(accountXpub: AccountXpub, start: Int, count: Int) {
+        let url = API_BASE_URL + "/bitcoin/xpub?xpub=\(accountXpub.getMasterPublicKey().value)&start=\(start)&count=\(count)"
+        let session = NSURLSession.sharedSession()
+
+        if let url = NSURL(string: url) {
+            let task = session.dataTaskWithURL(url) { (data, response, error) -> Void in
+                if let error = error {
+                    NSLog("Error while generating addresses for an xpub: \(error.description).")
+                    return
+                } else if let data = data {
+                    do {
+                        let data = try NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers ) as! [String]
+                        var addresses = [BitcoinAddress]()
+                        for addressString in data {
+                            addresses.append(BitcoinAddress(value: addressString))
+                        }
+                        accountXpub.setAddresses(addresses, start: start)
+                    } catch let error as NSError {
+                        NSLog("Error while parsing addresses generated for an xpub: \(error.description). Received: \(data).")
+                    }
+                } else {
+                    NSLog("No data or error received.")
+                }
+            }
+            task.resume()
+        } else {
+            NSLog("Couldn't build url while generating addresses for an xpub: \(url)")
+        }
+    }
+
     static func registerUser(callback: (String?, NSError?) -> Void) {
         let url = API_BASE_URL + "/user/register"
         _postRequest(url) { json, error in

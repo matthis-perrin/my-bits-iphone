@@ -61,6 +61,21 @@ class BitcoinTx: CustomStringConvertible, Equatable {
             }))
     }
 
+    func getInvolvedAddresses() -> [BitcoinAddress] {
+        var addresses = [BitcoinAddress]()
+        for input in self.inputs {
+            for address in input.sourceAddresses {
+                addresses.append(address)
+            }
+        }
+        for output in self.outputs {
+            for address in output.destinationAddresses {
+                addresses.append(address)
+            }
+        }
+        return addresses
+    }
+
     var description: String {
         var strings = [String]()
         strings.append("Block Hash: \(self.blockHash.description)")

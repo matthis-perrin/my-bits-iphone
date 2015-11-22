@@ -16,7 +16,7 @@ class TransactionFetcher {
         }
     }
 
-    func fetchAll() {
+    @objc func fetchAll() {
         let addresses = AddressManager.getAddresses()
         for address in addresses {
             TransactionFetcher.fetchOne(address)

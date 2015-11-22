@@ -13,15 +13,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
 
 
-        class TestViewController: AllTransactionsProtocol {
-            init() {
+        class TestViewController: AllTransactionsProtocol, XpubProtocol {
+            init(testAccountXpub: AccountXpub) {
                 TransactionStore.register(self)
+                XpubStore.register(self, forXpub: testAccountXpub)
             }
             func transactionReceived(tx: BitcoinTx) {
                 print("Transaction \(tx.hash) received!")
             }
+            func xpubReceivedNewAddress(xpub: AccountXpub, newAccountAddress: BitcoinAddress) {
+                print("Xpub got \(newAccountAddress)")
+            }
         }
-        let _ = TestViewController()
+        let testAccountXpub = AccountXpub(masterPublicKey: MasterPublicKey(value: "xpub661MyMwAqRbcEyn2XMrDPKF1vED2METavwTu647wiHQWqKVgsoexph3vV4crHp31ciGUKWB1ZrARFHZyxbEq88XXYcvzgo6mGcgzHScxBZk"))
+        let _ = TestViewController(testAccountXpub: testAccountXpub)
 
         do {
             let testAccount = Account(accountName: "Test Account")
