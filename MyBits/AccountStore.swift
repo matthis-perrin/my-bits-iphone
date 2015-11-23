@@ -4,9 +4,12 @@ enum AccountStoreException: ErrorType {
     case AddressAlreadyInAccount, XpubAlreadyInAccount
 }
 
+protocol MultiAccountProtocol: class {
+    func userReceivedNewTransaction(newTx: BitcoinTx, inputs: [TxIO], outputs: [TxIO])
+}
+
 protocol AccountProtocol: class {
 
-    func accountReceivedNewTransaction(account: Account, newTransaction: BitcoinTx)
     func accountReceivedNewAddress(account: Account, newAccountAddress: AccountAddress)
     func accountReceivedNewXpub(account: Account, newAccountXpub: AccountXpub)
 
@@ -14,7 +17,8 @@ protocol AccountProtocol: class {
 
 class AccountStore {
 
-    private static var delegates = [AccountId: [AccountProtocol]]()
+    private static var accountDelegates = [AccountId: [AccountProtocol]]()
+    private static var multiAccountDelegates = [MultiAccountProtocol]()
     private static var accounts = [Account]()
 
     static func initialize() throws {
@@ -39,17 +43,27 @@ class AccountStore {
         }
     }
 
+    static func register(delegate: MultiAccountProtocol) {
+        self.multiAccountDelegates.append(delegate)
+    }
+
     static func register(delegate: AccountProtocol, forAccount: Account) {
-        if var delegatesForAccount = AccountStore.delegates[forAccount.accountId] {
+        if var delegatesForAccount = AccountStore.accountDelegates[forAccount.accountId] {
             delegatesForAccount.append(delegate)
         } else {
-            AccountStore.delegates[forAccount.accountId] = [delegate]
+            AccountStore.accountDelegates[forAccount.accountId] = [delegate]
         }
     }
 
+    static func unregister(delegate: MultiAccountProtocol) {
+        AccountStore.multiAccountDelegates = AccountStore.multiAccountDelegates.filter({ d in
+            return d !== delegate
+        })
+    }
+
     static func unregister(delegate: AccountProtocol) {
-        for (accountId, delegates) in AccountStore.delegates {
-            AccountStore.delegates[accountId] = delegates.filter({ d in
+        for (accountId, delegates) in AccountStore.accountDelegates {
+            AccountStore.accountDelegates[accountId] = delegates.filter({ d in
                 return d !== delegate
             })
         }
@@ -73,7 +87,7 @@ class AccountStore {
             try DB.insertBitcoinAddress(accountAddress.getBitcoinAddress(), account: account)
         }
         AddressManager.rebuildAddressPool()
-        if let delegates = AccountStore.delegates[account.getId()] {
+        if let delegates = AccountStore.accountDelegates[account.getId()] {
             for delegate in delegates {
                 delegate.accountReceivedNewAddress(account, newAccountAddress: accountAddress)
             }
@@ -86,7 +100,7 @@ class AccountStore {
             try DB.insertMasterPublicKey(accountXpub.getMasterPublicKey(), account: account)
         }
         AddressManager.rebuildAddressPool()
-        if let delegates = AccountStore.delegates[account.getId()] {
+        if let delegates = AccountStore.accountDelegates[account.getId()] {
             for delegate in delegates {
                 delegate.accountReceivedNewXpub(account, newAccountXpub: accountXpub)
             }
@@ -97,49 +111,61 @@ class AccountStore {
     // new transaction received. We do this manually instead of using the
     // AllTransactionsProtocol because the class is static.
     static func triggerNewTransactionReceived(tx: BitcoinTx) {
-        var accountsToNotify = [Account]()
-        for account in AccountStore.accounts {
-            var addresses = [BitcoinAddress]()
-            for input in tx.inputs {
-                for address in input.sourceAddresses {
-                    addresses.append(address)
-                }
-            }
-            for output in tx.outputs {
-                for address in output.destinationAddresses {
-                    addresses.append(address)
-                }
-            }
-            var found = false
-            for address in account.getAddresses() {
-                if addresses.contains(address.getBitcoinAddress()) {
-                    accountsToNotify.append(account)
-                    found = true
-                    break
+        var inputIO = [TxIO]()
+        var outputIO = [TxIO]()
+
+        // Look into `account` for the address `bitcoinAddress` and generate a TxIO
+        func getTxIO (account: Account, bitcoinAddress: BitcoinAddress, amount: BitcoinAmount) -> TxIO? {
+            for aAddress in account.getAddresses() {
+                if bitcoinAddress == aAddress.getBitcoinAddress() {
+                    return AccountAddressTxIO(account: account, accountAddress: aAddress, amount: amount)
                 }
             }
             for xpub in account.getXpubs() {
-                if found {
-                    break
-                }
-                for address in xpub.getAddresses() {
-                    if addresses.contains(address) {
-                        accountsToNotify.append(account)
-                        found = true
-                        break
+                for xAddress in xpub.getAddresses() {
+                    if bitcoinAddress == xAddress {
+                        return AccountXpubTxIO(account: account, accountXpub: xpub, address: xAddress, amount: amount)
                     }
                 }
             }
         }
 
-        for accountToNotify in accountsToNotify {
-            if let delegates = AccountStore.delegates[accountToNotify.accountId] {
-                for delegate in delegates {
-                    delegate.accountReceivedNewTransaction(accountToNotify, newTransaction: tx)
+        // Generates all the TxIO for this transaction
+        for account in AccountStore.accounts {
+            for input in tx.inputs {
+                var found = false
+                for address in input.sourceAddresses {
+                    if let txIO = getTxIO(account, bitcoinAddress: address, amount: input.linkedOutputValue) {
+                        inputIO.append(txIO)
+                        found = true
+                        break
+                    }
+                }
+                if !found {
+                    if let address = input.sourceAddresses.first {
+                        inputIO.append(ExternalAddressTxIO(amount: input.linkedOutputValue, address: address))
+                    }
+                }
+            }
+            for output in tx.outputs {
+                var found = false
+                for address in output.destinationAddresses {
+                    if let txIO = getTxIO(account, bitcoinAddress: address, amount: output.value) {
+                        outputIO.append(txIO)
+                        found = true
+                        break
+                    }
+                }
+                if !found {
+                    if let address = output.destinationAddresses.first {
+                        inputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
+                    }
                 }
             }
         }
-
+        for delegate in self.multiAccountDelegates {
+            delegate.userReceivedNewTransaction(tx, inputs: inputIO, outputs: outputIO)
+        }
     }
 
 }
