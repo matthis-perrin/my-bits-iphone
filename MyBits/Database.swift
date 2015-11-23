@@ -33,32 +33,39 @@ class DB {
         }
 
         // SQL queries logs
-        db.trace { x in print(x) }
+//        db.trace { x in print(x + "\n") }
 
-        // Creating accounts table
-        try! db.run(self.accounts.create(ifNotExists: true) { t in
-            t.column(self.accountId, primaryKey: true)
-            t.column(self.accountName)
-            })
-        //        try! db.run(self.accounts.createIndex([self.accountId], unique: false, ifNotExists: true))
+        do {
+            // Creating accounts table
+            try db.run(self.accounts.create(ifNotExists: true) { t in
+                t.column(self.accountId, primaryKey: true)
+                t.column(self.accountName)
+                })
+            try db.run(self.accounts.createIndex([self.accountId], unique: true, ifNotExists: true))
 
-        // Creating master public keys table
-        try! db.run(self.masterPublicKeys.create(ifNotExists: true) { t in
-            t.column(self.masterPublicKeyId, primaryKey: true)
-            t.column(self.masterPublicKeyValue)
-            t.column(self.masterPublicKeyAccountId, references: self.accounts, self.accountId)
-            })
+            // Creating master public keys table
+            try db.run(self.masterPublicKeys.create(ifNotExists: true) { t in
+                t.column(self.masterPublicKeyId, primaryKey: true)
+                t.column(self.masterPublicKeyValue)
+                t.column(self.masterPublicKeyAccountId, references: self.accounts, self.accountId)
+                })
+            try db.run(self.masterPublicKeys.createIndex([self.masterPublicKeyAccountId], unique: true, ifNotExists: true))
 
-        // Creating bitcoin addresses table
-        try! db.run(self.bitcoinAddresses.create(ifNotExists: true) { t in
-            t.column(self.bitcoinAddressId, primaryKey: true)
-            t.column(self.bitcoinAddressValue)
-            t.column(self.self.bitcoinAddressAccountId, references: self.accounts, self.accountId)
-            t.column(self.self.bitcoinAddressMasterPublicKeyId, references: self.masterPublicKeys, self.masterPublicKeyId)
-            })
-
-        // Initialize stores
-        try! AccountStore.initialize()
+            // Creating bitcoin addresses table
+            try db.run(self.bitcoinAddresses.create(ifNotExists: true) { t in
+                t.column(self.bitcoinAddressId, primaryKey: true)
+                t.column(self.bitcoinAddressValue)
+                t.column(self.self.bitcoinAddressAccountId, references: self.accounts, self.accountId)
+                t.column(self.self.bitcoinAddressMasterPublicKeyId, references: self.masterPublicKeys, self.masterPublicKeyId)
+                })
+            try db.run(self.bitcoinAddresses.createIndex([self.bitcoinAddressAccountId], unique: false, ifNotExists: true))
+            try db.run(self.bitcoinAddresses.createIndex([self.bitcoinAddressMasterPublicKeyId], unique: false, ifNotExists: true))
+            
+            // Initialize stores
+            try AccountStore.initialize()
+        } catch let e {
+            print("DATABASE INIT ERROR: \(e)")
+        }
     }
 
     static func getAccounts() -> [Account] {
@@ -77,7 +84,12 @@ class DB {
             return []
         }
         var res = [MasterPublicKey]()
-        for row in db.prepare(self.masterPublicKeys.select(self.masterPublicKeys[self.masterPublicKeyId], self.masterPublicKeyValue).join(self.accounts, on: self.masterPublicKeyAccountId == self.accounts[self.accountId])) {
+        let rows = db.prepare(
+            self.masterPublicKeys
+                .select(self.masterPublicKeyId, self.masterPublicKeyValue)
+                .filter(self.masterPublicKeyAccountId == account.getId().value)
+        )
+        for row in rows {
             res.append(MasterPublicKey(masterPublicKeyId: MasterPublicKeyId(value: row[self.masterPublicKeyId]), value: row[self.masterPublicKeyValue]))
         }
         return res
@@ -88,7 +100,12 @@ class DB {
             return []
         }
         var res = [BitcoinAddress]()
-        for row in db.prepare(self.bitcoinAddresses.select(self.bitcoinAddresses[self.bitcoinAddressId], self.bitcoinAddressValue).join(self.accounts, on: self.bitcoinAddressAccountId == self.accounts[self.accountId])) {
+        let rows = db.prepare(
+            self.bitcoinAddresses
+                .select(self.bitcoinAddressId, self.bitcoinAddressValue)
+                .filter(self.bitcoinAddressAccountId == account.getId().value)
+        )
+        for row in rows {
             res.append(BitcoinAddress(bitcoinAddressId: BitcoinAddressId(value: row[self.bitcoinAddressId]), value: row[self.bitcoinAddressValue]))
         }
         return res
@@ -99,7 +116,12 @@ class DB {
             return []
         }
         var res = [BitcoinAddress]()
-        for row in db.prepare(self.bitcoinAddresses.select(self.bitcoinAddresses[self.bitcoinAddressId], self.bitcoinAddresses[self.bitcoinAddressValue]).join(self.masterPublicKeys, on: self.bitcoinAddressMasterPublicKeyId == self.masterPublicKeys[self.masterPublicKeyId])) {
+        let rows = db.prepare(
+            self.bitcoinAddresses
+                .select(self.bitcoinAddressId, self.bitcoinAddressValue)
+                .filter(self.bitcoinAddressMasterPublicKeyId == masterPublicKey.masterPublicKeyId.value)
+        )
+        for row in rows {
             res.append(BitcoinAddress(bitcoinAddressId: BitcoinAddressId(value: row[self.bitcoinAddressId]), value: row[self.bitcoinAddressValue]))
         }
         return res

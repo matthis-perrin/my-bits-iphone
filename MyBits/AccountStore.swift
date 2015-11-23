@@ -36,9 +36,8 @@ class AccountStore {
         // Master Public Keys
         for account in accounts {
             for mpk in DB.getMasterPublicKeys(account) {
-                let accountXpub =  AccountXpub(masterPublicKey: mpk)
+                let accountXpub = AccountXpub(masterPublicKey: mpk, addresses: DB.getBitcoinAddresses(mpk))
                 try AccountStore.addXpub(account, accountXpub: accountXpub, saveToDisk: false)
-                accountXpub.setAddresses(DB.getBitcoinAddresses(mpk), start: 0)
             }
         }
     }

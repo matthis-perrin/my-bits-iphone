@@ -16,7 +16,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(animated: Bool) {
 
         // Tab 1 - Accounts
-        self.accountsController = MainNavigationController(rootViewController: AccountsTableViewController())
+        self.accountsController = MainNavigationController(rootViewController: AccountsViewController())
         let accountsTitle = NSLocalizedString("accounts", comment: "Tab bar menu to the accounts screen where the user manages his accounts.")
         let accountIcon = UIImage(named: "TabBar_Accounts")
         let accountsTabBarItem = UITabBarItem(title: accountsTitle, image: accountIcon, selectedImage: accountIcon)

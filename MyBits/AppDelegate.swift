@@ -17,41 +17,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ///////////////////////////////////////////
         ///////////////////////////////////////////
         ///////////////////////////////////////////
-
-        class TestViewController: AllTransactionsProtocol, XpubProtocol {
-            let testAccountXpub: AccountXpub
-            init(testAccountXpub: AccountXpub) {
-                self.testAccountXpub = testAccountXpub
-                TransactionStore.register(self)
-                XpubStore.register(self, forXpub: testAccountXpub)
-            }
-            func transactionReceived(tx: BitcoinTx) {
-                print("Transaction \(tx.hash) received!")
-                print("Xpub balance: \(self.testAccountXpub.getBalance())")
-                for address in self.testAccountXpub.getAddresses() {
-                    let balance = address.getBalance()
-                    if balance.getSatoshiAmount() > 0 {
-                        print("\(address): \(address.getBalance())")
-                    }
-                }
-            }
-            func xpubReceivedNewAddress(xpub: AccountXpub, newAccountAddress: BitcoinAddress) {
-                print("Xpub got \(newAccountAddress)")
-            }
-        }
-        let testAccountXpub = AccountXpub(masterPublicKey: MasterPublicKey(value: "xpub6DJzLL3834dPK7zDAjTEWj6vYziA4Yu2t6VhARMudW8d1jkCGF58yUrkug7MVQQB7iNCCAhBKmPGZYZVf3MmTaunA7iCZXkHC5vdUnDvyxY"))
-        let _ = TestViewController(testAccountXpub: testAccountXpub)
-
-        do {
-            let testAccount = Account(accountName: "Test Account")
-            let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "1GDdV6DdaBq3mH1GjG1SQM9DsJZ3U1DVoV"))
-            try AccountStore.addAccount(testAccount)
-            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
-            try AccountStore.addXpub(testAccount, accountXpub: testAccountXpub)
-            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress) // Should error
-        } catch let e {
-            print("Error: \(e)")
-        }
+//        class TestViewController: AllTransactionsProtocol, XpubProtocol {
+//            let testAccountXpub: AccountXpub
+//            init(testAccountXpub: AccountXpub) {
+//                self.testAccountXpub = testAccountXpub
+//                TransactionStore.register(self)
+//                XpubStore.register(self, forXpub: testAccountXpub)
+//            }
+//            func transactionReceived(tx: BitcoinTx) {
+//                print("Transaction \(tx.hash) received!")
+//                print("Xpub balance: \(self.testAccountXpub.getBalance())")
+//                for address in self.testAccountXpub.getAddresses() {
+//                    let balance = address.getBalance()
+//                    if balance.getSatoshiAmount() > 0 {
+//                        print("\(address): \(address.getBalance())")
+//                    }
+//                }
+//            }
+//            func xpubReceivedNewAddress(xpub: AccountXpub, newAccountAddress: BitcoinAddress) {
+//                print("Xpub got \(newAccountAddress)")
+//            }
+//        }
+//        let testAccountXpub = AccountXpub(masterPublicKey: MasterPublicKey(value: "xpub6DJzLL3834dPK7zDAjTEWj6vYziA4Yu2t6VhARMudW8d1jkCGF58yUrkug7MVQQB7iNCCAhBKmPGZYZVf3MmTaunA7iCZXkHC5vdUnDvyxY"))
+//        let _ = TestViewController(testAccountXpub: testAccountXpub)
+//
+//        do {
+//            let testAccount = Account(accountName: "Test Account")
+//            let testAccountAddress = AccountAddress(bitcoinAddress: BitcoinAddress(value: "1GDdV6DdaBq3mH1GjG1SQM9DsJZ3U1DVoV"))
+//            try AccountStore.addAccount(testAccount)
+//            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress)
+//            try AccountStore.addXpub(testAccount, accountXpub: testAccountXpub)
+//            try AccountStore.addAddress(testAccount, accountAddress: testAccountAddress) // Should error
+//        } catch let e {
+//            print("Error: \(e)")
+//        }
         ///////////////////////////////////////////
         ///////////////////////////////////////////
         ///////////////////////////////////////////

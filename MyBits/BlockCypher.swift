@@ -13,11 +13,13 @@ struct BlockCypher {
                     return
                 } else if let data = data {
                     do {
-                        let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers ) as! NSDictionary
-                        let txsJson = jsonData["txs"] as! [NSDictionary]
-                        for txJson in txsJson {
-                            let tx: BitcoinTx = BitcoinTx.loadFromJson(txJson)
-                            TransactionStore.addTransaction(tx)
+                        if let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+                            if let txsJson = jsonData["txs"] as? [NSDictionary] {
+                                for txJson in txsJson {
+                                    let tx: BitcoinTx = BitcoinTx.loadFromJson(txJson)
+                                    TransactionStore.addTransaction(tx)
+                                }
+                            }
                         }
                     } catch let error as NSError {
                         NSLog("Error while parsing transactions for address \(forAddress.value): \(error.description). Received: \(String(data: data, encoding: NSUTF8StringEncoding)).")

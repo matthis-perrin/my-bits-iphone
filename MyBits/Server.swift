@@ -75,7 +75,7 @@ struct Server {
                         for addressString in data {
                             addresses.append(BitcoinAddress(value: addressString))
                         }
-                        accountXpub.setAddresses(addresses, start: start)
+                        try accountXpub.setAddresses(addresses, start: start)
                     } catch let error as NSError {
                         NSLog("Error while parsing addresses generated for an xpub: \(error.description). Received: \(String(data: data, encoding: NSUTF8StringEncoding)).")
                     }

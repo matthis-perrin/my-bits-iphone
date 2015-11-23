@@ -61,8 +61,7 @@ class TransactionStore {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // This is a new transaction
             TransactionStore.transactions[tx.hash] = tx
             for delegate in TransactionStore.globalDelegates {

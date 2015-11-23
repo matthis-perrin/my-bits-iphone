@@ -1,8 +1,6 @@
 import UIKit
 
-class AccountsTableViewController : UITableViewController {
-
-    private var accounts = [Account]()
+class AccountsViewController : UITableViewController, AllTransactionsProtocol {
 
     convenience init() {
         self.init(style: .Grouped)
@@ -18,8 +16,15 @@ class AccountsTableViewController : UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
 
-        self.accounts = AccountStore.getAccounts()
+        TransactionStore.unregister(self)
+        TransactionStore.register(self)
         self.tableView.reloadData()
+    }
+
+    func transactionReceived(tx: BitcoinTx) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
     }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -28,7 +33,7 @@ class AccountsTableViewController : UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return self.accounts.count
+            return AccountStore.getAccounts().count
         }
         return 1
     }
@@ -58,26 +63,29 @@ class AccountsTableViewController : UITableViewController {
         }
 
         // Name
-        let account = self.accounts[indexPath.row];
+        let account = AccountStore.getAccounts()[indexPath.row];
         cell!.textLabel?.text = account.getName()
 
         // Amount
         cell!.viewWithTag(1)?.removeFromSuperview()
         let currencyView = UICurrencyLabel(fromBtcAmount: account.getBalance())
         currencyView.textAlignment = .Right
-        currencyView.frame = CGRectMake(200, 0, 80, 80)
+        currencyView.frame = CGRectMake(0, 0, self.tableView.frame.size.width - 40, 80)
         currencyView.tag = 1
         cell!.addSubview(currencyView)
 
-        return cell!;
+        return cell!
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var nextViewController: UIViewController
         if indexPath.section == 1 {
-            self.navigationController?.pushViewController(NewAccountViewController(), animated: true)
-            return
+            nextViewController = NewAccountViewController()
+        } else {
+            nextViewController = AccountDetailsViewController(account: AccountStore.getAccounts()[indexPath.row])
         }
+        self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
 }
