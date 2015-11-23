@@ -14,9 +14,8 @@ class TransactionsListViewController: UIViewController {
     }
 
     func createComponents() {
-        let bitcoinBalance = 3.14
         self.testButton = UIButton(type: UIButtonType.RoundedRect)
-        self.testBalanceLabel = UICurrencyLabel(fromBitcoin: bitcoinBalance, displayCurrency: .Bitcoin)
+        self.testBalanceLabel = UICurrencyLabel(fromBtcAmount: BitcoinAmount(satoshis: 10))
         self.view.addSubview(self.testBalanceLabel);
         self.view.addSubview(self.testButton);
     }

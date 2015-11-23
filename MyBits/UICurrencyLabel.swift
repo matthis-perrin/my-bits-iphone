@@ -92,6 +92,9 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
             numberFormatter.locale = NSLocale.currentLocale()
             numberFormatter.currencyCode = currency
             numberFormatter.numberStyle = .CurrencyStyle
+            if currency == "BTC" {
+                numberFormatter.maximumFractionDigits = 8
+            }
             let amountString = numberFormatter.stringFromNumber(amount)
 
             if let amountString = amountString {

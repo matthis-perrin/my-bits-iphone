@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ///////////////////////////////////////////
         ///////////////////////////////////////////
         ///////////////////////////////////////////
+
         class TestViewController: AllTransactionsProtocol, XpubProtocol {
             let testAccountXpub: AccountXpub
             init(testAccountXpub: AccountXpub) {

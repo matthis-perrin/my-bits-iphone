@@ -128,6 +128,7 @@ class AccountStore {
                     }
                 }
             }
+            return nil
         }
 
         // Generates all the TxIO for this transaction
