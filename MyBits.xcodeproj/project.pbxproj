@@ -33,6 +33,7 @@
 		2DC3DC981C0153E80098A467 /* XpubStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3DC971C0153E80098A467 /* XpubStore.swift */; };
 		2DC4945E1BF2F169005E4C6B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC4945D1BF2F169005E4C6B /* LocalData.swift */; };
 		2DC85E131C0410D700952345 /* BitcoinTxInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC85E121C0410D700952345 /* BitcoinTxInfo.swift */; };
+		2DC85E151C04163F00952345 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC85E141C04163F00952345 /* TransactionViewController.swift */; };
 		2DCF40041BF98E6300C92CDF /* btc-symbol-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
@@ -75,6 +76,7 @@
 		2DC3DC971C0153E80098A467 /* XpubStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XpubStore.swift; sourceTree = "<group>"; };
 		2DC4945D1BF2F169005E4C6B /* LocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
 		2DC85E121C0410D700952345 /* BitcoinTxInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTxInfo.swift; sourceTree = "<group>"; };
+		2DC85E141C04163F00952345 /* TransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "btc-symbol-regular.ttf"; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */,
+				2DC85E141C04163F00952345 /* TransactionViewController.swift */,
 			);
 			name = Transactions;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */,
 				B55723061C024F1400B5A56B /* Database.swift in Sources */,
 				2DC4945E1BF2F169005E4C6B /* LocalData.swift in Sources */,
+				2DC85E151C04163F00952345 /* TransactionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
