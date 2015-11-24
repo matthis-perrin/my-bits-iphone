@@ -67,7 +67,6 @@ class TransactionStore {
             for delegate in TransactionStore.globalDelegates {
                 delegate.transactionReceived(tx)
             }
-            AccountStore.triggerNewTransactionReceived(tx)
         }
     }
 

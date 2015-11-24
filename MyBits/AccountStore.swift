@@ -106,68 +106,6 @@ class AccountStore {
         }
     }
 
-    // This method is called manually by the TransactionStore for each
-    // new transaction received. We do this manually instead of using the
-    // AllTransactionsProtocol because the class is static.
-    static func triggerNewTransactionReceived(tx: BitcoinTx) {
-        var inputIO = [TxIO]()
-        var outputIO = [TxIO]()
-
-        // Look into `account` for the address `bitcoinAddress` and generate a TxIO
-        func getTxIO (account: Account, bitcoinAddress: BitcoinAddress, amount: BitcoinAmount) -> TxIO? {
-            for aAddress in account.getAddresses() {
-                if bitcoinAddress == aAddress.getBitcoinAddress() {
-                    return AccountAddressTxIO(account: account, accountAddress: aAddress, amount: amount)
-                }
-            }
-            for xpub in account.getXpubs() {
-                for xAddress in xpub.getAddresses() {
-                    if bitcoinAddress == xAddress {
-                        return AccountXpubTxIO(account: account, accountXpub: xpub, address: xAddress, amount: amount)
-                    }
-                }
-            }
-            return nil
-        }
-
-        // Generates all the TxIO for this transaction
-        for account in AccountStore.accounts {
-            for input in tx.inputs {
-                var found = false
-                for address in input.sourceAddresses {
-                    if let txIO = getTxIO(account, bitcoinAddress: address, amount: input.linkedOutputValue) {
-                        inputIO.append(txIO)
-                        found = true
-                        break
-                    }
-                }
-                if !found {
-                    if let address = input.sourceAddresses.first {
-                        inputIO.append(ExternalAddressTxIO(amount: input.linkedOutputValue, address: address))
-                    }
-                }
-            }
-            for output in tx.outputs {
-                var found = false
-                for address in output.destinationAddresses {
-                    if let txIO = getTxIO(account, bitcoinAddress: address, amount: output.value) {
-                        outputIO.append(txIO)
-                        found = true
-                        break
-                    }
-                }
-                if !found {
-                    if let address = output.destinationAddresses.first {
-                        inputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
-                    }
-                }
-            }
-        }
-        for delegate in self.multiAccountDelegates {
-            delegate.userReceivedNewTransaction(tx, inputs: inputIO, outputs: outputIO)
-        }
-    }
-
 }
 
 
