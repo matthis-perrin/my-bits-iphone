@@ -4,10 +4,6 @@ enum AccountStoreException: ErrorType {
     case AddressAlreadyInAccount, XpubAlreadyInAccount
 }
 
-protocol MultiAccountProtocol: class {
-    func userReceivedNewTransaction(newTx: BitcoinTx, inputs: [TxIO], outputs: [TxIO])
-}
-
 protocol AccountProtocol: class {
 
     func accountReceivedNewAddress(account: Account, newAccountAddress: AccountAddress)
@@ -18,7 +14,6 @@ protocol AccountProtocol: class {
 class AccountStore {
 
     private static var accountDelegates = [AccountId: [AccountProtocol]]()
-    private static var multiAccountDelegates = [MultiAccountProtocol]()
     private static var accounts = [Account]()
 
     static func initialize() throws {
@@ -42,22 +37,12 @@ class AccountStore {
         }
     }
 
-    static func register(delegate: MultiAccountProtocol) {
-        self.multiAccountDelegates.append(delegate)
-    }
-
     static func register(delegate: AccountProtocol, forAccount: Account) {
         if var delegatesForAccount = AccountStore.accountDelegates[forAccount.accountId] {
             delegatesForAccount.append(delegate)
         } else {
             AccountStore.accountDelegates[forAccount.accountId] = [delegate]
         }
-    }
-
-    static func unregister(delegate: MultiAccountProtocol) {
-        AccountStore.multiAccountDelegates = AccountStore.multiAccountDelegates.filter({ d in
-            return d !== delegate
-        })
     }
 
     static func unregister(delegate: AccountProtocol) {
