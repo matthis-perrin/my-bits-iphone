@@ -10,4 +10,19 @@ class BitcoinTxInfo {
         self.outputTxIO = outputTxIO
         self.involvedAccounts = involvedAccounts
     }
+
+    func getBalanceDelta() -> BitcoinAmount {
+        var balance = BitcoinAmount(satoshis: 0)
+        for input in self.inputTxIO {
+            if !(input is ExternalAddressTxIO) {
+                balance = balance - input.amount
+            }
+        }
+        for output in self.outputTxIO {
+            if !(output is ExternalAddressTxIO) {
+                balance = balance + output.amount
+            }
+        }
+        return balance
+    }
 }

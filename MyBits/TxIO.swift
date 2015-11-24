@@ -20,6 +20,13 @@ class AccountAddressTxIO: TxIO {
         self.accountAddress = accountAddress
         super.init(amount: amount, address: accountAddress.getBitcoinAddress())
     }
+
+    func getAccount() -> Account {
+        return self.account
+    }
+    func getAccountAddress() -> AccountAddress {
+        return self.accountAddress
+    }
 }
 
 class AccountXpubTxIO: TxIO {
@@ -30,5 +37,12 @@ class AccountXpubTxIO: TxIO {
         self.account = account
         self.accountXpub = accountXpub
         super.init(amount: amount, address: address)
+    }
+
+    func getAccount() -> Account {
+        return self.account
+    }
+    func getAccountXpub() -> AccountXpub {
+        return self.accountXpub
     }
 }

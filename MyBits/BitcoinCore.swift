@@ -35,6 +35,12 @@ class BitcoinAddress: CustomStringConvertible, Hashable {
         return balance
     }
 
+    var smallDescription: String {
+        return self.value.substringToIndex(self.value.startIndex.advancedBy(5)) +
+               "..." +
+               self.value.substringFromIndex(self.value.endIndex.advancedBy(-4))
+    }
+
     var description: String {
         return "BitcoinAddress(\(self.value))"
     }
