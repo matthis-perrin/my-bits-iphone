@@ -32,6 +32,7 @@
 		2DAB283A1C02BD9F00B46588 /* TxIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAB28391C02BD9F00B46588 /* TxIO.swift */; };
 		2DC3DC981C0153E80098A467 /* XpubStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3DC971C0153E80098A467 /* XpubStore.swift */; };
 		2DC4945E1BF2F169005E4C6B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC4945D1BF2F169005E4C6B /* LocalData.swift */; };
+		2DC85E131C0410D700952345 /* BitcoinTxInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC85E121C0410D700952345 /* BitcoinTxInfo.swift */; };
 		2DCF40041BF98E6300C92CDF /* btc-symbol-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */; };
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		2DAB28391C02BD9F00B46588 /* TxIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxIO.swift; sourceTree = "<group>"; };
 		2DC3DC971C0153E80098A467 /* XpubStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XpubStore.swift; sourceTree = "<group>"; };
 		2DC4945D1BF2F169005E4C6B /* LocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
+		2DC85E121C0410D700952345 /* BitcoinTxInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTxInfo.swift; sourceTree = "<group>"; };
 		2DCF40031BF98E6300C92CDF /* btc-symbol-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "btc-symbol-regular.ttf"; sourceTree = "<group>"; };
 		2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -136,10 +138,11 @@
 				2D5558E31BFC0695001FD68E /* BitcoinAmount.swift */,
 				2D5558E51BFC0AC4001FD68E /* BitcoinCore.swift */,
 				2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */,
+				2DC85E121C0410D700952345 /* BitcoinTxInfo.swift */,
+				2DAB28391C02BD9F00B46588 /* TxIO.swift */,
 				2D5558E91BFC0D5F001FD68E /* TxInput.swift */,
 				2D5558EB1BFC1117001FD68E /* TxOutput.swift */,
 				B55723071C02719B00B5A56B /* Common.swift */,
-				2DAB28391C02BD9F00B46588 /* TxIO.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */,
 				2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */,
 				2D5558E61BFC0AC4001FD68E /* BitcoinCore.swift in Sources */,
+				2DC85E131C0410D700952345 /* BitcoinTxInfo.swift in Sources */,
 				2D4B6F461BFF4025007672AD /* AddressManager.swift in Sources */,
 				B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */,
 				2D067B901BE6FAB400C959A9 /* PriceStore.swift in Sources */,

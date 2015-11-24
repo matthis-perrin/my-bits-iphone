@@ -76,9 +76,11 @@ class BitcoinTx: CustomStringConvertible, Equatable {
         return addresses
     }
 
-    func getIO() -> [String: [TxIO]] {
+    func getInfo() -> BitcoinTxInfo {
         var inputIO = [TxIO]()
         var outputIO = [TxIO]()
+        var involvedAccounts = [Account]()
+        var accountsSeen = [AccountId: Bool]()
 
         // Look into `account` for the address `bitcoinAddress` and generate a TxIO
         func getTxIO (account: Account, bitcoinAddress: BitcoinAddress, amount: BitcoinAmount) -> TxIO? {
@@ -104,6 +106,9 @@ class BitcoinTx: CustomStringConvertible, Equatable {
                 for address in input.sourceAddresses {
                     if let txIO = getTxIO(account, bitcoinAddress: address, amount: input.linkedOutputValue) {
                         inputIO.append(txIO)
+                        if accountsSeen.updateValue(true, forKey: account.getId()) == nil {
+                            involvedAccounts.append(account)
+                        }
                         found = true
                         break
                     }
@@ -119,6 +124,9 @@ class BitcoinTx: CustomStringConvertible, Equatable {
                 for address in output.destinationAddresses {
                     if let txIO = getTxIO(account, bitcoinAddress: address, amount: output.value) {
                         outputIO.append(txIO)
+                        if accountsSeen.updateValue(true, forKey: account.getId()) == nil {
+                            involvedAccounts.append(account)
+                        }
                         found = true
                         break
                     }
@@ -130,7 +138,7 @@ class BitcoinTx: CustomStringConvertible, Equatable {
                 }
             }
         }
-        return ["input": inputIO, "output": outputIO]
+        return BitcoinTxInfo(inputTxIO: inputIO, outputTxIO: outputIO, involvedAccounts: involvedAccounts)
     }
 
     var description: String {
