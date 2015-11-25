@@ -2,12 +2,12 @@ import Foundation
 
 class BitcoinTx: CustomStringConvertible, Equatable {
 
-    let blockHash: BlockHash
+    let blockHash: BlockHash?
     let blockHeight: BlockHeight
     let hash: TxHash
     let fees: TxFee
     let size: TxSize
-    let confirmationTime: TxConfirmationTime
+    let confirmationTime: TxConfirmationTime?
     let receptionTime: TxReceptionTime
     let lockTime: TxLockTime
     let isDoubleSpent: Bool
@@ -15,12 +15,12 @@ class BitcoinTx: CustomStringConvertible, Equatable {
     let inputs: [TxInput]
     let outputs: [TxOutput]
 
-    init(blockHash: BlockHash = BlockHash(),
+    init(blockHash: BlockHash? = nil,
          blockHeight: BlockHeight = BlockHeight(),
          hash: TxHash = TxHash(),
          fees: TxFee = TxFee(),
          size: TxSize = TxSize(),
-         confirmationTime: TxConfirmationTime = TxConfirmationTime(),
+         confirmationTime: TxConfirmationTime? = nil,
          receptionTime: TxReceptionTime = TxReceptionTime(),
          lockTime: TxLockTime = TxLockTime(),
          isDoubleSpent: Bool = false,
@@ -43,13 +43,27 @@ class BitcoinTx: CustomStringConvertible, Equatable {
     }
 
     static func loadFromJson(json: NSDictionary) -> BitcoinTx {
+        var blockHash: BlockHash? = nil
+        if let blockHashString = json["block_hash"] {
+            if blockHashString is String {
+                blockHash = BlockHash(value: blockHashString as! String)
+            }
+        }
+
+        var confirmationTime: TxConfirmationTime? = nil
+        if let confirmationTimeString = json["block_hash"] {
+            if confirmationTimeString is String {
+                confirmationTime = TxConfirmationTime(value: confirmationTimeString as! String)
+            }
+        }
+
         return BitcoinTx(
-            blockHash: BlockHash(value: json["block_hash"] as! String),
+            blockHash: blockHash,
             blockHeight: BlockHeight(value: json["block_height"] as! Int),
             hash: TxHash(value: json["hash"] as! String),
             fees: TxFee(satoshis: json["fees"] as! Int),
             size: TxSize(value: json["size"] as! Int),
-            confirmationTime: TxConfirmationTime(value: json["confirmed"] as! String),
+            confirmationTime: confirmationTime,
             receptionTime: TxReceptionTime(value: json["received"] as! String),
             lockTime: TxLockTime(value: json["lock_time"] as! Int),
             isDoubleSpent: json["double_spend"] as! Bool,
@@ -143,12 +157,12 @@ class BitcoinTx: CustomStringConvertible, Equatable {
 
     var description: String {
         var strings = [String]()
-        strings.append("Block Hash: \(self.blockHash.description)")
+        strings.append("Block Hash: \(self.blockHash?.description)")
         strings.append("Block Height: \(self.blockHeight.description)")
         strings.append("Hash: \(self.hash.description)")
         strings.append("Fees: \(self.fees.description)")
         strings.append("Size: \(self.size.description)")
-        strings.append("Confirmation Time: \(self.confirmationTime.description)")
+        strings.append("Confirmation Time: \(self.confirmationTime?.description)")
         strings.append("Reception Time: \(self.receptionTime.description)")
         strings.append("Lock Time: \(self.lockTime.description)")
         strings.append("Double Spent: \(self.isDoubleSpent ? "true" : "false")")
