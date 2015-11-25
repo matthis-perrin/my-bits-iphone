@@ -26,7 +26,7 @@ class DB {
 
     static func initialize() {
         // Creating database connection
-//        try! NSFileManager().removeItemAtPath("\(self.path)/db.sqlite3")
+//        do { try NSFileManager().removeItemAtPath("\(self.path)/db.sqlite3") } catch {}
         self.conn = try! Connection("\(self.path)/db.sqlite3")
         guard let db = self.conn else {
             return

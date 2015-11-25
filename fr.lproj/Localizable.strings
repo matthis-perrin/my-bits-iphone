@@ -6,3 +6,8 @@
 "new account" = "Nouveau Compte";
 "create new account" = "Créer Nouveau Compte";
 "create new account description" = "Un compte contient une(des) adresse(s) publique(s)";
+
+// Transaction view
+"confirmation.zero" = "Non confirmée";
+"confirmation.one" = "1 confirmation";
+"confirmation.several" = "%@ confirmations";

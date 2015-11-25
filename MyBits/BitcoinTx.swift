@@ -56,7 +56,6 @@ class BitcoinTx: CustomStringConvertible, Equatable {
                 confirmationTime = TxConfirmationTime(value: confirmationTimeString as! String)
             }
         }
-
         return BitcoinTx(
             blockHash: blockHash,
             blockHeight: BlockHeight(value: json["block_height"] as! Int),
@@ -67,6 +66,7 @@ class BitcoinTx: CustomStringConvertible, Equatable {
             receptionTime: TxReceptionTime(value: json["received"] as! String),
             lockTime: TxLockTime(value: json["lock_time"] as! Int),
             isDoubleSpent: json["double_spend"] as! Bool,
+            confirmations: TxConfirmations(value: json["confirmations"] as! Int),
             inputs: (json["inputs"] as! [NSDictionary]).map({ inputJson in
                 return TxInput.loadFromJson(inputJson)
             }),

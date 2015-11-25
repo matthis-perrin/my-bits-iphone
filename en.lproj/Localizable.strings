@@ -6,3 +6,8 @@
 "new account" = "New Account";
 "create new account" = "Create New Account";
 "create new account description" = "An account contains public addresse(s)";
+
+// Transaction view
+"confirmation.zero" = "Unconfirmed";
+"confirmation.one" = "1 confirmation";
+"confirmation.several" = "%@ confirmations";
