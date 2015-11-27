@@ -155,6 +155,10 @@ class BitcoinTx: CustomStringConvertible, Equatable {
         return BitcoinTxInfo(inputTxIO: inputIO, outputTxIO: outputIO, involvedAccounts: involvedAccounts)
     }
 
+    var isConfirmed: Bool {
+        return self.confirmations.value > 0
+    }
+
     var description: String {
         var strings = [String]()
         strings.append("Block Hash: \(self.blockHash?.description)")

@@ -14,6 +14,8 @@ class TransactionViewController: UIViewController {
     let GREEN_TEXT_COLOR: UIColor = UIColor(red: 0, green: 150 / 255.0, blue: 136 / 255.0, alpha: 1.0)
     let RED_TEXT_COLOR: UIColor = UIColor(red: 1.0, green: 87 / 255.0, blue: 34 / 255.0, alpha: 1.0)
 
+    let CONFIRMATION_ICON_LABEL_GAP: CGFloat = 3.0
+
     var tx: BitcoinTx
     var txInfo: BitcoinTxInfo
 
@@ -24,6 +26,7 @@ class TransactionViewController: UIViewController {
 
     var titleLabel: UILabel!
     var subtitleLabels: [UILabel]!
+    var confirmationIcon: UIImageView!
     var confirmationLabel: UILabel!
     var amountLabel: UILabel!
     var dateLabel: UILabel!
@@ -110,6 +113,13 @@ class TransactionViewController: UIViewController {
         self.amountLabel.translatesAutoresizingMaskIntoConstraints = false
         self.amountLabel.backgroundColor = BACKGROUND_COLOR
         self.amountView.addSubview(amountLabel)
+
+        // Confirmation icon
+        self.confirmationIcon = UIImageView(image: UIImage(named: self.tx.isConfirmed ? "Transaction_Check" : "Transaction_Clock"))
+        self.confirmationIcon.translatesAutoresizingMaskIntoConstraints = false
+        self.confirmationIcon.backgroundColor = BACKGROUND_COLOR
+        self.confirmationIcon.tintColor = LIGHT_TEXT_COLOR
+        self.bottomView.addSubview(self.confirmationIcon)
 
         // Confirmation label
         var confirmationText = ""
@@ -283,6 +293,38 @@ class TransactionViewController: UIViewController {
             toItem: self.amountView, attribute: .Left,
             multiplier: 1.0, constant: 0))
 
+        // Confirmation icon
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationIcon, attribute: .Top,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Top,
+            multiplier: 1.0, constant: PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationIcon, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.confirmationLabel, attribute: .Left,
+            multiplier: 1.0, constant: -CONFIRMATION_ICON_LABEL_GAP))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationIcon, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Bottom,
+            multiplier: 1.0, constant: -SMALL_PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationIcon, attribute: .Left,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Left,
+            multiplier: 1.0, constant: PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationIcon, attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil, attribute: .Width,
+            multiplier: 1.0, constant: self.tx.isConfirmed ? 9.0 : 11.0))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationIcon, attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil, attribute: .Height,
+            multiplier: 1.0, constant: self.tx.isConfirmed ? 11.0 : 13.0))
+
         // Confirmation label
         constraints.append(NSLayoutConstraint(
             item: self.confirmationLabel, attribute: .Top,
@@ -299,11 +341,6 @@ class TransactionViewController: UIViewController {
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
             multiplier: 1.0, constant: -SMALL_PADDING))
-        constraints.append(NSLayoutConstraint(
-            item: self.confirmationLabel, attribute: .Left,
-            relatedBy: .Equal,
-            toItem: self.bottomView, attribute: .Left,
-            multiplier: 1.0, constant: PADDING))
 
         // Date label
         constraints.append(NSLayoutConstraint(
