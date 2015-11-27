@@ -144,6 +144,12 @@ class TxTime: CustomStringConvertible, Equatable {
         "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
         "yyyy-MM-dd'T'HH:mm:ss'Z'",
     ]
+    private static let dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .MediumStyle
+        return formatter
+    }()
     init() {
         self.value = NSDate()
     }
@@ -165,6 +171,9 @@ class TxTime: CustomStringConvertible, Equatable {
             self.value = NSDate()
             NSLog("Received invalid date \(value)")
         }
+    }
+    var userFriendlyDescription: String {
+        return TxTime.dateFormatter.stringFromDate(self.value)
     }
     var description: String {
         return "TxTime(\(self.value))"

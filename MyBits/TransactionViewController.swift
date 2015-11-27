@@ -132,7 +132,7 @@ class TransactionViewController: UIViewController {
 
         // Date label
         self.dateLabel = UILabel(frame: CGRectZero)
-        self.dateLabel.text = tx.receptionTime.value.description
+        self.dateLabel.text = tx.receptionTime.userFriendlyDescription
         self.dateLabel.textAlignment = .Right
         self.dateLabel.font = UIFont(name: self.dateLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
         self.dateLabel.textColor = LIGHT_TEXT_COLOR
