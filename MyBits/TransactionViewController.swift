@@ -3,42 +3,35 @@ import UIKit
 
 class TransactionViewController: UIViewController {
 
-    let PADDING: CGFloat = 10.0
-    let CONFIRMATION_FONT_SIZE: CGFloat = 11.0
+    let PADDING: CGFloat = 18.0
+    let SMALL_PADDING: CGFloat = 5.0
+
+    let BIG_TEXT_FONT_SIZE: CGFloat = 16.0
+    let SMALL_TEXT_FONT_SIZE: CGFloat = 10.0
+
+    let DARK_TEXT_COLOR: UIColor = UIColor(white: 51.0 / 255.0, alpha: 1.0)
+    let LIGHT_TEXT_COLOR: UIColor = UIColor(white: 155.0 / 255.0, alpha: 1.0)
+    let GREEN_TEXT_COLOR: UIColor = UIColor(red: 0, green: 150 / 255.0, blue: 136 / 255.0, alpha: 1.0)
+    let RED_TEXT_COLOR: UIColor = UIColor(red: 1.0, green: 87 / 255.0, blue: 34 / 255.0, alpha: 1.0)
 
     var tx: BitcoinTx
     var txInfo: BitcoinTxInfo
 
-    // Left part of the view.
-    // Handles displaying the confirmation level of the transaction.
-    var leftView: UIView!
+    var titleView: UIView!
+    var subtitleView: UIView!
+    var amountView: UIView!
+    var bottomView: UIView!
 
-    // Left part subviews.
+    var titleLabel: UILabel!
+    var subtitleLabels: [UILabel]!
     var confirmationLabel: UILabel!
-
-
-    // Middle part of the view.
-    // Handles displaying the title and eventual subtitles for the transaction.
-    var middleView: UIView!
-
-
-    // Right part of the view.
-    // Handles displaying the transaction balance delta
-    var rightView: UIView!
-
-    // Right part subviews
-    var balanceDeltaLabel: UICurrencyLabel!
-
-//    var leftLabels: [UILabel]!
-//    var rightLabels: [UILabel]!
-//    var balanceDeltaLabel: UICurrencyLabel!
+    var amountLabel: UILabel!
+    var dateLabel: UILabel!
 
     init(tx: BitcoinTx) {
         self.tx = tx
         self.txInfo = tx.getInfo()
         super.init(nibName: nil, bundle: nil)
-//        self.leftLabels = [UILabel]()
-//        self.rightLabels = [UILabel]()
     }
 
     required convenience init(coder: NSCoder) {
@@ -52,11 +45,71 @@ class TransactionViewController: UIViewController {
     }
 
     func createComponents() {
-        // Left view
-        self.leftView = UIView(frame: CGRectZero)
-        self.leftView.translatesAutoresizingMaskIntoConstraints = false
-//        self.leftView.layer.borderWidth = 1.0
-        self.view.addSubview(leftView)
+
+        let balanceDelta = self.txInfo.getBalanceDelta()
+
+//        let BORDER_WIDTH: CGFloat = 1.0
+        let BORDER_WIDTH: CGFloat = 0.0
+//        let BACKGROUND_COLOR: UIColor = UIColor.redColor()
+        let BACKGROUND_COLOR: UIColor = UIColor(white: 1, alpha: 0)
+
+        // Title view
+        self.titleView = UIView(frame: CGRectZero)
+        self.titleView.translatesAutoresizingMaskIntoConstraints = false
+        self.titleView.layer.borderWidth = BORDER_WIDTH
+        self.view.addSubview(self.titleView)
+
+        // Subtitle view
+        self.subtitleView = UIView(frame: CGRectZero)
+        self.subtitleView.translatesAutoresizingMaskIntoConstraints = false
+        self.subtitleView.layer.borderWidth = BORDER_WIDTH
+        self.view.addSubview(self.subtitleView)
+
+        // Amount view
+        self.amountView = UIView(frame: CGRectZero)
+        self.amountView.translatesAutoresizingMaskIntoConstraints = false
+        self.amountView.layer.borderWidth = BORDER_WIDTH
+        self.view.addSubview(self.amountView)
+
+        // Bottom view
+        self.bottomView = UIView(frame: CGRectZero)
+        self.bottomView.translatesAutoresizingMaskIntoConstraints = false
+        self.bottomView.layer.borderWidth = BORDER_WIDTH
+        self.view.addSubview(self.bottomView)
+
+
+        // Title label
+        self.titleLabel = UILabel(frame: CGRectZero)
+        self.titleLabel.text = balanceDelta > 0 ? "Bitcoin received" : "Bitcoin sent"
+        self.titleLabel.textAlignment = .Left
+        self.titleLabel.font = UIFont(name: self.titleLabel.font!.fontName, size: BIG_TEXT_FONT_SIZE)
+        self.titleLabel.textColor = DARK_TEXT_COLOR
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.titleLabel.backgroundColor = BACKGROUND_COLOR
+        self.titleView.addSubview(self.titleLabel)
+
+        // Subtitle labels
+        self.subtitleLabels = [UILabel]()
+        let subtitleLabel1 = UILabel(frame: CGRectZero)
+        subtitleLabel1.text = "Subtitle - coming soon"
+        subtitleLabel1.textAlignment = .Left
+        subtitleLabel1.font = UIFont(name: subtitleLabel1.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
+        subtitleLabel1.textColor = DARK_TEXT_COLOR
+        subtitleLabel1.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel1.backgroundColor = BACKGROUND_COLOR
+        self.subtitleLabels.append(subtitleLabel1)
+        for subtitle in self.subtitleLabels {
+            self.subtitleView.addSubview(subtitle)
+        }
+
+        // Amount label
+        self.amountLabel = UICurrencyLabel(fromBtcAmount: balanceDelta)
+        self.amountLabel.textAlignment = .Right
+        self.amountLabel.font = UIFont(name: self.amountLabel.font!.fontName, size: BIG_TEXT_FONT_SIZE)
+        self.amountLabel.textColor = balanceDelta > 0 ? GREEN_TEXT_COLOR : balanceDelta < 0 ? RED_TEXT_COLOR : DARK_TEXT_COLOR
+        self.amountLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.amountLabel.backgroundColor = BACKGROUND_COLOR
+        self.amountView.addSubview(amountLabel)
 
         // Confirmation label
         var confirmationText = ""
@@ -66,268 +119,208 @@ class TransactionViewController: UIViewController {
             confirmationText = NSLocalizedString("confirmation.one", comment: "Number of confirmation (1) of the transaction")
         } else {
             let confirmationCount = self.tx.confirmations.value > 99 ? "99+" : self.tx.confirmations.value.description
-            print(confirmationCount)
             confirmationText = String(format: NSLocalizedString("confirmation.several", comment: "Number of confirmation (>1) of the transaction"), arguments: [confirmationCount])
         }
         self.confirmationLabel = UILabel(frame: CGRectZero)
         self.confirmationLabel.text = confirmationText
-        self.confirmationLabel.textAlignment = .Center
-        self.confirmationLabel.font = UIFont(name: self.confirmationLabel.font!.fontName, size: CONFIRMATION_FONT_SIZE)
+        self.confirmationLabel.textAlignment = .Left
+        self.confirmationLabel.font = UIFont(name: self.confirmationLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
+        self.confirmationLabel.textColor = LIGHT_TEXT_COLOR
         self.confirmationLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.leftView.addSubview(self.confirmationLabel)
+        self.confirmationLabel.backgroundColor = BACKGROUND_COLOR
+        self.bottomView.addSubview(self.confirmationLabel)
 
-        // Middle view
-        self.middleView = UIView(frame: CGRectZero)
-        self.middleView.translatesAutoresizingMaskIntoConstraints = false
-//        self.middleView.layer.borderWidth = 1.0
-        self.view.addSubview(middleView)
+        // Date label
+        self.dateLabel = UILabel(frame: CGRectZero)
+        self.dateLabel.text = tx.receptionTime.value.description
+        self.dateLabel.textAlignment = .Right
+        self.dateLabel.font = UIFont(name: self.dateLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
+        self.dateLabel.textColor = LIGHT_TEXT_COLOR
+        self.dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.dateLabel.backgroundColor = BACKGROUND_COLOR
+        self.bottomView.addSubview(self.dateLabel)
 
-        // Right view
-        self.rightView = UIView(frame: CGRectZero)
-        self.rightView.translatesAutoresizingMaskIntoConstraints = false
-//        self.rightView.layer.borderWidth = 1.0
-        self.view.addSubview(rightView)
-
-        self.balanceDeltaLabel = UICurrencyLabel(fromBtcAmount: self.txInfo.getBalanceDelta())
-        self.balanceDeltaLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.rightView.addSubview(balanceDeltaLabel)
-
-
-//        let fromLabel = UILabel(frame: CGRectZero)
-//        fromLabel.text = "From:"
-//        fromLabel.font = UIFont(name: fromLabel.font.familyName, size: 14.0)!
-//        leftLabels.append(fromLabel)
-//        self.view.addSubview(fromLabel)
-//
-//        let toLabel = UILabel(frame: CGRectZero)
-//        toLabel.text = "To:"
-//        toLabel.font = UIFont(name: toLabel.font.familyName, size: 14.0)!
-//        rightLabels.append(toLabel)
-//        self.view.addSubview(toLabel)
-//
-//        func txIOToLabel(txIO: TxIO) -> UILabel {
-//            let currencyLabel = UICurrencyLabel(fromBtcAmount: txIO.amount)
-//            if (txIO is ExternalAddressTxIO) {
-//                currencyLabel.setPrefix("External (\(txIO.address.smallDescription)) - ")
-//            } else if (txIO is AccountAddressTxIO) {
-//                currencyLabel.setPrefix("\((txIO as! AccountAddressTxIO).getAccount().getName()) (\(txIO.address.smallDescription)) - ")
-//            } else if (txIO is AccountXpubTxIO) {
-//                currencyLabel.setPrefix("\((txIO as! AccountXpubTxIO).getAccount().getName()) (\(txIO.address.smallDescription)) - ")
-//            }
-//            return currencyLabel
-//        }
-//
-//        for txIO in self.txInfo.inputTxIO {
-//            let label = txIOToLabel(txIO)
-//            label.font = UIFont(name: label.font.familyName, size: 12.0)!
-//            self.leftLabels.append(label)
-//            self.view.addSubview(label)
-//        }
-//        for txIO in self.txInfo.outputTxIO {
-//            let label = txIOToLabel(txIO)
-//            label.font = UIFont(name: label.font.familyName, size: 12.0)!
-//            self.rightLabels.append(label)
-//            self.view.addSubview(label)
-//        }
-//
-//        let balanceDelta = txInfo.getBalanceDelta()
-//        self.balanceDeltaLabel = UICurrencyLabel(fromBtcAmount: balanceDelta)
-//        self.view.addSubview(self.balanceDeltaLabel)
     }
 
     func layoutComponents() {
         var constraints:[NSLayoutConstraint] = []
 
-        // Left view
+        // Title view
         constraints.append(NSLayoutConstraint(
-            item: self.leftView, attribute: .CenterY,
+            item: self.titleView, attribute: .Top,
             relatedBy: .Equal,
-            toItem: self.view, attribute: .CenterY,
+            toItem: self.view, attribute: .Top,
             multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint(
-            item: self.leftView, attribute: .Left,
+            item: self.titleView, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.amountView, attribute: .Left,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.titleView, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.subtitleView, attribute: .Top,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.titleView, attribute: .Left,
             relatedBy: .Equal,
             toItem: self.view, attribute: .Left,
-            multiplier: 1.0, constant: PADDING))
-
-        // Confirmation label
-        constraints.append(NSLayoutConstraint(
-            item: self.confirmationLabel, attribute: .Bottom,
-            relatedBy: .Equal,
-            toItem: self.leftView, attribute: .Bottom,
-            multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint(
-            item: self.confirmationLabel, attribute: .Top,
-            relatedBy: .Equal,
-            toItem: self.leftView, attribute: .Top,
-            multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint(
-            item: self.confirmationLabel, attribute: .Left,
-            relatedBy: .Equal,
-            toItem: self.leftView, attribute: .Left,
-            multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint(
-            item: self.confirmationLabel, attribute: .Right,
-            relatedBy: .Equal,
-            toItem: self.leftView, attribute: .Right,
             multiplier: 1.0, constant: 0))
 
-        // Middle view
+        // Subtitle view
         constraints.append(NSLayoutConstraint(
-            item: self.middleView, attribute: .Top,
+            item: self.subtitleView, attribute: .Right,
             relatedBy: .Equal,
-            toItem: self.view, attribute: .Top,
+            toItem: self.amountView, attribute: .Left,
             multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint(
-            item: self.middleView, attribute: .Bottom,
+            item: self.subtitleView, attribute: .Bottom,
             relatedBy: .Equal,
-            toItem: self.view, attribute: .Bottom,
+            toItem: self.bottomView, attribute: .Top,
             multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint(
-            item: self.middleView, attribute: .Left,
+            item: self.subtitleView, attribute: .Left,
             relatedBy: .Equal,
-            toItem: self.leftView, attribute: .Right,
-            multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint(
-            item: self.middleView, attribute: .Right,
-            relatedBy: .Equal,
-            toItem: self.rightView, attribute: .Left,
+            toItem: self.view, attribute: .Left,
             multiplier: 1.0, constant: 0))
 
-        // Right view
+        // Amount view
         constraints.append(NSLayoutConstraint(
-            item: self.rightView, attribute: .Top,
+            item: self.amountView, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.view, attribute: .Top,
             multiplier: 1.0, constant: PADDING))
         constraints.append(NSLayoutConstraint(
-            item: self.rightView, attribute: .Bottom,
-            relatedBy: .Equal,
-            toItem: self.view, attribute: .Bottom,
-            multiplier: 1.0, constant: -PADDING))
-        constraints.append(NSLayoutConstraint(
-            item: self.rightView, attribute: .Right,
+            item: self.amountView, attribute: .Right,
             relatedBy: .Equal,
             toItem: self.view, attribute: .Right,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.amountView, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Top,
+            multiplier: 1.0, constant: 0))
+
+        // Bottom view
+        constraints.append(NSLayoutConstraint(
+            item: self.bottomView, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.view, attribute: .Right,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.bottomView, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.view, attribute: .Bottom,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.bottomView, attribute: .Left,
+            relatedBy: .Equal,
+            toItem: self.view, attribute: .Left,
+            multiplier: 1.0, constant: 0))
+
+        // Title label
+        constraints.append(NSLayoutConstraint(
+            item: self.titleLabel, attribute: .Top,
+            relatedBy: .Equal,
+            toItem: self.titleView, attribute: .Top,
+            multiplier: 1.0, constant: PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.titleLabel, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.titleView, attribute: .Right,
             multiplier: 1.0, constant: -PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.titleLabel, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.titleView, attribute: .Bottom,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.titleLabel, attribute: .Left,
+            relatedBy: .Equal,
+            toItem: self.titleView, attribute: .Left,
+            multiplier: 1.0, constant: PADDING))
 
-        // Balance delta
-        constraints.append(NSLayoutConstraint(
-            item: self.balanceDeltaLabel, attribute: .Left,
-            relatedBy: .Equal,
-            toItem: self.rightView, attribute: .Left,
-            multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint(
-            item: self.balanceDeltaLabel, attribute: .Right,
-            relatedBy: .Equal,
-            toItem: self.rightView, attribute: .Right,
-            multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint(
-            item: self.balanceDeltaLabel, attribute: .CenterY,
-            relatedBy: .Equal,
-            toItem: self.rightView, attribute: .CenterY,
-            multiplier: 1.0, constant: 0))
-
-        // Main view
-        for view in [self.leftView, self.middleView, self.rightView] {
-            print(view)
+        // Subtitle labels
+        for (index, subtitleLabel) in self.subtitleLabels.enumerate() {
+            let previous = index == 0 ? self.subtitleView : self.subtitleLabels[index - 1]
+            let next = index == self.subtitleLabels.count - 1 ? self.bottomView : self.subtitleLabels[index + 1]
             constraints.append(NSLayoutConstraint(
-                item: self.view, attribute: .Bottom,
-                relatedBy: .GreaterThanOrEqual,
-                toItem: view, attribute: .Bottom,
+                item: subtitleLabel, attribute: .Top,
+                relatedBy: .Equal,
+                toItem: previous, attribute: .Top,
+                multiplier: 1.0, constant: SMALL_PADDING))
+            constraints.append(NSLayoutConstraint(
+                item: subtitleLabel, attribute: .Right,
+                relatedBy: .Equal,
+                toItem: self.subtitleView, attribute: .Right,
+                multiplier: 1.0, constant: -PADDING))
+            constraints.append(NSLayoutConstraint(
+                item: subtitleLabel, attribute: .Bottom,
+                relatedBy: .Equal,
+                toItem: next, attribute: .Top,
+                multiplier: 1.0, constant: 0))
+            constraints.append(NSLayoutConstraint(
+                item: subtitleLabel, attribute: .Left,
+                relatedBy: .Equal,
+                toItem: self.subtitleView, attribute: .Left,
                 multiplier: 1.0, constant: PADDING))
         }
 
+        // Amount label
+        constraints.append(NSLayoutConstraint(
+            item: self.amountLabel, attribute: .CenterY,
+            relatedBy: .Equal,
+            toItem: self.amountView, attribute: .CenterY,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.amountLabel, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.amountView, attribute: .Right,
+            multiplier: 1.0, constant: -PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.amountLabel, attribute: .Left,
+            relatedBy: .Equal,
+            toItem: self.amountView, attribute: .Left,
+            multiplier: 1.0, constant: 0))
 
+        // Confirmation label
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationLabel, attribute: .Top,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Top,
+            multiplier: 1.0, constant: PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationLabel, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.dateLabel, attribute: .Left,
+            multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationLabel, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Bottom,
+            multiplier: 1.0, constant: -SMALL_PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.confirmationLabel, attribute: .Left,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Left,
+            multiplier: 1.0, constant: PADDING))
 
-//        // Left labels
-//        for (index, leftLabel) in self.leftLabels.enumerate() {
-//            if (index == 0) {
-//                constraints.append(NSLayoutConstraint(
-//                    item: leftLabel, attribute: .Top,
-//                    relatedBy: .Equal,
-//                    toItem: self.view, attribute: .Top,
-//                    multiplier: 1.0, constant: PADDING))
-//                constraints.append(NSLayoutConstraint(
-//                    item: leftLabel, attribute: .Left,
-//                    relatedBy: .Equal,
-//                    toItem: self.view, attribute: .Left,
-//                    multiplier: 1.0, constant: PADDING))
-//            } else {
-//                let previous = self.leftLabels[index - 1]
-//                constraints.append(NSLayoutConstraint(
-//                    item: leftLabel, attribute: .Top,
-//                    relatedBy: .Equal,
-//                    toItem: previous, attribute: .Bottom,
-//                    multiplier: 1.0, constant: 0.0))
-//                constraints.append(NSLayoutConstraint(
-//                    item: leftLabel, attribute: .Left,
-//                    relatedBy: .Equal,
-//                    toItem: self.leftLabels.first!, attribute: .Left,
-//                    multiplier: 1.0, constant: 10.0))
-//            }
-//            constraints.append(NSLayoutConstraint(
-//                item: leftLabel, attribute: .Height,
-//                relatedBy: .Equal,
-//                toItem: nil, attribute: .Height,
-//                multiplier: 1.0, constant: 20.0))
-//            leftLabel.translatesAutoresizingMaskIntoConstraints = false
-//        }
-//
-//        // Right labels
-//        for (index, rightLabel) in self.rightLabels.enumerate() {
-//            if (index == 0) {
-//                constraints.append(NSLayoutConstraint(
-//                    item: rightLabel, attribute: .Top,
-//                    relatedBy: .Equal,
-//                    toItem: self.leftLabels.last!, attribute: .Bottom,
-//                    multiplier: 1.0, constant: 0.0))
-//                constraints.append(NSLayoutConstraint(
-//                    item: rightLabel, attribute: .Left,
-//                    relatedBy: .Equal,
-//                    toItem: self.leftLabels.first!, attribute: .Left,
-//                    multiplier: 1.0, constant: 0.0))
-//            } else {
-//                let previous = self.rightLabels[index - 1]
-//                constraints.append(NSLayoutConstraint(
-//                    item: rightLabel, attribute: .Top,
-//                    relatedBy: .Equal,
-//                    toItem: previous, attribute: .Bottom,
-//                    multiplier: 1.0, constant: 0.0))
-//                constraints.append(NSLayoutConstraint(
-//                    item: rightLabel, attribute: .Left,
-//                    relatedBy: .Equal,
-//                    toItem: self.rightLabels.first!, attribute: .Left,
-//                    multiplier: 1.0, constant: 10.0))
-//            }
-//            constraints.append(NSLayoutConstraint(
-//                item: rightLabel, attribute: .Height,
-//                relatedBy: .Equal,
-//                toItem: nil, attribute: .Height,
-//                multiplier: 1.0, constant: 20.0))
-//            rightLabel.translatesAutoresizingMaskIntoConstraints = false
-//        }
-//
-//        // Balance Delta
-//        constraints.append(NSLayoutConstraint(
-//            item: self.balanceDeltaLabel, attribute: .Right,
-//            relatedBy: .Equal,
-//            toItem: self.view, attribute: .Right,
-//            multiplier: 1.0, constant: -PADDING))
-//        constraints.append(NSLayoutConstraint(
-//            item: self.balanceDeltaLabel, attribute: .CenterY,
-//            relatedBy: .Equal,
-//            toItem: self.view, attribute: .CenterY,
-//            multiplier: 1.0, constant: 0.0))
-//        self.balanceDeltaLabel.translatesAutoresizingMaskIntoConstraints = false
-//
-//        // View
-//        constraints.append(NSLayoutConstraint(
-//            item: self.view, attribute: .Bottom,
-//            relatedBy: .Equal,
-//            toItem: self.rightLabels.last!, attribute: .Bottom,
-//            multiplier: 1.0, constant: PADDING))
-
+        // Date label
+        constraints.append(NSLayoutConstraint(
+            item: self.dateLabel, attribute: .Top,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Top,
+            multiplier: 1.0, constant: PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.dateLabel, attribute: .Right,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Right,
+            multiplier: 1.0, constant: -PADDING))
+        constraints.append(NSLayoutConstraint(
+            item: self.dateLabel, attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.bottomView, attribute: .Bottom,
+            multiplier: 1.0, constant: -SMALL_PADDING))
 
         NSLayoutConstraint.activateConstraints(constraints)
     }

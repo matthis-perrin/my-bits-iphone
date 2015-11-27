@@ -70,3 +70,19 @@ func /(left: BitcoinAmount, right: BitcoinAmount) -> BitcoinAmount {
 func ==(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
     return left.satoshis == right.satoshis
 }
+
+func >(left: BitcoinAmount, right: Int) -> Bool {
+    return left.satoshis > right
+}
+
+func >(left: Int, right: BitcoinAmount) -> Bool {
+    return left > right.satoshis
+}
+
+func <(left: BitcoinAmount, right: Int) -> Bool {
+    return left.satoshis < right
+}
+
+func <(left: Int, right: BitcoinAmount) -> Bool {
+    return left < right.satoshis
+}
