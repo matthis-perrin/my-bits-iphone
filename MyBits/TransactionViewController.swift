@@ -6,8 +6,8 @@ class TransactionViewController: UIViewController {
     let PADDING: CGFloat = 18.0
     let SMALL_PADDING: CGFloat = 5.0
 
-    let BIG_TEXT_FONT_SIZE: CGFloat = 16.0
-    let SMALL_TEXT_FONT_SIZE: CGFloat = 10.0
+    let BIG_TEXT_FONT_SIZE: CGFloat = 17.0
+    let SMALL_TEXT_FONT_SIZE: CGFloat = 11.0
 
     let DARK_TEXT_COLOR: UIColor = UIColor(white: 51.0 / 255.0, alpha: 1.0)
     let LIGHT_TEXT_COLOR: UIColor = UIColor(white: 155.0 / 255.0, alpha: 1.0)
@@ -318,7 +318,7 @@ class TransactionViewController: UIViewController {
             item: self.confirmationIcon, attribute: .Width,
             relatedBy: .Equal,
             toItem: nil, attribute: .Width,
-            multiplier: 1.0, constant: self.tx.isConfirmed ? 9.0 : 11.0))
+            multiplier: 1.0, constant: self.tx.isConfirmed ? 11.0 : 13.0))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Height,
             relatedBy: .Equal,

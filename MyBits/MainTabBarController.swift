@@ -23,7 +23,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         self.accountsController?.tabBarItem = accountsTabBarItem
 
         // Tab 2 - Transactions
-        self.transactionsController = MainNavigationController(rootViewController: TransactionsListViewController())
+        self.transactionsController = MainNavigationController(rootViewController: TransactionTableViewController())
         let transactionsTitle = NSLocalizedString("transactions", comment: "Tab bar menu to the main screen where the bitcoin transactions are listed.")
         let transactionsIcon = UIImage(named: "TabBar_Transactions")
         let transactionsTabBarItem = UITabBarItem(title: transactionsTitle, image: transactionsIcon,

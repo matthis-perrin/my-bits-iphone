@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D067B7A1BE6756300C959A9 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B791BE6756300C959A9 /* MainTabBarController.swift */; };
 		2D067B7F1BE69C1D00C959A9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D067B811BE69C1D00C959A9 /* Localizable.strings */; };
-		2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */; };
+		2D067B891BE6C6DE00C959A9 /* TransactionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B881BE6C6DE00C959A9 /* TransactionTableViewController.swift */; };
 		2D067B8D1BE6DA4200C959A9 /* PrivacyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8C1BE6DA4200C959A9 /* PrivacyStore.swift */; };
 		2D067B901BE6FAB400C959A9 /* PriceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B8F1BE6FAB400C959A9 /* PriceStore.swift */; };
 		2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */; };
@@ -28,6 +28,7 @@
 		2D5558EE1BFC12EC001FD68E /* BitcoinTx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */; };
 		2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E5191BEFE7790045FA98 /* UserKeychain.swift */; };
 		2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E51C1BEFF4E50045FA98 /* Server.swift */; };
+		2D9AAC3F1C090883004C644A /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9AAC3E1C090883004C644A /* TransactionTableViewCell.swift */; };
 		2D9F6E301BFC29F200B93EA0 /* BlockCypher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9F6E2F1BFC29F200B93EA0 /* BlockCypher.swift */; };
 		2DAB283A1C02BD9F00B46588 /* TxIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAB28391C02BD9F00B46588 /* TxIO.swift */; };
 		2DC3DC981C0153E80098A467 /* XpubStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3DC971C0153E80098A467 /* XpubStore.swift */; };
@@ -52,7 +53,7 @@
 		2D067B791BE6756300C959A9 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		2D067B801BE69C1D00C959A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2D067B831BE69C3E00C959A9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsListViewController.swift; sourceTree = "<group>"; };
+		2D067B881BE6C6DE00C959A9 /* TransactionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewController.swift; sourceTree = "<group>"; };
 		2D067B8C1BE6DA4200C959A9 /* PrivacyStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyStore.swift; sourceTree = "<group>"; };
 		2D067B8F1BE6FAB400C959A9 /* PriceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceStore.swift; sourceTree = "<group>"; };
 		2D067B931BE6FF8A00C959A9 /* PriceFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceFetcher.swift; sourceTree = "<group>"; };
@@ -71,6 +72,7 @@
 		2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTx.swift; sourceTree = "<group>"; };
 		2D68E5191BEFE7790045FA98 /* UserKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserKeychain.swift; sourceTree = "<group>"; };
 		2D68E51C1BEFF4E50045FA98 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		2D9AAC3E1C090883004C644A /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		2D9F6E2F1BFC29F200B93EA0 /* BlockCypher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCypher.swift; sourceTree = "<group>"; };
 		2DAB28391C02BD9F00B46588 /* TxIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxIO.swift; sourceTree = "<group>"; };
 		2DC3DC971C0153E80098A467 /* XpubStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XpubStore.swift; sourceTree = "<group>"; };
@@ -109,8 +111,9 @@
 		2D067B841BE6C49800C959A9 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
-				2D067B881BE6C6DE00C959A9 /* TransactionsListViewController.swift */,
+				2D067B881BE6C6DE00C959A9 /* TransactionTableViewController.swift */,
 				2DC85E141C04163F00952345 /* TransactionViewController.swift */,
+				2D9AAC3E1C090883004C644A /* TransactionTableViewCell.swift */,
 			);
 			name = Transactions;
 			sourceTree = "<group>";
@@ -449,7 +452,7 @@
 			files = (
 				2D0839641BFEA90300EACD2A /* TransactionStore.swift in Sources */,
 				2D067B981BE7064100C959A9 /* PriceProviderProtocol.swift in Sources */,
-				2D067B891BE6C6DE00C959A9 /* TransactionsListViewController.swift in Sources */,
+				2D067B891BE6C6DE00C959A9 /* TransactionTableViewController.swift in Sources */,
 				2D5558E61BFC0AC4001FD68E /* BitcoinCore.swift in Sources */,
 				2DC85E131C0410D700952345 /* BitcoinTxInfo.swift in Sources */,
 				2D4B6F461BFF4025007672AD /* AddressManager.swift in Sources */,
@@ -465,6 +468,7 @@
 				2D4B6F421BFEBC8C007672AD /* AddressStore.swift in Sources */,
 				2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */,
 				2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */,
+				2D9AAC3F1C090883004C644A /* TransactionTableViewCell.swift in Sources */,
 				B58A0C721BFBDD850051C28F /* AccountsViewController.swift in Sources */,
 				2D9F6E301BFC29F200B93EA0 /* BlockCypher.swift in Sources */,
 				2D4B6F441BFECB5D007672AD /* AccountStore.swift in Sources */,
