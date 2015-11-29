@@ -42,7 +42,6 @@
 		32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B896E21C4F568C82550F056 /* Pods_MyBits.framework */; };
 		B55723061C024F1400B5A56B /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55723051C024F1400B5A56B /* Database.swift */; };
 		B55723081C02719B00B5A56B /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55723071C02719B00B5A56B /* Common.swift */; };
-		B557230A1C03BA4B00B5A56B /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55723091C03BA4B00B5A56B /* AccountDetailsViewController.swift */; };
 		B58A0C721BFBDD850051C28F /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C711BFBDD850051C28F /* AccountsViewController.swift */; };
 		B58A0C741BFBDECB0051C28F /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */; };
 		B58A0C761BFBEFBF0051C28F /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */; };
@@ -89,7 +88,6 @@
 		8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.debug.xcconfig"; sourceTree = "<group>"; };
 		B55723051C024F1400B5A56B /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B55723071C02719B00B5A56B /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
-		B55723091C03BA4B00B5A56B /* AccountDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewController.swift; sourceTree = "<group>"; };
 		B58A0C711BFBDD850051C28F /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		B58A0C731BFBDECB0051C28F /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 			children = (
 				B58A0C711BFBDD850051C28F /* AccountsViewController.swift */,
 				B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */,
-				B55723091C03BA4B00B5A56B /* AccountDetailsViewController.swift */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -476,7 +473,6 @@
 				2D5558EA1BFC0D5F001FD68E /* TxInput.swift in Sources */,
 				2D067B8D1BE6DA4200C959A9 /* PrivacyStore.swift in Sources */,
 				2D5558E41BFC0695001FD68E /* BitcoinAmount.swift in Sources */,
-				B557230A1C03BA4B00B5A56B /* AccountDetailsViewController.swift in Sources */,
 				2D067B941BE6FF8A00C959A9 /* PriceFetcher.swift in Sources */,
 				2D067B9B1BE706CF00C959A9 /* BitcoinAveragePriceProvider.swift in Sources */,
 				2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */,

@@ -83,7 +83,7 @@ class AccountsViewController : UITableViewController, AllTransactionsProtocol {
         if indexPath.section == 1 {
             nextViewController = NewAccountViewController()
         } else {
-            nextViewController = AccountDetailsViewController(account: AccountStore.getAccounts()[indexPath.row])
+            nextViewController = TransactionTableViewController(accounts: [AccountStore.getAccounts()[indexPath.row]])
         }
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }

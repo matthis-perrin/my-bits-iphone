@@ -52,7 +52,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             self.settingsController!,
             self.moreController!
         ]
-        self.selectedViewController = self.transactionsController!
+
     }
 
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {

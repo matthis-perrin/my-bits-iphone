@@ -26,32 +26,38 @@ class TransactionTableViewController: UITableViewController, AllTransactionsProt
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 150.0 // TODO - Put a real average size
+
+        self.reloadTxs()
+    }
+
+    private func reloadTxs() {
+        self.txs = TransactionStore.getTransactions()
+            .filter() { tx in
+                return self.accounts.isEmpty ||
+                    tx.getInfo().involvedAccounts.contains() { txAccount in
+                        return self.accounts.contains() { filteredAccount in
+                            return txAccount.getId() == filteredAccount.getId()
+                        }
+                }
+            }
+            .sort() { tx1, tx2 in
+                if tx1.blockHeight.value == tx2.blockHeight.value {
+                    return tx1.receptionTime.value.compare(tx2.receptionTime.value) == NSComparisonResult.OrderedAscending
+                } else {
+                    if tx1.blockHeight.value < 0 {
+                        return true
+                    } else if tx2.blockHeight.value < 0 {
+                        return false
+                    } else {
+                        return tx1.receptionTime.value.compare(tx2.receptionTime.value) == NSComparisonResult.OrderedDescending
+                    }
+                }
+            }
     }
 
     func transactionReceived(tx: BitcoinTx) {
         dispatch_async(dispatch_get_main_queue(), {
-            self.txs = TransactionStore.getTransactions()
-                .filter() { tx in
-                    return self.accounts.isEmpty ||
-                        tx.getInfo().involvedAccounts.contains() { txAccount in
-                            return self.accounts.contains() { filteredAccount in
-                                return txAccount.getId() == filteredAccount.getId()
-                            }
-                        }
-                }
-                .sort() { tx1, tx2 in
-                    if tx1.blockHeight.value == tx2.blockHeight.value {
-                        return tx1.receptionTime.value.compare(tx2.receptionTime.value) == NSComparisonResult.OrderedAscending
-                    } else {
-                        if tx1.blockHeight.value < 0 {
-                            return true
-                        } else if tx2.blockHeight.value < 0 {
-                            return false
-                        } else {
-                            return tx1.receptionTime.value.compare(tx2.receptionTime.value) == NSComparisonResult.OrderedDescending
-                        }
-                    }
-                }
+            self.reloadTxs()
             self.tableView.reloadData()
         })
     }

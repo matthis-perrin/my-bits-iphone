@@ -29,14 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
 
-//        do {
-//            let account = Account(accountName: "Test Account")
-//            try AccountStore.addAccount(account)
-//            try AccountStore.addAddress(account, accountAddress: AccountAddress(bitcoinAddress: BitcoinAddress(value: "1CRaxD5WfwaewzhVT3PHYB63hFzcgWrmLK")))
-//        } catch {
-//
-//        }
-
         return true
     }
 
