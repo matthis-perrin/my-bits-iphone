@@ -37,6 +37,10 @@ class TransactionTableViewCell: UITableViewCell {
         self.init(tx: BitcoinTx())
     }
 
+    func setTx(tx: BitcoinTx) {
+        self.transactionViewController.setTx(tx)
+    }
+
     static func reusableIdentifierFor(tx: BitcoinTx) -> String {
         // The only real change in the layout is the number of subtitles, so we
         // base the reusable identifier from that

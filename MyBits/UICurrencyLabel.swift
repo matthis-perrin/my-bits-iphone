@@ -144,6 +144,13 @@ class UICurrencyLabel: UILabel, PrivacyProtocol, PriceProtocol {
     // Public methods
     // --------------
 
+    func setAmount(amount: Double, amountCurrency: CurrencyType, displayCurrency: CurrencyType) {
+        self.amount = amount
+        self.amountCurrencyType = amountCurrency
+        self.displayCurrencyType = displayCurrency
+        self.updateText()
+    }
+
     func setRespectPrivacy(respectPrivacy: Bool) {
         self.respectPrivacy = respectPrivacy
         self.updateText()

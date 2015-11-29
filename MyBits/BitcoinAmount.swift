@@ -37,7 +37,7 @@ class BitcoinAmount: CustomStringConvertible, Equatable {
     }
 
     var description: String {
-        if self.getSatoshiAmount() < 100000 {
+        if abs(self.getSatoshiAmount()) < 100000 {
             let satoshString = BitcoinAmount.satoshiNumberFormater.stringFromNumber(self.getSatoshiAmount())!
             return "BitcoinAmount(\(satoshString) Satoshis)"
         } else {

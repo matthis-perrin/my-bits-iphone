@@ -38,7 +38,12 @@ class TransactionTableViewController: UITableViewController, AllTransactionsProt
                 }
             }
         }
-        let cell = TransactionTableViewCell(tx: sortedTxs[indexPath.row])
+        let tx = sortedTxs[indexPath.row]
+        if let cell = self.tableView.dequeueReusableCellWithIdentifier(TransactionTableViewCell.reusableIdentifierFor(tx)) as? TransactionTableViewCell {
+            cell.setTx(tx)
+            return cell
+        }
+        let cell = TransactionTableViewCell(tx: tx)
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
         cell.preservesSuperviewLayoutMargins = false

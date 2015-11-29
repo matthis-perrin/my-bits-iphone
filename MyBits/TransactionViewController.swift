@@ -17,7 +17,6 @@ class TransactionViewController: UIViewController {
     let CONFIRMATION_ICON_LABEL_GAP: CGFloat = 3.0
 
     var tx: BitcoinTx
-    var txInfo: BitcoinTxInfo
 
     var titleView: UIView!
     var subtitleView: UIView!
@@ -28,12 +27,11 @@ class TransactionViewController: UIViewController {
     var subtitleLabels: [UILabel]!
     var confirmationIcon: UIImageView!
     var confirmationLabel: UILabel!
-    var amountLabel: UILabel!
+    var amountLabel: UICurrencyLabel!
     var dateLabel: UILabel!
 
     init(tx: BitcoinTx) {
         self.tx = tx
-        self.txInfo = tx.getInfo()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -45,11 +43,10 @@ class TransactionViewController: UIViewController {
         super.viewDidLoad()
         self.createComponents()
         self.layoutComponents()
+        self.setTx(self.tx)
     }
 
     func createComponents() {
-
-        let balanceDelta = self.txInfo.getBalanceDelta()
 
 //        let BORDER_WIDTH: CGFloat = 1.0
         let BORDER_WIDTH: CGFloat = 0.0
@@ -83,7 +80,6 @@ class TransactionViewController: UIViewController {
 
         // Title label
         self.titleLabel = UILabel(frame: CGRectZero)
-        self.titleLabel.text = balanceDelta > 0 ? "Bitcoin received" : "Bitcoin sent"
         self.titleLabel.textAlignment = .Left
         self.titleLabel.font = UIFont(name: self.titleLabel.font!.fontName, size: BIG_TEXT_FONT_SIZE)
         self.titleLabel.textColor = DARK_TEXT_COLOR
@@ -106,33 +102,22 @@ class TransactionViewController: UIViewController {
         }
 
         // Amount label
-        self.amountLabel = UICurrencyLabel(fromBtcAmount: balanceDelta)
+        self.amountLabel = UICurrencyLabel()
         self.amountLabel.textAlignment = .Right
         self.amountLabel.font = UIFont(name: self.amountLabel.font!.fontName, size: BIG_TEXT_FONT_SIZE)
-        self.amountLabel.textColor = balanceDelta > 0 ? GREEN_TEXT_COLOR : balanceDelta < 0 ? RED_TEXT_COLOR : DARK_TEXT_COLOR
         self.amountLabel.translatesAutoresizingMaskIntoConstraints = false
         self.amountLabel.backgroundColor = BACKGROUND_COLOR
         self.amountView.addSubview(amountLabel)
 
         // Confirmation icon
-        self.confirmationIcon = UIImageView(image: UIImage(named: self.tx.isConfirmed ? "Transaction_Check" : "Transaction_Clock"))
+        self.confirmationIcon = UIImageView()
         self.confirmationIcon.translatesAutoresizingMaskIntoConstraints = false
         self.confirmationIcon.backgroundColor = BACKGROUND_COLOR
         self.confirmationIcon.tintColor = LIGHT_TEXT_COLOR
         self.bottomView.addSubview(self.confirmationIcon)
 
         // Confirmation label
-        var confirmationText = ""
-        if self.tx.confirmations.value == 0 {
-            confirmationText = NSLocalizedString("confirmation.zero", comment: "Number of confirmation (0) of the transaction")
-        } else if self.tx.confirmations.value == 1 {
-            confirmationText = NSLocalizedString("confirmation.one", comment: "Number of confirmation (1) of the transaction")
-        } else {
-            let confirmationCount = self.tx.confirmations.value > 99 ? "99+" : self.tx.confirmations.value.description
-            confirmationText = String(format: NSLocalizedString("confirmation.several", comment: "Number of confirmation (>1) of the transaction"), arguments: [confirmationCount])
-        }
         self.confirmationLabel = UILabel(frame: CGRectZero)
-        self.confirmationLabel.text = confirmationText
         self.confirmationLabel.textAlignment = .Left
         self.confirmationLabel.font = UIFont(name: self.confirmationLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
         self.confirmationLabel.textColor = LIGHT_TEXT_COLOR
@@ -142,7 +127,6 @@ class TransactionViewController: UIViewController {
 
         // Date label
         self.dateLabel = UILabel(frame: CGRectZero)
-        self.dateLabel.text = tx.receptionTime.userFriendlyDescription
         self.dateLabel.textAlignment = .Right
         self.dateLabel.font = UIFont(name: self.dateLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
         self.dateLabel.textColor = LIGHT_TEXT_COLOR
@@ -308,7 +292,7 @@ class TransactionViewController: UIViewController {
             item: self.confirmationIcon, attribute: .Bottom,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
-            multiplier: 1.0, constant: -SMALL_PADDING))
+            multiplier: 1.0, constant: -2.0 * SMALL_PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Left,
             relatedBy: .Equal,
@@ -340,7 +324,7 @@ class TransactionViewController: UIViewController {
             item: self.confirmationLabel, attribute: .Bottom,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
-            multiplier: 1.0, constant: -SMALL_PADDING))
+            multiplier: 1.0, constant: -2.0 * SMALL_PADDING))
 
         // Date label
         constraints.append(NSLayoutConstraint(
@@ -357,9 +341,29 @@ class TransactionViewController: UIViewController {
             item: self.dateLabel, attribute: .Bottom,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
-            multiplier: 1.0, constant: -SMALL_PADDING))
+            multiplier: 1.0, constant: -2.0 * SMALL_PADDING))
 
         NSLayoutConstraint.activateConstraints(constraints)
+    }
+
+    func setTx(tx: BitcoinTx) {
+        self.tx = tx
+        let balanceDelta = self.tx.getInfo().getBalanceDelta()
+        self.titleLabel.text = balanceDelta > 0 ? "Bitcoin received" : "Bitcoin sent"
+        self.amountLabel.setAmount(balanceDelta.getBitcoinAmount(), amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
+        self.amountLabel.textColor = balanceDelta > 0 ? GREEN_TEXT_COLOR : balanceDelta < 0 ? RED_TEXT_COLOR : DARK_TEXT_COLOR
+        self.confirmationIcon.image = UIImage(named: self.tx.isConfirmed ? "Transaction_Check" : "Transaction_Clock")
+        var confirmationText = ""
+        if self.tx.confirmations.value == 0 {
+            confirmationText = NSLocalizedString("confirmation.zero", comment: "Number of confirmation (0) of the transaction")
+        } else if self.tx.confirmations.value == 1 {
+            confirmationText = NSLocalizedString("confirmation.one", comment: "Number of confirmation (1) of the transaction")
+        } else {
+            let confirmationCount = self.tx.confirmations.value > 99 ? "99+" : self.tx.confirmations.value.description
+            confirmationText = String(format: NSLocalizedString("confirmation.several", comment: "Number of confirmation (>1) of the transaction"), arguments: [confirmationCount])
+        }
+        self.confirmationLabel.text = confirmationText
+        self.dateLabel.text = tx.receptionTime.userFriendlyDescription
     }
 
 }
