@@ -51,7 +51,7 @@ class BitcoinTx: CustomStringConvertible, Equatable {
         }
 
         var confirmationTime: TxConfirmationTime? = nil
-        if let confirmationTimeString = json["block_hash"] {
+        if let confirmationTimeString = json["confirmed"] {
             if confirmationTimeString is String {
                 confirmationTime = TxConfirmationTime(value: confirmationTimeString as! String)
             }
