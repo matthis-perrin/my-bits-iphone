@@ -15,6 +15,8 @@ class BitcoinTx: CustomStringConvertible, Equatable {
     let inputs: [TxInput]
     let outputs: [TxOutput]
 
+    var txInfo: BitcoinTxInfo!
+
     init(blockHash: BlockHash? = nil,
          blockHeight: BlockHeight = BlockHeight(),
          hash: TxHash = TxHash(),
@@ -40,6 +42,8 @@ class BitcoinTx: CustomStringConvertible, Equatable {
         self.confirmations = confirmations
         self.inputs = inputs
         self.outputs = outputs
+
+        self.txInfo = BitcoinTxInfo.getForTx(self)
     }
 
     static func loadFromJson(json: NSDictionary) -> BitcoinTx {
@@ -88,71 +92,6 @@ class BitcoinTx: CustomStringConvertible, Equatable {
             }
         }
         return addresses
-    }
-
-    func getInfo() -> BitcoinTxInfo {
-        var inputIO = [TxIO]()
-        var outputIO = [TxIO]()
-        var involvedAccounts = [Account]()
-        var accountsSeen = [AccountId: Bool]()
-
-        // Look into `account` for the address `bitcoinAddress` and generate a TxIO
-        func getTxIO (account: Account, bitcoinAddress: BitcoinAddress, amount: BitcoinAmount) -> TxIO? {
-            for aAddress in account.getAddresses() {
-                if bitcoinAddress == aAddress.getBitcoinAddress() {
-                    return AccountAddressTxIO(account: account, accountAddress: aAddress, amount: amount)
-                }
-            }
-            for xpub in account.getXpubs() {
-                for xAddress in xpub.getAddresses() {
-                    if bitcoinAddress == xAddress {
-                        return AccountXpubTxIO(account: account, accountXpub: xpub, address: xAddress, amount: amount)
-                    }
-                }
-            }
-            return nil
-        }
-
-        // Generates all the TxIO for this transaction
-        for account in AccountStore.getAccounts() {
-            for input in self.inputs {
-                var found = false
-                for address in input.sourceAddresses {
-                    if let txIO = getTxIO(account, bitcoinAddress: address, amount: input.linkedOutputValue) {
-                        inputIO.append(txIO)
-                        if accountsSeen.updateValue(true, forKey: account.getId()) == nil {
-                            involvedAccounts.append(account)
-                        }
-                        found = true
-                        break
-                    }
-                }
-                if !found {
-                    if let address = input.sourceAddresses.first {
-                        inputIO.append(ExternalAddressTxIO(amount: input.linkedOutputValue, address: address))
-                    }
-                }
-            }
-            for output in self.outputs {
-                var found = false
-                for address in output.destinationAddresses {
-                    if let txIO = getTxIO(account, bitcoinAddress: address, amount: output.value) {
-                        outputIO.append(txIO)
-                        if accountsSeen.updateValue(true, forKey: account.getId()) == nil {
-                            involvedAccounts.append(account)
-                        }
-                        found = true
-                        break
-                    }
-                }
-                if !found {
-                    if let address = output.destinationAddresses.first {
-                        inputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
-                    }
-                }
-            }
-        }
-        return BitcoinTxInfo(inputTxIO: inputIO, outputTxIO: outputIO, involvedAccounts: involvedAccounts)
     }
 
     var isConfirmed: Bool {

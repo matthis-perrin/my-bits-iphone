@@ -34,7 +34,7 @@ class TransactionTableViewController: UITableViewController, AllTransactionsProt
         self.txs = TransactionStore.getTransactions()
             .filter() { tx in
                 return self.accounts.isEmpty ||
-                    tx.getInfo().involvedAccounts.contains() { txAccount in
+                    tx.txInfo.involvedAccounts.contains() { txAccount in
                         return self.accounts.contains() { filteredAccount in
                             return txAccount.getId() == filteredAccount.getId()
                         }

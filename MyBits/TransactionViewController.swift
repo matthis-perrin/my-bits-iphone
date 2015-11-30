@@ -346,10 +346,38 @@ class TransactionViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(constraints)
     }
 
+    private func getTitleText() -> String {
+        let balanceDelta = self.tx.txInfo.getBalanceDelta()
+        let accountBalanceDelta = self.tx.txInfo.getAccountsBalanceDelta()
+        let externalBalanceDelta = self.tx.txInfo.getExternalBalanceDelta().reduce(0) {
+            return $0 + $1.1.getSatoshiAmount()
+        }
+        let positives = accountBalanceDelta.reduce(0) { return $0 + ($1.1 > 0 ? 1 : 0) }
+        let negatives = accountBalanceDelta.reduce(0) { return $0 + ($1.1 < 0 ? 1 : 0) }
+        let zeros =     accountBalanceDelta.reduce(0) { return $0 + ($1.1 == 0 ? 1 : 0) }
+
+        let TITLE_TYPE_1 = "External transaction"
+        let TITLE_TYPE_2 = "Empty transaction"
+        let TITLE_TYPE_3 = "In-account transfer"
+        let TITLE_TYPE_4 = "Bitcoin sent"
+        let TITLE_TYPE_5 = "Bitcoin received"
+        let TITLE_TYPE_6 = balanceDelta > 0 ? TITLE_TYPE_5 : balanceDelta < 0 ? TITLE_TYPE_4 : TITLE_TYPE_3
+        let TITLE_TYPE_7 = "Unknown transaction"
+
+        if positives == 0 && negatives == 0 && zeros == 0 { return externalBalanceDelta > 0 ? TITLE_TYPE_1 : TITLE_TYPE_2 }
+        if positives == 0 && negatives == 0 && zeros >= 1 { return TITLE_TYPE_3 }
+        if positives == 0 && negatives >= 1 { return TITLE_TYPE_4 }
+        if positives >= 1 && negatives == 0 { return TITLE_TYPE_5 }
+        if positives >= 1 && negatives >= 1 { return TITLE_TYPE_6 }
+
+        NSLog("Unknown state when generating the title for the transaction: \(self.tx)")
+        return TITLE_TYPE_7
+    }
+
     func setTx(tx: BitcoinTx) {
         self.tx = tx
-        let balanceDelta = self.tx.getInfo().getBalanceDelta()
-        self.titleLabel.text = balanceDelta > 0 ? "Bitcoin received" : "Bitcoin sent"
+        let balanceDelta = self.tx.txInfo.getBalanceDelta()
+        self.titleLabel.text = self.getTitleText()
         self.amountLabel.setAmount(balanceDelta.getBitcoinAmount(), amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
         self.amountLabel.textColor = balanceDelta > 0 ? GREEN_TEXT_COLOR : balanceDelta < 0 ? RED_TEXT_COLOR : DARK_TEXT_COLOR
         self.confirmationIcon.image = UIImage(named: self.tx.isConfirmed ? "Transaction_Check" : "Transaction_Clock")

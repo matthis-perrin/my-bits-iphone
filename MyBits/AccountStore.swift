@@ -98,7 +98,7 @@ class AccountStore {
 
 class AccountId: GenericId {}
 
-class Account {
+class Account: Hashable {
 
     private var accountId: AccountId
     private var accountName: String
@@ -157,4 +157,14 @@ class Account {
         return balance
     }
 
+    var hashValue: Int {
+        get {
+            return self.getId().hashValue
+        }
+    }
+
+}
+
+func ==(left: Account, right: Account) -> Bool {
+    return left.getId() == right.getId()
 }
