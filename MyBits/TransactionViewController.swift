@@ -3,18 +3,30 @@ import UIKit
 
 class TransactionViewController: UIViewController {
 
-    let PADDING: CGFloat = 18.0
-    let SMALL_PADDING: CGFloat = 5.0
+    static let PADDING: CGFloat = 18.0
+    static let SMALL_PADDING: CGFloat = 5.0
 
-    let BIG_TEXT_FONT_SIZE: CGFloat = 17.0
-    let SMALL_TEXT_FONT_SIZE: CGFloat = 11.0
+    static let BIG_TEXT_FONT_SIZE: CGFloat = 17.0
+    static let SMALL_TEXT_FONT_SIZE: CGFloat = 11.0
 
-    let DARK_TEXT_COLOR: UIColor = UIColor(white: 51.0 / 255.0, alpha: 1.0)
-    let LIGHT_TEXT_COLOR: UIColor = UIColor(white: 155.0 / 255.0, alpha: 1.0)
-    let GREEN_TEXT_COLOR: UIColor = UIColor(red: 0, green: 150 / 255.0, blue: 136 / 255.0, alpha: 1.0)
-    let RED_TEXT_COLOR: UIColor = UIColor(red: 1.0, green: 87 / 255.0, blue: 34 / 255.0, alpha: 1.0)
+    static let DARK_TEXT_COLOR: UIColor = UIColor(white: 51.0 / 255.0, alpha: 1.0)
+    static let LIGHT_TEXT_COLOR: UIColor = UIColor(white: 155.0 / 255.0, alpha: 1.0)
+    static let GREEN_TEXT_COLOR: UIColor = UIColor(red: 0, green: 150 / 255.0, blue: 136 / 255.0, alpha: 1.0)
+    static let RED_TEXT_COLOR: UIColor = UIColor(red: 1.0, green: 87 / 255.0, blue: 34 / 255.0, alpha: 1.0)
 
-    let CONFIRMATION_ICON_LABEL_GAP: CGFloat = 3.0
+    static let CONFIRMATION_ICON_LABEL_GAP: CGFloat = 3.0
+
+
+    static let UNKNOWN_TITLE = "Unknown transaction"
+    static let TITLES = [
+        TxType.External: "External transaction",
+        TxType.Empty: "Empty transaction",
+        TxType.InAccount: "In-account transfer",
+        TxType.Sent: "Bitcoin sent",
+        TxType.Received: "Bitcoin received",
+        TxType.Unknown: UNKNOWN_TITLE,
+    ]
+
 
     var tx: BitcoinTx
 
@@ -81,8 +93,8 @@ class TransactionViewController: UIViewController {
         // Title label
         self.titleLabel = UILabel(frame: CGRectZero)
         self.titleLabel.textAlignment = .Left
-        self.titleLabel.font = UIFont(name: self.titleLabel.font!.fontName, size: BIG_TEXT_FONT_SIZE)
-        self.titleLabel.textColor = DARK_TEXT_COLOR
+        self.titleLabel.font = UIFont(name: self.titleLabel.font!.fontName, size: TransactionViewController.BIG_TEXT_FONT_SIZE)
+        self.titleLabel.textColor = TransactionViewController.DARK_TEXT_COLOR
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.backgroundColor = BACKGROUND_COLOR
         self.titleView.addSubview(self.titleLabel)
@@ -91,8 +103,8 @@ class TransactionViewController: UIViewController {
         self.subtitleLabels = self.getSubtitles()
         for subtitle in subtitleLabels {
             subtitle.textAlignment = .Left
-            subtitle.font = UIFont(name: subtitle.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
-            subtitle.textColor = DARK_TEXT_COLOR
+            subtitle.font = UIFont(name: subtitle.font!.fontName, size: TransactionViewController.SMALL_TEXT_FONT_SIZE)
+            subtitle.textColor = TransactionViewController.DARK_TEXT_COLOR
             subtitle.translatesAutoresizingMaskIntoConstraints = false
             subtitle.backgroundColor = BACKGROUND_COLOR
             self.subtitleView.addSubview(subtitle)
@@ -101,7 +113,7 @@ class TransactionViewController: UIViewController {
         // Amount label
         self.amountLabel = UICurrencyLabel()
         self.amountLabel.textAlignment = .Right
-        self.amountLabel.font = UIFont(name: self.amountLabel.font!.fontName, size: BIG_TEXT_FONT_SIZE)
+        self.amountLabel.font = UIFont(name: self.amountLabel.font!.fontName, size: TransactionViewController.BIG_TEXT_FONT_SIZE)
         self.amountLabel.translatesAutoresizingMaskIntoConstraints = false
         self.amountLabel.backgroundColor = BACKGROUND_COLOR
         self.amountView.addSubview(amountLabel)
@@ -110,14 +122,14 @@ class TransactionViewController: UIViewController {
         self.confirmationIcon = UIImageView()
         self.confirmationIcon.translatesAutoresizingMaskIntoConstraints = false
         self.confirmationIcon.backgroundColor = BACKGROUND_COLOR
-        self.confirmationIcon.tintColor = LIGHT_TEXT_COLOR
+        self.confirmationIcon.tintColor = TransactionViewController.LIGHT_TEXT_COLOR
         self.bottomView.addSubview(self.confirmationIcon)
 
         // Confirmation label
         self.confirmationLabel = UILabel(frame: CGRectZero)
         self.confirmationLabel.textAlignment = .Left
-        self.confirmationLabel.font = UIFont(name: self.confirmationLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
-        self.confirmationLabel.textColor = LIGHT_TEXT_COLOR
+        self.confirmationLabel.font = UIFont(name: self.confirmationLabel.font!.fontName, size: TransactionViewController.SMALL_TEXT_FONT_SIZE)
+        self.confirmationLabel.textColor = TransactionViewController.LIGHT_TEXT_COLOR
         self.confirmationLabel.translatesAutoresizingMaskIntoConstraints = false
         self.confirmationLabel.backgroundColor = BACKGROUND_COLOR
         self.bottomView.addSubview(self.confirmationLabel)
@@ -125,8 +137,8 @@ class TransactionViewController: UIViewController {
         // Date label
         self.dateLabel = UILabel(frame: CGRectZero)
         self.dateLabel.textAlignment = .Right
-        self.dateLabel.font = UIFont(name: self.dateLabel.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
-        self.dateLabel.textColor = LIGHT_TEXT_COLOR
+        self.dateLabel.font = UIFont(name: self.dateLabel.font!.fontName, size: TransactionViewController.SMALL_TEXT_FONT_SIZE)
+        self.dateLabel.textColor = TransactionViewController.LIGHT_TEXT_COLOR
         self.dateLabel.translatesAutoresizingMaskIntoConstraints = false
         self.dateLabel.backgroundColor = BACKGROUND_COLOR
         self.bottomView.addSubview(self.dateLabel)
@@ -180,7 +192,7 @@ class TransactionViewController: UIViewController {
             item: self.amountView, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.view, attribute: .Top,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.amountView, attribute: .Right,
             relatedBy: .Equal,
@@ -214,12 +226,12 @@ class TransactionViewController: UIViewController {
             item: self.titleLabel, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.titleView, attribute: .Top,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.titleLabel, attribute: .Right,
             relatedBy: .Equal,
             toItem: self.titleView, attribute: .Right,
-            multiplier: 1.0, constant: -PADDING))
+            multiplier: 1.0, constant: -TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.titleLabel, attribute: .Bottom,
             relatedBy: .Equal,
@@ -229,7 +241,7 @@ class TransactionViewController: UIViewController {
             item: self.titleLabel, attribute: .Left,
             relatedBy: .Equal,
             toItem: self.titleView, attribute: .Left,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
 
         // Subtitle labels
         for (index, subtitleLabel) in self.subtitleLabels.enumerate() {
@@ -239,12 +251,12 @@ class TransactionViewController: UIViewController {
                 item: subtitleLabel, attribute: .Top,
                 relatedBy: .Equal,
                 toItem: previous, attribute: .Top,
-                multiplier: 1.0, constant: SMALL_PADDING))
+                multiplier: 1.0, constant: TransactionViewController.SMALL_PADDING))
             constraints.append(NSLayoutConstraint(
                 item: subtitleLabel, attribute: .Right,
                 relatedBy: .Equal,
                 toItem: self.subtitleView, attribute: .Right,
-                multiplier: 1.0, constant: -PADDING))
+                multiplier: 1.0, constant: -TransactionViewController.PADDING))
             constraints.append(NSLayoutConstraint(
                 item: subtitleLabel, attribute: .Bottom,
                 relatedBy: .Equal,
@@ -254,7 +266,7 @@ class TransactionViewController: UIViewController {
                 item: subtitleLabel, attribute: .Left,
                 relatedBy: .Equal,
                 toItem: self.subtitleView, attribute: .Left,
-                multiplier: 1.0, constant: PADDING))
+                multiplier: 1.0, constant: TransactionViewController.PADDING))
         }
 
         // Amount label
@@ -267,7 +279,7 @@ class TransactionViewController: UIViewController {
             item: self.amountLabel, attribute: .Right,
             relatedBy: .Equal,
             toItem: self.amountView, attribute: .Right,
-            multiplier: 1.0, constant: -PADDING))
+            multiplier: 1.0, constant: -TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.amountLabel, attribute: .Left,
             relatedBy: .Equal,
@@ -279,22 +291,22 @@ class TransactionViewController: UIViewController {
             item: self.confirmationIcon, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Top,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Right,
             relatedBy: .Equal,
             toItem: self.confirmationLabel, attribute: .Left,
-            multiplier: 1.0, constant: -CONFIRMATION_ICON_LABEL_GAP))
+            multiplier: 1.0, constant: -TransactionViewController.CONFIRMATION_ICON_LABEL_GAP))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Bottom,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
-            multiplier: 1.0, constant: -2.0 * SMALL_PADDING))
+            multiplier: 1.0, constant: -2.0 * TransactionViewController.SMALL_PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Left,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Left,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Width,
             relatedBy: .Equal,
@@ -311,7 +323,7 @@ class TransactionViewController: UIViewController {
             item: self.confirmationLabel, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Top,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationLabel, attribute: .Right,
             relatedBy: .Equal,
@@ -321,54 +333,34 @@ class TransactionViewController: UIViewController {
             item: self.confirmationLabel, attribute: .Bottom,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
-            multiplier: 1.0, constant: -2.0 * SMALL_PADDING))
+            multiplier: 1.0, constant: -2.0 * TransactionViewController.SMALL_PADDING))
 
         // Date label
         constraints.append(NSLayoutConstraint(
             item: self.dateLabel, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Top,
-            multiplier: 1.0, constant: PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.dateLabel, attribute: .Right,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Right,
-            multiplier: 1.0, constant: -PADDING))
+            multiplier: 1.0, constant: -TransactionViewController.PADDING))
         constraints.append(NSLayoutConstraint(
             item: self.dateLabel, attribute: .Bottom,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Bottom,
-            multiplier: 1.0, constant: -2.0 * SMALL_PADDING))
+            multiplier: 1.0, constant: -2.0 * TransactionViewController.SMALL_PADDING))
 
         NSLayoutConstraint.activateConstraints(constraints)
     }
 
     private func getTitleText() -> String {
-        let balanceDelta = self.tx.txInfo.getBalanceDelta()
-        let accountBalanceDelta = self.tx.txInfo.getAccountsBalanceDelta()
-        let externalBalanceDelta = self.tx.txInfo.getExternalBalanceDelta().reduce(0) {
-            return $0 + $1.1.getSatoshiAmount()
+        if let title = TransactionViewController.TITLES[self.tx.getType()] {
+            return title
+        } else {
+            return TransactionViewController.UNKNOWN_TITLE
         }
-        let positives = accountBalanceDelta.reduce(0) { return $0 + ($1.1 > 0 ? 1 : 0) }
-        let negatives = accountBalanceDelta.reduce(0) { return $0 + ($1.1 < 0 ? 1 : 0) }
-        let zeros =     accountBalanceDelta.reduce(0) { return $0 + ($1.1 == 0 ? 1 : 0) }
-
-        let TITLE_TYPE_1 = "External transaction"
-        let TITLE_TYPE_2 = "Empty transaction"
-        let TITLE_TYPE_3 = "In-account transfer"
-        let TITLE_TYPE_4 = "Bitcoin sent"
-        let TITLE_TYPE_5 = "Bitcoin received"
-        let TITLE_TYPE_6 = balanceDelta > 0 ? TITLE_TYPE_5 : balanceDelta < 0 ? TITLE_TYPE_4 : TITLE_TYPE_3
-        let TITLE_TYPE_7 = "Unknown transaction"
-
-        if positives == 0 && negatives == 0 && zeros == 0 { return externalBalanceDelta > 0 ? TITLE_TYPE_1 : TITLE_TYPE_2 }
-        if positives == 0 && negatives == 0 && zeros >= 1 { return TITLE_TYPE_3 }
-        if positives == 0 && negatives >= 1 { return TITLE_TYPE_4 }
-        if positives >= 1 && negatives == 0 { return TITLE_TYPE_5 }
-        if positives >= 1 && negatives >= 1 { return TITLE_TYPE_6 }
-
-        NSLog("Unknown state when generating the title for the transaction: \(self.tx)")
-        return TITLE_TYPE_7
     }
 
     private func getSubtitles() -> [UILabel] {
@@ -386,7 +378,7 @@ class TransactionViewController: UIViewController {
         let balanceDelta = self.tx.txInfo.getBalanceDelta()
         self.titleLabel.text = self.getTitleText()
         self.amountLabel.setAmount(balanceDelta.getBitcoinAmount(), amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
-        self.amountLabel.textColor = balanceDelta > 0 ? GREEN_TEXT_COLOR : balanceDelta < 0 ? RED_TEXT_COLOR : DARK_TEXT_COLOR
+        self.amountLabel.textColor = balanceDelta > 0 ? TransactionViewController.GREEN_TEXT_COLOR : balanceDelta < 0 ? TransactionViewController.RED_TEXT_COLOR : TransactionViewController.DARK_TEXT_COLOR
         self.confirmationIcon.image = UIImage(named: self.tx.isConfirmed ? "Transaction_Check" : "Transaction_Clock")
         var confirmationText = ""
         if self.tx.confirmations.value == 0 {

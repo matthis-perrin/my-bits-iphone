@@ -110,8 +110,8 @@ class BitcoinTxInfo {
                 }
             }
         }
-        copy.inputTxIO = copy.inputTxIO.filter() { return $0.amount == 0 }
-        copy.outputTxIO = copy.inputTxIO.filter() { return $0.amount == 0 }
+        copy.inputTxIO = copy.inputTxIO.filter() { return $0.amount > 0 }
+        copy.outputTxIO = copy.outputTxIO.filter() { return $0.amount > 0 }
         var accountsSeen = [AccountId: Bool]()
         func readAccountFromTxIO(txIO: TxIO) -> Void {
             if let txIO = txIO as? AccountXpubTxIO {
@@ -187,7 +187,7 @@ class BitcoinTxInfo {
                 }
                 if !found {
                     if let address = output.destinationAddresses.first {
-                        inputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
+                        outputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
                     }
                 }
             }
