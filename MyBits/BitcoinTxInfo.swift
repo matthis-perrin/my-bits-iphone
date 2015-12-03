@@ -1,9 +1,9 @@
 import Foundation
 
 class BitcoinTxInfo {
-    let inputTxIO: [TxIO]
-    let outputTxIO: [TxIO]
-    let involvedAccounts: [Account]
+    var inputTxIO: [TxIO]
+    var outputTxIO: [TxIO]
+    var involvedAccounts: [Account]
 
     init(inputTxIO: [TxIO], outputTxIO: [TxIO], involvedAccounts: [Account]) {
         self.inputTxIO = inputTxIO
@@ -85,6 +85,50 @@ class BitcoinTxInfo {
         return balance
     }
 
+    func withoutChange() -> BitcoinTxInfo {
+        let copy = self.copy()
+        for input in copy.inputTxIO {
+            if let input = input as? AccountXpubTxIO {
+                for output in copy.outputTxIO {
+                    if let output = output as? AccountXpubTxIO {
+                        if output.getAccountXpub().contains(input.address) {
+                            let amount = min(input.amount, output.amount)
+                            input.amount -= amount
+                            output.amount -= amount
+                            break
+                        }
+                    }
+                }
+            } else {
+                for output in copy.outputTxIO {
+                    if input.address == output.address {
+                        let amount = min(input.amount, output.amount)
+                        input.amount -= amount
+                        output.amount -= amount
+                        break
+                    }
+                }
+            }
+        }
+        copy.inputTxIO = copy.inputTxIO.filter() { return $0.amount == 0 }
+        copy.outputTxIO = copy.inputTxIO.filter() { return $0.amount == 0 }
+        var accountsSeen = [AccountId: Bool]()
+        func readAccountFromTxIO(txIO: TxIO) -> Void {
+            if let txIO = txIO as? AccountXpubTxIO {
+                accountsSeen[txIO.getAccount().getId()] = true
+            } else if let txIO = txIO as? AccountXpubTxIO {
+                accountsSeen[txIO.getAccount().getId()] = true
+            }
+        }
+        for input in copy.inputTxIO {
+            readAccountFromTxIO(input)
+        }
+        for output in copy.outputTxIO {
+            readAccountFromTxIO(output)
+        }
+        return copy
+    }
+
     static func getForTx(tx: BitcoinTx) -> BitcoinTxInfo {
 
         var inputIO = [TxIO]()
@@ -149,6 +193,13 @@ class BitcoinTxInfo {
             }
         }
         return BitcoinTxInfo(inputTxIO: inputIO, outputTxIO: outputIO, involvedAccounts: involvedAccounts)
+    }
+
+    func copy() -> BitcoinTxInfo {
+        let clonedInputTxIO = self.inputTxIO.map() { return $0.copy() }
+        let clonedOutputTxIO = self.outputTxIO.map() { return $0.copy() }
+        let clonedInvolvedAccounts = self.involvedAccounts.map() { return $0.copy() }
+        return BitcoinTxInfo(inputTxIO: clonedInputTxIO, outputTxIO: clonedOutputTxIO, involvedAccounts: clonedInvolvedAccounts)
     }
 
 }

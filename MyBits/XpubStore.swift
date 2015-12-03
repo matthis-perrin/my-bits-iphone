@@ -106,10 +106,16 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
             Server.generateAddresses(self, start: self.addresses.count, count: count)
         }
     }
+    func contains(address: BitcoinAddress) -> Bool {
+        return self.addresses.contains(address)
+    }
     var hashValue: Int {
         get {
             return masterPublicKey.hashValue
         }
+    }
+    func copy() -> AccountXpub {
+        return AccountXpub(masterPublicKey: self.masterPublicKey, addresses: self.addresses.map() { return $0.copy() })
     }
 
 }

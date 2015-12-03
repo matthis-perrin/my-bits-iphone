@@ -88,16 +88,13 @@ class TransactionViewController: UIViewController {
         self.titleView.addSubview(self.titleLabel)
 
         // Subtitle labels
-        self.subtitleLabels = [UILabel]()
-        let subtitleLabel1 = UILabel(frame: CGRectZero)
-        subtitleLabel1.text = "Subtitle - coming soon"
-        subtitleLabel1.textAlignment = .Left
-        subtitleLabel1.font = UIFont(name: subtitleLabel1.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
-        subtitleLabel1.textColor = DARK_TEXT_COLOR
-        subtitleLabel1.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel1.backgroundColor = BACKGROUND_COLOR
-        self.subtitleLabels.append(subtitleLabel1)
-        for subtitle in self.subtitleLabels {
+        self.subtitleLabels = self.getSubtitles()
+        for subtitle in subtitleLabels {
+            subtitle.textAlignment = .Left
+            subtitle.font = UIFont(name: subtitle.font!.fontName, size: SMALL_TEXT_FONT_SIZE)
+            subtitle.textColor = DARK_TEXT_COLOR
+            subtitle.translatesAutoresizingMaskIntoConstraints = false
+            subtitle.backgroundColor = BACKGROUND_COLOR
             self.subtitleView.addSubview(subtitle)
         }
 
@@ -372,6 +369,16 @@ class TransactionViewController: UIViewController {
 
         NSLog("Unknown state when generating the title for the transaction: \(self.tx)")
         return TITLE_TYPE_7
+    }
+
+    private func getSubtitles() -> [UILabel] {
+        var labels = [UILabel]()
+
+        let subtitleLabel1 = UILabel(frame: CGRectZero)
+        subtitleLabel1.text = "Subtitle - coming soon"
+        labels.append(subtitleLabel1)
+
+        return labels
     }
 
     func setTx(tx: BitcoinTx) {

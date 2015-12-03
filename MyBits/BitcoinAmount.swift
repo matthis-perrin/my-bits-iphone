@@ -1,9 +1,9 @@
 import Foundation
 
 
-class BitcoinAmount: CustomStringConvertible, Equatable {
+class BitcoinAmount: CustomStringConvertible, Equatable, Comparable {
 
-    private let satoshis: Int
+    private var satoshis: Int
     private static let SatoshisInBitcoin: Double = 1e8
 
     private static var satoshiNumberFormater: NSNumberFormatter {
@@ -46,6 +46,10 @@ class BitcoinAmount: CustomStringConvertible, Equatable {
         }
     }
 
+    func copy() -> BitcoinAmount {
+        return BitcoinAmount(satoshis: self.satoshis)
+    }
+
 }
 
 
@@ -83,6 +87,22 @@ func ==(left: Int, right: BitcoinAmount) -> Bool {
     return left == right.satoshis
 }
 
+func >(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
+    return left.satoshis > right.satoshis
+}
+
+func >=(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
+    return left.satoshis >= right.satoshis
+}
+
+func <(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
+    return left.satoshis < right.satoshis
+}
+
+func <=(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
+    return left.satoshis <= right.satoshis
+}
+
 func >(left: BitcoinAmount, right: Int) -> Bool {
     return left.satoshis > right
 }
@@ -97,4 +117,12 @@ func <(left: BitcoinAmount, right: Int) -> Bool {
 
 func <(left: Int, right: BitcoinAmount) -> Bool {
     return left < right.satoshis
+}
+
+func +=(left: BitcoinAmount, right: BitcoinAmount) -> Void {
+    left.satoshis += right.satoshis
+}
+
+func -=(left: BitcoinAmount, right: BitcoinAmount) -> Void {
+    left.satoshis -= right.satoshis
 }

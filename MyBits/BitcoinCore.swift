@@ -49,6 +49,9 @@ class BitcoinAddress: CustomStringConvertible, Hashable {
             return value.hashValue
         }
     }
+    func copy() -> BitcoinAddress {
+        return BitcoinAddress(bitcoinAddressId: self.bitcoinAddressId, value: self.value)
+    }
 }
 func ==(left: BitcoinAddress, right: BitcoinAddress) -> Bool {
     return left.value == right.value

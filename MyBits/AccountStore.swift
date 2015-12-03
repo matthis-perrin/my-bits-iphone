@@ -163,6 +163,13 @@ class Account: Hashable {
         }
     }
 
+    func copy() -> Account {
+        let account = Account(accountId: self.accountId, accountName: accountName)
+        account.accountAddresses = self.accountAddresses
+        account.accountXpubs = self.accountXpubs
+        return account
+    }
+
 }
 
 func ==(left: Account, right: Account) -> Bool {

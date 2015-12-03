@@ -63,4 +63,8 @@ class AccountAddress {
         return self.bitcoinAddress.getBalance()
     }
 
+    func copy() -> AccountAddress {
+        return AccountAddress(bitcoinAddress: bitcoinAddress.copy())
+    }
+
 }
