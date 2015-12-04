@@ -5,6 +5,7 @@ class DB {
 
     private static let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
     private static var conn: Connection!
+    static var useTestDB = false
 
     // Accounts table
     private static let accounts = Table("accounts")
@@ -24,10 +25,20 @@ class DB {
     private static let bitcoinAddressAccountId = Expression<Int?>("account_id")
     private static let bitcoinAddressMasterPublicKeyId = Expression<Int?>("master_public_key_id")
 
+    static func empty() {
+        do {
+            try NSFileManager().removeItemAtPath(DB.getDBPath())
+        } catch {}
+    }
+
+    static func getDBPath() -> String {
+        let suffix = DB.useTestDB ? "-test" : ""
+        return "\(DB.path)/db\(suffix).sqlite3"
+    }
+
     static func initialize() {
         // Creating database connection
-//        do { try NSFileManager().removeItemAtPath("\(self.path)/db.sqlite3") } catch {}
-        self.conn = try! Connection("\(self.path)/db.sqlite3")
+        self.conn = try! Connection(DB.getDBPath())
         guard let db = self.conn else {
             return
         }

@@ -26,6 +26,7 @@
 		2D5558EA1BFC0D5F001FD68E /* TxInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558E91BFC0D5F001FD68E /* TxInput.swift */; };
 		2D5558EC1BFC1117001FD68E /* TxOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558EB1BFC1117001FD68E /* TxOutput.swift */; };
 		2D5558EE1BFC12EC001FD68E /* BitcoinTx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */; };
+		2D671A4E1C11286B00D53E2F /* TransactionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D671A4D1C11286B00D53E2F /* TransactionViewControllerTests.swift */; };
 		2D68E51A1BEFE7790045FA98 /* UserKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E5191BEFE7790045FA98 /* UserKeychain.swift */; };
 		2D68E51D1BEFF4E50045FA98 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68E51C1BEFF4E50045FA98 /* Server.swift */; };
 		2D9AAC3F1C090883004C644A /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9AAC3E1C090883004C644A /* TransactionTableViewCell.swift */; };
@@ -39,6 +40,7 @@
 		2DF9BCF01BE5B47C000BA8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */; };
 		2DF9BCF71BE5B47C000BA8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */; };
 		32DDC01B6AEF0EE23FE8A059 /* Pods_MyBits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B896E21C4F568C82550F056 /* Pods_MyBits.framework */; };
+		9539C32552A2338E9F61A189 /* Pods_MyBitsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499D013E9526EFB8DF72CD94 /* Pods_MyBitsTests.framework */; };
 		B55723061C024F1400B5A56B /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55723051C024F1400B5A56B /* Database.swift */; };
 		B55723081C02719B00B5A56B /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55723071C02719B00B5A56B /* Common.swift */; };
 		B58A0C721BFBDD850051C28F /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C711BFBDD850051C28F /* AccountsViewController.swift */; };
@@ -46,8 +48,19 @@
 		B58A0C761BFBEFBF0051C28F /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0C751BFBEFBF0051C28F /* NewAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2D671A501C11286B00D53E2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DF9BCE41BE5B47C000BA8EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2DF9BCEB1BE5B47C000BA8EC;
+			remoteInfo = MyBits;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0513EC81E4B365A46AD1BFB7 /* Pods-MyBits.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.release.xcconfig"; sourceTree = "<group>"; };
+		13C8F19C535ABC578E47A72E /* Pods-MyBitsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBitsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyBitsTests/Pods-MyBitsTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D067B791BE6756300C959A9 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		2D067B801BE69C1D00C959A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2D067B831BE69C3E00C959A9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -68,6 +81,9 @@
 		2D5558E91BFC0D5F001FD68E /* TxInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxInput.swift; sourceTree = "<group>"; };
 		2D5558EB1BFC1117001FD68E /* TxOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxOutput.swift; sourceTree = "<group>"; };
 		2D5558ED1BFC12EC001FD68E /* BitcoinTx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTx.swift; sourceTree = "<group>"; };
+		2D671A4B1C11286B00D53E2F /* MyBitsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBitsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D671A4D1C11286B00D53E2F /* TransactionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewControllerTests.swift; sourceTree = "<group>"; };
+		2D671A4F1C11286B00D53E2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D68E5191BEFE7790045FA98 /* UserKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserKeychain.swift; sourceTree = "<group>"; };
 		2D68E51C1BEFF4E50045FA98 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		2D9AAC3E1C090883004C644A /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -82,8 +98,10 @@
 		2DF9BCEF1BE5B47C000BA8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DF9BCF61BE5B47C000BA8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DF9BCFB1BE5B47C000BA8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		499D013E9526EFB8DF72CD94 /* Pods_MyBitsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBitsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B896E21C4F568C82550F056 /* Pods_MyBits.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBits.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBits.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBits/Pods-MyBits.debug.xcconfig"; sourceTree = "<group>"; };
+		9F65F39959AA7DCB8CF95CED /* Pods-MyBitsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBitsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyBitsTests/Pods-MyBitsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B55723051C024F1400B5A56B /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B55723071C02719B00B5A56B /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		B58A0C711BFBDD850051C28F /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +111,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2D671A481C11286B00D53E2F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9539C32552A2338E9F61A189 /* Pods_MyBitsTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2DF9BCE91BE5B47C000BA8EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -200,6 +226,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		2D671A4C1C11286B00D53E2F /* MyBitsTests */ = {
+			isa = PBXGroup;
+			children = (
+				2D671A4D1C11286B00D53E2F /* TransactionViewControllerTests.swift */,
+				2D671A4F1C11286B00D53E2F /* Info.plist */,
+			);
+			path = MyBitsTests;
+			sourceTree = "<group>";
+		};
 		2D68E5181BEFE76A0045FA98 /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				2DF9BCEE1BE5B47C000BA8EC /* MyBits */,
+				2D671A4C1C11286B00D53E2F /* MyBitsTests */,
 				2DF9BCED1BE5B47C000BA8EC /* Products */,
 				3214B3CD4B44F4E24D5C77F2 /* Pods */,
 				37B5B736C12C67EABAEA754E /* Frameworks */,
@@ -265,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				2DF9BCEC1BE5B47C000BA8EC /* MyBits.app */,
+				2D671A4B1C11286B00D53E2F /* MyBitsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,6 +328,8 @@
 			children = (
 				8F8EE0B029E8753A43E2BFC8 /* Pods-MyBits.debug.xcconfig */,
 				0513EC81E4B365A46AD1BFB7 /* Pods-MyBits.release.xcconfig */,
+				9F65F39959AA7DCB8CF95CED /* Pods-MyBitsTests.debug.xcconfig */,
+				13C8F19C535ABC578E47A72E /* Pods-MyBitsTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -300,6 +339,7 @@
 			children = (
 				B5EE23811C0218BA001408D9 /* AVFoundation.framework */,
 				6B896E21C4F568C82550F056 /* Pods_MyBits.framework */,
+				499D013E9526EFB8DF72CD94 /* Pods_MyBitsTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -307,6 +347,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2D671A4A1C11286B00D53E2F /* MyBitsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D671A541C11286B00D53E2F /* Build configuration list for PBXNativeTarget "MyBitsTests" */;
+			buildPhases = (
+				DF0882B3DED16CB503A33B9F /* Check Pods Manifest.lock */,
+				2D671A471C11286B00D53E2F /* Sources */,
+				2D671A481C11286B00D53E2F /* Frameworks */,
+				2D671A491C11286B00D53E2F /* Resources */,
+				C9DBC36A6A66A15F84F17742 /* Embed Pods Frameworks */,
+				A9BBA78E4912A2E90BEEAC3C /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2D671A511C11286B00D53E2F /* PBXTargetDependency */,
+			);
+			name = MyBitsTests;
+			productName = MyBitsTests;
+			productReference = 2D671A4B1C11286B00D53E2F /* MyBitsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2DF9BCEB1BE5B47C000BA8EC /* MyBits */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2DF9BD141BE5B47C000BA8EC /* Build configuration list for PBXNativeTarget "MyBits" */;
@@ -338,6 +399,10 @@
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Raccoonz Ninja";
 				TargetAttributes = {
+					2D671A4A1C11286B00D53E2F = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 2DF9BCEB1BE5B47C000BA8EC;
+					};
 					2DF9BCEB1BE5B47C000BA8EC = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 49ND9TC5D4;
@@ -359,11 +424,19 @@
 			projectRoot = "";
 			targets = (
 				2DF9BCEB1BE5B47C000BA8EC /* MyBits */,
+				2D671A4A1C11286B00D53E2F /* MyBitsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2D671A491C11286B00D53E2F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2DF9BCEA1BE5B47C000BA8EC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -421,6 +494,51 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MyBits/Pods-MyBits-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A9BBA78E4912A2E90BEEAC3C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MyBitsTests/Pods-MyBitsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9DBC36A6A66A15F84F17742 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MyBitsTests/Pods-MyBitsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF0882B3DED16CB503A33B9F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		E83F6678C47725CBBB749FE6 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -439,6 +557,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2D671A471C11286B00D53E2F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D671A4E1C11286B00D53E2F /* TransactionViewControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2DF9BCE81BE5B47C000BA8EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -481,6 +607,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2D671A511C11286B00D53E2F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2DF9BCEB1BE5B47C000BA8EC /* MyBits */;
+			targetProxy = 2D671A501C11286B00D53E2F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		2D067B811BE69C1D00C959A9 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -495,6 +629,37 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2D671A521C11286B00D53E2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F65F39959AA7DCB8CF95CED /* Pods-MyBitsTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+				);
+				INFOPLIST_FILE = MyBitsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raccoonzninja.mybits.MyBitsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyBits.app/MyBits";
+			};
+			name = Debug;
+		};
+		2D671A531C11286B00D53E2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13C8F19C535ABC578E47A72E /* Pods-MyBitsTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = MyBitsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raccoonzninja.mybits.MyBitsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyBits.app/MyBits";
+			};
+			name = Release;
+		};
 		2DF9BD121BE5B47C000BA8EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -611,6 +776,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2D671A541C11286B00D53E2F /* Build configuration list for PBXNativeTarget "MyBitsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D671A521C11286B00D53E2F /* Debug */,
+				2D671A531C11286B00D53E2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2DF9BCE71BE5B47C000BA8EC /* Build configuration list for PBXProject "MyBits" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

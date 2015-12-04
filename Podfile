@@ -8,3 +8,9 @@ target 'MyBits' do
   pod 'QRCodeReader.swift'
   pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
 end
+
+target 'MyBitsTests' do
+  pod 'KeychainAccess'
+  pod 'QRCodeReader.swift'
+  pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
+end

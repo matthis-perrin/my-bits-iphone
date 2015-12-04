@@ -102,7 +102,7 @@ class BitcoinTxInfo {
             } else {
                 for output in copy.outputTxIO {
                     if input.address == output.address {
-                        let amount = min(input.amount, output.amount)
+                        let amount = min(input.amount, output.amount).copy()
                         input.amount -= amount
                         output.amount -= amount
                         break
@@ -126,6 +126,7 @@ class BitcoinTxInfo {
         for output in copy.outputTxIO {
             readAccountFromTxIO(output)
         }
+        copy.involvedAccounts = AccountStore.getAccounts().filter() { account in accountsSeen.contains() { $0.0 == account.getId() } }
         return copy
     }
 
