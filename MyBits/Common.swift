@@ -1,16 +1,16 @@
 import Foundation
 
 class GenericId: Hashable {
-    var value: Int
-    init(value: Int) {
+    var value: Int64
+    init(value: Int64) {
         self.value = value
     }
     convenience init() {
-        self.init(value: Int(arc4random()))
+        self.init(value: Int64(arc4random()))
     }
     var hashValue: Int {
         get {
-            return value
+            return value.hashValue
         }
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 
 class BitcoinAmount: CustomStringConvertible, Equatable, Comparable {
 
-    private var satoshis: Int
+    private var satoshis: Int64
     private static let SatoshisInBitcoin: Double = 1e8
 
     private static var satoshiNumberFormater: NSNumberFormatter {
@@ -21,7 +21,7 @@ class BitcoinAmount: CustomStringConvertible, Equatable, Comparable {
         self.init(satoshis: 0)
     }
 
-    init(satoshis: Int) {
+    init(satoshis: Int64) {
         self.satoshis = satoshis
     }
 
@@ -32,13 +32,13 @@ class BitcoinAmount: CustomStringConvertible, Equatable, Comparable {
         return Double(self.satoshis) / BitcoinAmount.SatoshisInBitcoin
     }
 
-    func getSatoshiAmount() -> Int {
+    func getSatoshiAmount() -> Int64 {
         return self.satoshis
     }
 
     var description: String {
         if abs(self.getSatoshiAmount()) < 100000 {
-            let satoshString = BitcoinAmount.satoshiNumberFormater.stringFromNumber(self.getSatoshiAmount())!
+            let satoshString = BitcoinAmount.satoshiNumberFormater.stringFromNumber(NSNumber(longLong: self.getSatoshiAmount()))!
             return "BitcoinAmount(\(satoshString) Satoshis)"
         } else {
             let bitcoinString = NSString(format: "%.08f", self.getBitcoinAmount())
@@ -79,11 +79,11 @@ func ==(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
     return left.satoshis == right.satoshis
 }
 
-func ==(left: BitcoinAmount, right: Int) -> Bool {
+func ==(left: BitcoinAmount, right: Int64) -> Bool {
     return left.satoshis == right
 }
 
-func ==(left: Int, right: BitcoinAmount) -> Bool {
+func ==(left: Int64, right: BitcoinAmount) -> Bool {
     return left == right.satoshis
 }
 
@@ -103,19 +103,19 @@ func <=(left: BitcoinAmount, right: BitcoinAmount) -> Bool {
     return left.satoshis <= right.satoshis
 }
 
-func >(left: BitcoinAmount, right: Int) -> Bool {
+func >(left: BitcoinAmount, right: Int64) -> Bool {
     return left.satoshis > right
 }
 
-func >(left: Int, right: BitcoinAmount) -> Bool {
+func >(left: Int64, right: BitcoinAmount) -> Bool {
     return left > right.satoshis
 }
 
-func <(left: BitcoinAmount, right: Int) -> Bool {
+func <(left: BitcoinAmount, right: Int64) -> Bool {
     return left.satoshis < right
 }
 
-func <(left: Int, right: BitcoinAmount) -> Bool {
+func <(left: Int64, right: BitcoinAmount) -> Bool {
     return left < right.satoshis
 }
 

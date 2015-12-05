@@ -23,7 +23,7 @@ class TxOutput: CustomStringConvertible, Equatable {
 
     static func loadFromJson(json: NSDictionary) -> TxOutput {
         return TxOutput(
-            value: BitcoinAmount(satoshis: json["value"] as! Int),
+            value: BitcoinAmount(satoshis: (json["value"] as! NSNumber).longLongValue),
             script: BitcoinScript(value: json["script"] as! String),
             scriptType: BitcoinScriptType.fromString(json["script_type"] as! String),
             destinationAddresses: (json["addresses"] as! [String]).map() { value in

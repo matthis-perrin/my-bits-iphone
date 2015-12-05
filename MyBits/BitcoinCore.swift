@@ -101,8 +101,8 @@ func ==(left: BlockHash, right: BlockHash) -> Bool {
 }
 
 class BlockHeight: CustomStringConvertible, Equatable {
-    var value: Int
-    init(value: Int = 0) {
+    var value: Int64
+    init(value: Int64 = 0) {
         self.value = value
     }
     var description: String {
@@ -129,8 +129,8 @@ func ==(left: BitcoinScript, right: BitcoinScript) -> Bool {
 }
 
 class TxConfirmations: CustomStringConvertible, Equatable {
-    var value: Int
-    init(value: Int = 0) {
+    var value: Int64
+    init(value: Int64 = 0) {
         self.value = value
     }
     var description: String {
@@ -219,8 +219,8 @@ func ==(left: TxHash, right: TxHash) -> Bool {
 }
 
 class TxSize: CustomStringConvertible, Equatable {
-    var value: Int
-    init(value: Int = 0) {
+    var value: Int64
+    init(value: Int64 = 0) {
         self.value = value
     }
     var description: String {
@@ -232,8 +232,8 @@ func ==(left: TxSize, right: TxSize) -> Bool {
 }
 
 class TxLockTime: CustomStringConvertible, Equatable {
-    var value: Int
-    init(value: Int = 0) {
+    var value: Int64
+    init(value: Int64 = 0) {
         self.value = value
     }
     var description: String {

@@ -66,15 +66,15 @@ class BitcoinTx: CustomStringConvertible, Equatable {
         }
         return BitcoinTx(
             blockHash: blockHash,
-            blockHeight: BlockHeight(value: json["block_height"] as! Int),
+            blockHeight: BlockHeight(value: (json["block_height"] as! NSNumber).longLongValue),
             hash: TxHash(value: json["hash"] as! String),
-            fees: TxFee(satoshis: json["fees"] as! Int),
-            size: TxSize(value: json["size"] as! Int),
+            fees: TxFee(satoshis: (json["fees"] as! NSNumber).longLongValue),
+            size: TxSize(value: (json["size"] as! NSNumber).longLongValue),
             confirmationTime: confirmationTime,
             receptionTime: TxReceptionTime(value: json["received"] as! String),
-            lockTime: TxLockTime(value: json["lock_time"] as! Int),
+            lockTime: TxLockTime(value: (json["lock_time"] as! NSNumber).longLongValue),
             isDoubleSpent: json["double_spend"] as! Bool,
-            confirmations: TxConfirmations(value: json["confirmations"] as! Int),
+            confirmations: TxConfirmations(value: (json["confirmations"] as! NSNumber).longLongValue),
             inputs: (json["inputs"] as! [NSDictionary]).map({ inputJson in
                 return TxInput.loadFromJson(inputJson)
             }),

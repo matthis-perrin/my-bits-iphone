@@ -3,19 +3,19 @@ import Foundation
 class TxInput: CustomStringConvertible, Equatable {
 
     let previousTxHash: TxHash
-    let linkedOutputIndex: Int
+    let linkedOutputIndex: Int64
     let linkedOutputValue: BitcoinAmount
     let script: BitcoinScript
     let scriptType: BitcoinScriptType
-    let sequence: Int
+    let sequence: Int64
     let sourceAddresses: [BitcoinAddress]
 
     init(previousTxHash: TxHash = TxHash(),
-         linkedOutputIndex: Int = 0,
+         linkedOutputIndex: Int64 = 0,
          linkedOutputValue: BitcoinAmount = BitcoinAmount(),
          script: BitcoinScript = BitcoinScript(),
          scriptType: BitcoinScriptType = .Unknown,
-         sequence: Int = 0,
+         sequence: Int64 = 0,
          sourceAddresses: [BitcoinAddress] = []) {
 
         self.previousTxHash = previousTxHash
@@ -30,11 +30,11 @@ class TxInput: CustomStringConvertible, Equatable {
     static func loadFromJson(json: NSDictionary) -> TxInput {
         return TxInput(
             previousTxHash: TxHash(value: json["prev_hash"] as! String),
-            linkedOutputIndex: json["output_index"] as! Int,
-            linkedOutputValue: BitcoinAmount(satoshis: json["output_value"] as! Int),
+            linkedOutputIndex: (json["output_index"] as! NSNumber).longLongValue,
+            linkedOutputValue: BitcoinAmount(satoshis: (json["output_value"] as! NSNumber).longLongValue),
             script: BitcoinScript(value: json["script"] as! String),
             scriptType: BitcoinScriptType.fromString(json["script_type"] as! String),
-            sequence: json["sequence"] as! Int,
+            sequence: (json["sequence"] as! NSNumber).longLongValue,
             sourceAddresses: (json["addresses"] as! [String]).map({ value in
                 return BitcoinAddress(value: value)
             }))

@@ -9,21 +9,21 @@ class DB {
 
     // Accounts table
     private static let accounts = Table("accounts")
-    private static let accountId = Expression<Int>("id")
+    private static let accountId = Expression<Int64>("id")
     private static let accountName = Expression<String>("account_name")
 
     // Master Public Keys table
     private static let masterPublicKeys = Table("master_public_keys")
-    private static let masterPublicKeyId = Expression<Int>("id")
+    private static let masterPublicKeyId = Expression<Int64>("id")
     private static let masterPublicKeyValue = Expression<String>("value")
-    private static let masterPublicKeyAccountId = Expression<Int?>("account_id")
+    private static let masterPublicKeyAccountId = Expression<Int64?>("account_id")
 
     // Bitcoin Addresses table
     private static let bitcoinAddresses = Table("bitcoin_addresses")
-    private static let bitcoinAddressId = Expression<Int>("id")
+    private static let bitcoinAddressId = Expression<Int64>("id")
     private static let bitcoinAddressValue = Expression<String>("value")
-    private static let bitcoinAddressAccountId = Expression<Int?>("account_id")
-    private static let bitcoinAddressMasterPublicKeyId = Expression<Int?>("master_public_key_id")
+    private static let bitcoinAddressAccountId = Expression<Int64?>("account_id")
+    private static let bitcoinAddressMasterPublicKeyId = Expression<Int64?>("master_public_key_id")
 
     static func empty() {
         do {
