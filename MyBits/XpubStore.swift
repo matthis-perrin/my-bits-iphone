@@ -53,7 +53,8 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
         self.isGeneratingNewAddresses = false
         TransactionStore.register(self)
         if generateAddresses {
-            self.generateNextAddresses(AccountXpub.CLEAN_ADDRESSES_LENGTH)
+            Server.generateAddresses(self, start: 0, count: 19)
+//            self.generateNextAddresses(AccountXpub.CLEAN_ADDRESSES_LENGTH)
         }
     }
 
@@ -97,16 +98,16 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
         AddressManager.rebuildAddressPool()
     }
     private func generateNextAddresses(count: Int) {
-        if self.isGeneratingNewAddresses {
-            // Retry in 2 seconds
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
-                self.generateNextAddresses(count)
-            });
-            NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("generateNextAddresses"), userInfo: [count], repeats: false)
-        } else {
-            self.isGeneratingNewAddresses = true
-            Server.generateAddresses(self, start: self.addresses.count, count: count)
-        }
+//        if self.isGeneratingNewAddresses {
+//            // Retry in 2 seconds
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
+//                self.generateNextAddresses(count)
+//            });
+//            NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("generateNextAddresses"), userInfo: [count], repeats: false)
+//        } else {
+//            self.isGeneratingNewAddresses = true
+//            Server.generateAddresses(self, start: self.addresses.count, count: count)
+//        }
     }
     func contains(address: BitcoinAddress) -> Bool {
         return self.addresses.contains(address)

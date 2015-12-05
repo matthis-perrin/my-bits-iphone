@@ -2,27 +2,78 @@ import Foundation
 
 class TransactionFetcher {
 
-    private static let FETCHING_INTERVAL = 30.0 // In seconds
-    private static let REQUEST_PER_SECONDS = 1.0
-    private var timer: NSTimer?
+    private static let REFRESH_DELAY = 30.0 // In seconds
+    private static let REQUEST_DELAY = 0.1 // In seconds
+    private static let DEBUG = true
 
+    private static var addressesQueue = [BitcoinAddress]()
+    private static let lockQueue = dispatch_queue_create("TransactionFetcherLockQueue", nil)
+    private static var readyForRefresh = false
 
-    func start() {
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(TransactionFetcher.FETCHING_INTERVAL, target: self, selector: Selector("fetchAll"), userInfo: nil, repeats: true)
+    static func queueAddresses(addresses: [BitcoinAddress]) {
+        log("Queuing \(addresses.count) bitcoin addresses")
+        dispatch_sync(lockQueue) {
+            addressesQueue.appendContentsOf(addresses)
+        }
+        readyForRefresh = true
+        delayRunQueue(REQUEST_DELAY)
     }
 
-    static func fetchMulti(addresses: [BitcoinAddress]) {
-        for (index, address) in addresses.enumerate() {
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(index) * Double(1/TransactionFetcher.REQUEST_PER_SECONDS) * Double(NSEC_PER_SEC)));
-            dispatch_after(delay, dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-                BlockCypher.loadTransactions(address)
+    private static func delayRunQueue(delay: Double) {
+        var emptyQueue = false
+        dispatch_sync(lockQueue) {
+            emptyQueue = addressesQueue.isEmpty
+        }
+        if emptyQueue {
+            if readyForRefresh {
+                log("Planning refresh in \(REFRESH_DELAY) seconds")
+                delayFunc(REFRESH_DELAY) {
+                    queueAddresses(AddressManager.getAddresses())
+                }
             }
+        } else {
+            delayFunc(delay, runQueue)
         }
     }
 
-    @objc private func fetchAll() {
-        let addresses = AddressManager.getAddresses()
-        TransactionFetcher.fetchMulti(addresses)
+    private static func runQueue() {
+        var addressOpt: BitcoinAddress?
+        dispatch_sync(lockQueue) {
+            if !addressesQueue.isEmpty {
+                addressOpt = addressesQueue.removeFirst()
+            }
+        }
+        guard let address = addressOpt else {
+            return
+        }
+        log("Fetching bitcoin address \(address)")
+        BlockCypher.loadTransactions(address, transactionsCallback: { transactions in
+            log("Received bitcoin address \(address)")
+            for tx in transactions {
+                TransactionStore.addTransaction(tx)
+            }
+            delayRunQueue(REQUEST_DELAY)
+        }) { error in
+            log("Error with bitcoin address \(address)")
+            dispatch_sync(lockQueue) {
+                addressesQueue.append(address)
+            }
+            delayRunQueue(REQUEST_DELAY * 2)
+        }
+    }
+
+    private static func delayFunc(delay: Double, _ closure: () -> ()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), closure)
+    }
+
+    private static func log(message: String) {
+        if DEBUG {
+            NSLog("[TransactionFetcher] \(message)")
+        }
     }
 
 }

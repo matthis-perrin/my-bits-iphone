@@ -1,36 +1,32 @@
-import Foundation
+import Alamofire
 
-struct BlockCypher {
+enum BlockCypherError : ErrorType {
+    case RequestFailed
+}
 
-    static func loadTransactions(forAddress: BitcoinAddress) {
-        let url = NSURL(string: "https://api.blockcypher.com/v1/btc/main/addrs/\(forAddress.value)/full")
-        let session = NSURLSession.sharedSession()
+class BlockCypher {
 
-        if let url = url {
-            let task = session.dataTaskWithURL(url) { (data, response, error) -> Void in
-                if let error = error {
-                    NSLog("Error while loading transaction for address \(forAddress.value): \(error.description).")
+    private static let TRANSACTIONS_KEY = "txs"
+    private static let ERROR_KEY = "error"
+
+    static func loadTransactions(forAddress: BitcoinAddress, transactionsCallback: [BitcoinTx] -> Void, errorCallback: BlockCypherError -> Void) {
+        let url = "https://api.blockcypher.com/v1/btc/main/addrs/\(forAddress.value)/full"
+        Alamofire.request(.GET, url).responseJSON { response in
+            if let json = response.result.value as? NSDictionary {
+                if json[ERROR_KEY] != nil {
+                    errorCallback(BlockCypherError.RequestFailed)
                     return
-                } else if let data = data {
-                    do {
-                        if let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers) as? NSDictionary {
-                            if let txsJson = jsonData["txs"] as? [NSDictionary] {
-                                for txJson in txsJson {
-                                    let tx: BitcoinTx = BitcoinTx.loadFromJson(txJson)
-                                    TransactionStore.addTransaction(tx)
-                                }
-                            }
-                        }
-                    } catch let error as NSError {
-                        NSLog("Error while parsing transactions for address \(forAddress.value): \(error.description). Received: \(String(data: data, encoding: NSUTF8StringEncoding)).")
-                    }
-                } else {
-                    NSLog("No data or error received.")
                 }
+                var transactions = [BitcoinTx]()
+                if let txsJson = json[TRANSACTIONS_KEY] as? [NSDictionary] {
+                    for txJson in txsJson {
+                        transactions.append(BitcoinTx.loadFromJson(txJson))
+                    }
+                }
+                transactionsCallback(transactions)
+            } else {
+                errorCallback(BlockCypherError.RequestFailed)
             }
-            task.resume()
-        } else {
-            NSLog("Couldn't build url for address \(forAddress.value).")
         }
     }
 

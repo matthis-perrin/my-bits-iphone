@@ -30,7 +30,7 @@ class AddressManager {
             }
         }
         AddressManager.addressPool = all
-        TransactionFetcher.fetchMulti(new)
+        TransactionFetcher.queueAddresses(new)
     }
 
     static func getAddresses() -> [BitcoinAddress] {

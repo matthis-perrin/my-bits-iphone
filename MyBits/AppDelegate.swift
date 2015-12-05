@@ -14,9 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize DB and load data in memory
         DB.initialize()
 
-        // Starts fetching transactions details
-        TransactionFetcher().start()
-
         // Starts the price fetcher that will pull the bitcoin price on a
         // regular basis and broadcast price changes to all listeners
         PriceFetcher().start()
