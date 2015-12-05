@@ -52,7 +52,6 @@ class DB {
                 t.column(self.accountId, primaryKey: true)
                 t.column(self.accountName)
                 })
-            try db.run(self.accounts.createIndex([self.accountId], unique: true, ifNotExists: true))
 
             // Creating master public keys table
             try db.run(self.masterPublicKeys.create(ifNotExists: true) { t in
@@ -60,7 +59,6 @@ class DB {
                 t.column(self.masterPublicKeyValue)
                 t.column(self.masterPublicKeyAccountId, references: self.accounts, self.accountId)
                 })
-            try db.run(self.masterPublicKeys.createIndex([self.masterPublicKeyAccountId], unique: true, ifNotExists: true))
 
             // Creating bitcoin addresses table
             try db.run(self.bitcoinAddresses.create(ifNotExists: true) { t in
@@ -69,8 +67,6 @@ class DB {
                 t.column(self.self.bitcoinAddressAccountId, references: self.accounts, self.accountId)
                 t.column(self.self.bitcoinAddressMasterPublicKeyId, references: self.masterPublicKeys, self.masterPublicKeyId)
                 })
-            try db.run(self.bitcoinAddresses.createIndex([self.bitcoinAddressAccountId], unique: false, ifNotExists: true))
-            try db.run(self.bitcoinAddresses.createIndex([self.bitcoinAddressMasterPublicKeyId], unique: false, ifNotExists: true))
             
             // Initialize stores
             try AccountStore.initialize()
