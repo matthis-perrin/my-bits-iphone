@@ -47,16 +47,18 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
     // Flag that indicates we're fetching new addresses from the server for this xpub.
     private var isGeneratingNewAddresses: Bool
 
-    init(masterPublicKey: MasterPublicKey, addresses: [BitcoinAddress]) {
+    init(masterPublicKey: MasterPublicKey, addresses: [BitcoinAddress], generateAddresses: Bool) {
         self.masterPublicKey = masterPublicKey
         self.addresses = addresses
         self.isGeneratingNewAddresses = false
         TransactionStore.register(self)
-        self.generateNextAddresses(AccountXpub.CLEAN_ADDRESSES_LENGTH)
+        if generateAddresses {
+            self.generateNextAddresses(AccountXpub.CLEAN_ADDRESSES_LENGTH)
+        }
     }
 
     convenience init(masterPublicKey: MasterPublicKey) {
-        self.init(masterPublicKey: masterPublicKey, addresses: [BitcoinAddress]())
+        self.init(masterPublicKey: masterPublicKey, addresses: [BitcoinAddress](), generateAddresses: true)
     }
 
     func transactionReceived(tx: BitcoinTx) {
@@ -115,7 +117,7 @@ class AccountXpub: Hashable, AllTransactionsProtocol {
         }
     }
     func copy() -> AccountXpub {
-        return AccountXpub(masterPublicKey: self.masterPublicKey, addresses: self.addresses.map() { return $0.copy() })
+        return AccountXpub(masterPublicKey: self.masterPublicKey, addresses: self.addresses.map() { return $0.copy() }, generateAddresses: true)
     }
 
 }

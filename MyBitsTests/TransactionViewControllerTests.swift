@@ -26,11 +26,11 @@ class MyBitsTests: XCTestCase {
     private func getTx(inputs: [String: Int], _ outputs: [String: Int]) -> BitcoinTx {
         return BitcoinTx(
             inputs: inputs.map() { return TxInput(
-                linkedOutputValue: BitcoinAmount(satoshis: $0.1),
+                linkedOutputValue: BitcoinAmount(satoshis: Int64($0.1)),
                 sourceAddresses: [BitcoinAddress(value: $0.0)])
             },
             outputs: outputs.map() { return TxOutput(
-                value: BitcoinAmount(satoshis: $0.1),
+                value: BitcoinAmount(satoshis: Int64($0.1)),
                 destinationAddresses: [BitcoinAddress(value: $0.0)])
             }
         )
