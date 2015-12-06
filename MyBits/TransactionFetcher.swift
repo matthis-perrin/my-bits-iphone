@@ -26,8 +26,10 @@ class TransactionFetcher {
         log("Queuing \(addresses.count) bitcoin addresses")
         dispatch_sync(lockQueue) {
             addressesQueue.appendContentsOf(addresses)
+            if (!readyForRefresh && !addressesQueue.isEmpty) {
+                readyForRefresh = true
+            }
         }
-        readyForRefresh = true
         delayRunQueue(REQUEST_DELAY)
     }
 
@@ -66,6 +68,9 @@ class TransactionFetcher {
             for tx in transactions {
                 TransactionStore.addTransaction(tx)
             }
+            address.updateTimestamp = Int64(NSDate().timeIntervalSince1970)
+            AccountStore.broadcastBitcoinAddressUpdate(address)
+            try! DB.bitcoinAddressUpdate(address)
             delayRunQueue(REQUEST_DELAY)
         }) { error in
             log("Error with bitcoin address \(address)")

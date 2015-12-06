@@ -11,10 +11,15 @@ protocol AccountProtocol: class {
 
 }
 
+protocol BitcoinAddressProtocol : class {
+    func bitcoinAddressUpdate(bitcoinAddress: BitcoinAddress)
+}
+
 class AccountStore {
 
     private static var accountDelegates = [AccountId: [AccountProtocol]]()
     private static var accounts = [Account]()
+    private static var bitcoinAddressProtocols = [BitcoinAddressProtocol]()
 
     static func initialize() throws {
         // Accounts
@@ -50,6 +55,25 @@ class AccountStore {
             AccountStore.accountDelegates[accountId] = delegates.filter({ d in
                 return d !== delegate
             })
+        }
+    }
+
+    static func registerBitcoinAddressProtocol(bitcoinAddressProtocol: BitcoinAddressProtocol) {
+        self.bitcoinAddressProtocols.append(bitcoinAddressProtocol)
+    }
+
+    static func unregisterBitcoinAddressProtocol(bitcoinAddressProtocol: BitcoinAddressProtocol) {
+        for (index, p) in self.bitcoinAddressProtocols.enumerate() {
+            if p === bitcoinAddressProtocol {
+                self.bitcoinAddressProtocols.removeAtIndex(index)
+                break
+            }
+        }
+    }
+
+    static func broadcastBitcoinAddressUpdate(bitcoinAddress: BitcoinAddress) {
+        for p in self.bitcoinAddressProtocols {
+            p.bitcoinAddressUpdate(bitcoinAddress)
         }
     }
 
@@ -102,18 +126,20 @@ class Account: Hashable {
 
     private var accountId: AccountId
     private var accountName: String
+    private var accountCreationTimestamp: Int64
     private var accountAddresses: [AccountAddress]
     private var accountXpubs: [AccountXpub]
 
-    init(accountId: AccountId, accountName: String) {
+    init(accountId: AccountId, accountName: String, accountCreationTimestamp: Int64) {
         self.accountId = accountId
         self.accountName = accountName
         self.accountAddresses = [AccountAddress]()
         self.accountXpubs = [AccountXpub]()
+        self.accountCreationTimestamp = accountCreationTimestamp
     }
 
     convenience init(accountName: String) {
-        self.init(accountId: AccountId(), accountName: accountName)
+        self.init(accountId: AccountId(), accountName: accountName, accountCreationTimestamp: Int64(NSDate().timeIntervalSince1970))
     }
 
     internal func addAddress(accountAddress: AccountAddress) throws {
@@ -136,6 +162,10 @@ class Account: Hashable {
 
     func getName() -> String {
         return self.accountName
+    }
+
+    func getCreationTimestamp() -> Int64 {
+        return self.accountCreationTimestamp
     }
 
     func getAddresses() -> [AccountAddress] {
@@ -164,7 +194,7 @@ class Account: Hashable {
     }
 
     func copy() -> Account {
-        let account = Account(accountId: self.accountId, accountName: accountName)
+        let account = Account(accountId: self.accountId, accountName: self.accountName, accountCreationTimestamp: self.accountCreationTimestamp)
         account.accountAddresses = self.accountAddresses
         account.accountXpubs = self.accountXpubs
         return account

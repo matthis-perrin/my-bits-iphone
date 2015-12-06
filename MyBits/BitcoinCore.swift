@@ -7,14 +7,18 @@ class BitcoinAddressId: GenericId {}
 class BitcoinAddress: CustomStringConvertible, Hashable {
     var bitcoinAddressId: BitcoinAddressId
     var value: String
+    var creationTimestamp: Int64
+    var updateTimestamp: Int64?
 
-    init(bitcoinAddressId: BitcoinAddressId, value: String) {
+    init(bitcoinAddressId: BitcoinAddressId, value: String, creationTimestamp: Int64, updateTimestamp: Int64?) {
         self.bitcoinAddressId = bitcoinAddressId
         self.value = value
+        self.creationTimestamp = creationTimestamp
+        self.updateTimestamp = updateTimestamp
     }
 
     convenience init(value: String) {
-        self.init(bitcoinAddressId: BitcoinAddressId(), value: value)
+        self.init(bitcoinAddressId: BitcoinAddressId(), value: value, creationTimestamp: Int64(NSDate().timeIntervalSince1970), updateTimestamp: nil)
     }
 
     func getBalance() -> BitcoinAmount {
@@ -50,7 +54,7 @@ class BitcoinAddress: CustomStringConvertible, Hashable {
         }
     }
     func copy() -> BitcoinAddress {
-        return BitcoinAddress(bitcoinAddressId: self.bitcoinAddressId, value: self.value)
+        return BitcoinAddress(bitcoinAddressId: self.bitcoinAddressId, value: self.value, creationTimestamp: self.creationTimestamp, updateTimestamp: self.updateTimestamp)
     }
 }
 func ==(left: BitcoinAddress, right: BitcoinAddress) -> Bool {
@@ -62,14 +66,16 @@ class MasterPublicKeyId: GenericId {}
 class MasterPublicKey: CustomStringConvertible, Hashable {
     var masterPublicKeyId: MasterPublicKeyId
     var value: String
+    var creationTimestamp: Int64
 
-    init(masterPublicKeyId: MasterPublicKeyId, value: String) {
+    init(masterPublicKeyId: MasterPublicKeyId, value: String, creationTimestamp: Int64) {
         self.masterPublicKeyId = masterPublicKeyId
         self.value = value
+        self.creationTimestamp = creationTimestamp
     }
 
     convenience init(value: String) {
-        self.init(masterPublicKeyId: MasterPublicKeyId(), value: value)
+        self.init(masterPublicKeyId: MasterPublicKeyId(), value: value, creationTimestamp: Int64(NSDate().timeIntervalSince1970))
     }
 
     var description: String {

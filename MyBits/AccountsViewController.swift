@@ -1,6 +1,6 @@
 import UIKit
 
-class AccountsViewController : UITableViewController, AllTransactionsProtocol {
+class AccountsViewController : UITableViewController, AllTransactionsProtocol, BitcoinAddressProtocol {
 
     convenience init() {
         self.init(style: .Grouped)
@@ -18,10 +18,19 @@ class AccountsViewController : UITableViewController, AllTransactionsProtocol {
 
         TransactionStore.unregister(self)
         TransactionStore.register(self)
+
+        AccountStore.unregisterBitcoinAddressProtocol(self)
+        AccountStore.registerBitcoinAddressProtocol(self)
         self.tableView.reloadData()
     }
 
     func transactionReceived(tx: BitcoinTx) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
+    }
+
+    func bitcoinAddressUpdate(bitcoinAddress: BitcoinAddress) {
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView.reloadData()
         }
@@ -58,13 +67,35 @@ class AccountsViewController : UITableViewController, AllTransactionsProtocol {
         // Account cell
         var cell = tableView.dequeueReusableCellWithIdentifier("AccountCell")
         if (cell == nil) {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: "AccountCell")
+            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "AccountCell")
             cell!.accessoryType = .DisclosureIndicator
         }
 
         // Name
         let account = AccountStore.getAccounts()[indexPath.row];
         cell!.textLabel?.text = account.getName()
+
+        // Last Update
+        var lastUpdate: Int64?
+        for address in account.getAllBitcoinAddresses() {
+            if let updateTimestamp = address.updateTimestamp {
+                if lastUpdate == nil {
+                    lastUpdate = updateTimestamp
+                } else if lastUpdate > updateTimestamp {
+                    lastUpdate = updateTimestamp
+                }
+            } else {
+                lastUpdate = nil
+                break
+            }
+        }
+        var lastUpdateString: String
+        if lastUpdate == nil {
+            lastUpdateString = NSLocalizedString("account never synchronized", comment: "")
+        } else {
+            lastUpdateString = NSDate(timeIntervalSince1970: NSTimeInterval(lastUpdate!)).description
+        }
+        cell!.detailTextLabel?.text = lastUpdateString
 
         // Amount
         cell!.viewWithTag(1)?.removeFromSuperview()
