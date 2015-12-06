@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InternetService.start()
 
         // Initialize DB and load data in memory
+//        DB.empty()
         DB.initialize()
 
         // Starts the price fetcher that will pull the bitcoin price on a

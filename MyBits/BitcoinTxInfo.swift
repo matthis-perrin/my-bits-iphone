@@ -1,6 +1,6 @@
 import Foundation
 
-class BitcoinTxInfo {
+class BitcoinTxInfo: CustomStringConvertible {
     var inputTxIO: [TxIO]
     var outputTxIO: [TxIO]
     var involvedAccounts: [Account]
@@ -197,8 +197,8 @@ class BitcoinTxInfo {
         }
 
         // Generates all the TxIO for this transaction
-        for account in AccountStore.getAccounts() {
-            for input in tx.inputs {
+        for input in tx.inputs {
+            for account in AccountStore.getAccounts() {
                 var found = false
                 for address in input.sourceAddresses {
                     if let txIO = getTxIO(account, bitcoinAddress: address, amount: input.linkedOutputValue) {
@@ -214,9 +214,13 @@ class BitcoinTxInfo {
                     if let address = input.sourceAddresses.first {
                         inputIO.append(ExternalAddressTxIO(amount: input.linkedOutputValue, address: address))
                     }
+                } else {
+                    break
                 }
             }
-            for output in tx.outputs {
+        }
+        for output in tx.outputs {
+            for account in AccountStore.getAccounts() {
                 var found = false
                 for address in output.destinationAddresses {
                     if let txIO = getTxIO(account, bitcoinAddress: address, amount: output.value) {
@@ -232,6 +236,8 @@ class BitcoinTxInfo {
                     if let address = output.destinationAddresses.first {
                         outputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
                     }
+                } else {
+                    break
                 }
             }
         }
@@ -243,6 +249,20 @@ class BitcoinTxInfo {
         let clonedOutputTxIO = self.outputTxIO.map() { return $0.copy() }
         let clonedInvolvedAccounts = self.involvedAccounts.map() { return $0.copy() }
         return BitcoinTxInfo(inputTxIO: clonedInputTxIO, outputTxIO: clonedOutputTxIO, involvedAccounts: clonedInvolvedAccounts)
+    }
+
+    var description: String {
+        var result = ""
+        for (index, input) in self.inputTxIO.enumerate() {
+            result += "Input #\(index) - " + input.description + "\n"
+        }
+        for (index, output) in self.outputTxIO.enumerate() {
+            result += "Output #\(index) - " + output.description + "\n"
+        }
+        for (index, account) in self.involvedAccounts.enumerate() {
+            result += "Account #\(index) - \"\(account.getName())\"\n"
+        }
+        return result
     }
 
 }

@@ -210,9 +210,7 @@ class TxHash: CustomStringConvertible, Hashable {
         self.value = value
     }
     var description: String {
-        let suffix = self.value.characters.count > MaxSizeForHashDescription ? "..." : ""
-        let end = min(MaxSizeForHashDescription, self.value.characters.count)
-        return "TxHash(\(self.value.substringToIndex(self.value.startIndex.advancedBy(end)) + suffix))"
+        return "TxHash(\(self.value))"
     }
     var hashValue: Int {
         get {

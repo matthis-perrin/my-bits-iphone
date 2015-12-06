@@ -68,12 +68,27 @@ class TransactionViewController: UIViewController {
     }
 
     static func getSubtitles(txInfo: BitcoinTxInfo) -> [(prefix: String, amount: BitcoinAmount?, suffix: String?)] {
-        let amount = txInfo.getBalanceDelta()
-        var subtitles: [(prefix: String, amount: BitcoinAmount?, suffix: String?)] = [("", amount, " to Account #1")]
-        if amount < 0 {
-            subtitles.append(("That's a negative amount", nil, nil))
+        let type = txInfo.getType()
+
+        func getEntity(txIO: TxIO) -> String {
+            if let txIO = txIO as? AccountAddressTxIO {
+                return txIO.getAccount().getName()
+            } else if let txIO = txIO as? AccountXpubTxIO {
+                return txIO.getAccount().getName()
+            } else {
+                return txIO.address.value
+            }
         }
-        return subtitles
+
+        if type == .Empty {
+            return []
+        } else if type == .Sent {
+            return [
+                ("From \(getEntity(txInfo.inputTxIO[0])) to \(getEntity(txInfo.outputTxIO[0]))", nil, nil)
+            ]
+        }
+
+        return []
     }
 
     static func getAmount(txInfo: BitcoinTxInfo) -> BitcoinAmount {
@@ -330,7 +345,7 @@ class TransactionViewController: UIViewController {
             item: self.confirmationIcon, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Top,
-            multiplier: 1.0, constant: TransactionViewController.PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING - 4))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationIcon, attribute: .Right,
             relatedBy: .Equal,
@@ -362,7 +377,7 @@ class TransactionViewController: UIViewController {
             item: self.confirmationLabel, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Top,
-            multiplier: 1.0, constant: TransactionViewController.PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING - 4))
         constraints.append(NSLayoutConstraint(
             item: self.confirmationLabel, attribute: .Right,
             relatedBy: .Equal,
@@ -379,7 +394,7 @@ class TransactionViewController: UIViewController {
             item: self.dateLabel, attribute: .Top,
             relatedBy: .Equal,
             toItem: self.bottomView, attribute: .Top,
-            multiplier: 1.0, constant: TransactionViewController.PADDING))
+            multiplier: 1.0, constant: TransactionViewController.PADDING - 4))
         constraints.append(NSLayoutConstraint(
             item: self.dateLabel, attribute: .Right,
             relatedBy: .Equal,
