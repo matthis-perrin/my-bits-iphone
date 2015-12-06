@@ -45,10 +45,16 @@ class TransactionTableViewCell: UITableViewCell {
     }
 
     static func reusableIdentifierFor(tx: BitcoinTx) -> String {
-        // The only real change in the layout is the number of subtitles, so we
-        // base the reusable identifier from that
-        let subtitleCount = 1 // For now always 1 (hardcoded)
-        return "TransactionViewCell.\(subtitleCount)"
+        // The only real change in the layout is the number and type of subtitles, so we
+        // base the reusable identifier from that.
+        // Subtitle are simply represented by a number (0 for UICurrencyLabel and 1 for simple UILabel)
+        // and joined in a sequence separated by "."
+        // Example: TransactionViewCell.0.0.1.0
+        // (Cell with four subtitles - first two are UICurrencyLabels, third is a simple UILabel and
+        // last is a UICurrencyLabel again)
+        let subtitles = TransactionViewController.getSubtitles(tx.txInfo.withoutChange())
+        let code = subtitles.map() { return $0.amount == nil ? "0" : "1" }
+        return "TransactionViewCell.\(code.joinWithSeparator("."))"
     }
 
 }

@@ -5,6 +5,8 @@ class TransactionViewController: UIViewController {
 
     static let PADDING: CGFloat = 18.0
     static let SMALL_PADDING: CGFloat = 5.0
+    static let SUBTITLE_PADDING: CGFloat = 3.0
+    static let CONFIRMATION_ICON_LABEL_GAP: CGFloat = 3.0
 
     static let BIG_TEXT_FONT_SIZE: CGFloat = 17.0
     static let SMALL_TEXT_FONT_SIZE: CGFloat = 11.0
@@ -14,7 +16,6 @@ class TransactionViewController: UIViewController {
     static let GREEN_TEXT_COLOR: UIColor = UIColor(red: 0, green: 150 / 255.0, blue: 136 / 255.0, alpha: 1.0)
     static let RED_TEXT_COLOR: UIColor = UIColor(red: 1.0, green: 87 / 255.0, blue: 34 / 255.0, alpha: 1.0)
 
-    static let CONFIRMATION_ICON_LABEL_GAP: CGFloat = 3.0
 
 
     static let UNKNOWN_TITLE = "Unknown transaction"
@@ -58,23 +59,25 @@ class TransactionViewController: UIViewController {
         self.setTx(self.tx)
     }
 
-    private func getTitle() -> String {
-        if let title = TransactionViewController.TITLES[self.tx.getType()] {
+    static func getTitle(txInfo: BitcoinTxInfo) -> String {
+        if let title = TransactionViewController.TITLES[txInfo.getType()] {
             return title
         } else {
             return TransactionViewController.UNKNOWN_TITLE
         }
     }
 
-    private func getSubtitles() -> [(prefix: String, amount: BitcoinAmount?, suffix: String?)] {
-        return [
-            ("Subtitle - coming soon", nil, nil),
-            ("", BitcoinAmount(satoshis: 314159), " to Account #1")
-        ]
+    static func getSubtitles(txInfo: BitcoinTxInfo) -> [(prefix: String, amount: BitcoinAmount?, suffix: String?)] {
+        let amount = txInfo.getBalanceDelta()
+        var subtitles: [(prefix: String, amount: BitcoinAmount?, suffix: String?)] = [("", amount, " to Account #1")]
+        if amount < 0 {
+            subtitles.append(("That's a negative amount", nil, nil))
+        }
+        return subtitles
     }
 
-    private func getAmount() -> BitcoinAmount {
-        return self.tx.txInfo.withoutChange().getBalanceDelta()
+    static func getAmount(txInfo: BitcoinTxInfo) -> BitcoinAmount {
+        return txInfo.getBalanceDelta()
     }
 
     func createComponents() {
@@ -120,23 +123,12 @@ class TransactionViewController: UIViewController {
 
         // Subtitle labels
         self.subtitleLabels = [UILabel]()
-        for subtitleMetadata in self.getSubtitles() {
+        for subtitleMetadata in TransactionViewController.getSubtitles(self.tx.txInfo.withoutChange()) {
             var subtitle: UILabel? = nil
             if let amount = subtitleMetadata.amount {
-                let currencySubtitle = UICurrencyLabel(fromBtcAmount: amount)
-                currencySubtitle.setPrefix(subtitleMetadata.prefix)
-                if let suffix = subtitleMetadata.suffix {
-                    currencySubtitle.setSuffix(suffix)
-                }
-                subtitle = currencySubtitle
+                subtitle = UICurrencyLabel(fromBtcAmount: amount)
             } else {
-                let textSubtitle = UILabel(frame: CGRectZero)
-                var text = subtitleMetadata.prefix
-                if let suffix = subtitleMetadata.suffix {
-                    text += suffix
-                }
-                textSubtitle.text = text
-                subtitle = textSubtitle
+                subtitle = UILabel(frame: CGRectZero)
             }
             if let subtitle = subtitle {
                 subtitleLabels.append(subtitle)
@@ -295,7 +287,7 @@ class TransactionViewController: UIViewController {
                     item: subtitleLabel, attribute: .Top,
                     relatedBy: .Equal,
                     toItem: self.subtitleLabels[index - 1], attribute: .Bottom,
-                    multiplier: 1.0, constant: TransactionViewController.SMALL_PADDING))
+                    multiplier: 1.0, constant: TransactionViewController.SUBTITLE_PADDING))
             }
             constraints.append(NSLayoutConstraint(
                 item: subtitleLabel, attribute: .Right,
@@ -307,12 +299,6 @@ class TransactionViewController: UIViewController {
                     item: subtitleLabel, attribute: .Bottom,
                     relatedBy: .Equal,
                     toItem: self.bottomView, attribute: .Top,
-                    multiplier: 1.0, constant: 0))
-            } else {
-                constraints.append(NSLayoutConstraint(
-                    item: subtitleLabel, attribute: .Bottom,
-                    relatedBy: .Equal,
-                    toItem: self.subtitleLabels[index + 1], attribute: .Top,
                     multiplier: 1.0, constant: 0))
             }
             constraints.append(NSLayoutConstraint(
@@ -410,13 +396,14 @@ class TransactionViewController: UIViewController {
 
     func setTx(tx: BitcoinTx) {
         self.tx = tx
-        let amount = self.getAmount()
+        let txInfo = self.tx.txInfo.withoutChange()
+        let amount = TransactionViewController.getAmount(txInfo)
 
         // Title
-        self.titleLabel.text = self.getTitle()
+        self.titleLabel.text = TransactionViewController.getTitle(txInfo)
 
         // Subtitles
-        let subtitles = self.getSubtitles()
+        let subtitles = TransactionViewController.getSubtitles(txInfo)
         if self.subtitleLabels.count != subtitles.count {
             NSLog("Inconsistency between subtitles count (\(subtitles.count)) and labels count (\(self.subtitleLabels))")
         } else {

@@ -11,6 +11,48 @@ class BitcoinTxInfo {
         self.involvedAccounts = involvedAccounts
     }
 
+    func getType() -> TxType {
+        let balanceDelta = self.getBalanceDelta()
+        let accountBalanceDelta = self.getAccountsBalanceDelta()
+        let externalBalanceDelta = self.getExternalBalanceDelta().reduce(0) {
+            return $0 + $1.1.getSatoshiAmount()
+        }
+        let positives = accountBalanceDelta.reduce(0) { return $0 + ($1.1 > 0 ? 1 : 0) }
+        let negatives = accountBalanceDelta.reduce(0) { return $0 + ($1.1 < 0 ? 1 : 0) }
+        let zeros =     accountBalanceDelta.reduce(0) { return $0 + ($1.1 == 0 ? 1 : 0) }
+
+        if positives == 0 {
+            if negatives == 0 {
+                if zeros == 0 {
+                    if externalBalanceDelta > 0 {
+                        return TxType.External
+                    } else {
+                        return TxType.Empty
+                    }
+                } else {
+                    return TxType.InAccount
+                }
+            } else {
+                return TxType.Sent
+            }
+        } else {
+            if negatives == 0 {
+                return TxType.Received
+            }
+            if negatives > 0 {
+                if balanceDelta > 0 {
+                    return TxType.Received
+                } else if balanceDelta < 0 {
+                    return TxType.Sent
+                } else {
+                    return TxType.InAccount
+                }
+            }
+        }
+
+        return TxType.Unknown
+    }
+
     func getAccountsBalanceDelta() -> [Account: BitcoinAmount] {
         var balances = [Account: BitcoinAmount]()
 
