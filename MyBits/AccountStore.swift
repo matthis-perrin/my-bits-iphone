@@ -170,6 +170,17 @@ class Account: Hashable {
         return account
     }
 
+    func getAllBitcoinAddresses() -> [BitcoinAddress] {
+        var res = [BitcoinAddress]()
+        for address in accountAddresses {
+            res.append(address.getBitcoinAddress())
+        }
+        for xpub in accountXpubs {
+            res.appendContentsOf(xpub.getAddresses())
+        }
+        return res
+    }
+
 }
 
 func ==(left: Account, right: Account) -> Bool {

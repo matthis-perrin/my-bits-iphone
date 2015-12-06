@@ -13,7 +13,16 @@ class TransactionFetcher {
     private static var readyForRefresh = false
     private static var waitingForConnection = false
 
-    static func queueAddresses(addresses: [BitcoinAddress]) {
+    static func queueAddressesForAccount(account: Account) {
+        let addresses = account.getAllBitcoinAddresses()
+        log("Fetching \(addresses.count) bitcoin addresses from cache")
+        for address in addresses {
+            BlockCypher.loadTransactionsFromCache(address, transactionsCallback: { transactions in
+                for tx in transactions {
+                    TransactionStore.addTransaction(tx)
+                }
+            })
+        }
         log("Queuing \(addresses.count) bitcoin addresses")
         dispatch_sync(lockQueue) {
             addressesQueue.appendContentsOf(addresses)
@@ -31,7 +40,9 @@ class TransactionFetcher {
             if readyForRefresh {
                 log("Planning refresh in \(REFRESH_DELAY) seconds")
                 delayFunc(REFRESH_DELAY) {
-                    queueAddresses(AddressManager.getAddresses())
+                    for account in AccountStore.getAccounts() {
+                        queueAddressesForAccount(account)
+                    }
                 }
             }
         } else {
