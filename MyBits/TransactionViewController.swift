@@ -67,7 +67,10 @@ class TransactionViewController: UIViewController {
     }
 
     private func getSubtitles() -> [(prefix: String, amount: BitcoinAmount?, suffix: String?)] {
-        return [("Subtitle - coming soon", nil, nil)]
+        return [
+            ("Subtitle - coming soon", nil, nil),
+            ("", BitcoinAmount(satoshis: 314159), " to Account #1")
+        ]
     }
 
     private func getAmount() -> BitcoinAmount {
@@ -281,23 +284,37 @@ class TransactionViewController: UIViewController {
 
         // Subtitle labels
         for (index, subtitleLabel) in self.subtitleLabels.enumerate() {
-            let previous = index == 0 ? self.subtitleView : self.subtitleLabels[index - 1]
-            let next = index == self.subtitleLabels.count - 1 ? self.bottomView : self.subtitleLabels[index + 1]
-            constraints.append(NSLayoutConstraint(
-                item: subtitleLabel, attribute: .Top,
-                relatedBy: .Equal,
-                toItem: previous, attribute: .Top,
-                multiplier: 1.0, constant: TransactionViewController.SMALL_PADDING))
+            if index == 0  {
+                constraints.append(NSLayoutConstraint(
+                    item: subtitleLabel, attribute: .Top,
+                    relatedBy: .Equal,
+                    toItem: self.subtitleView, attribute: .Top,
+                    multiplier: 1.0, constant: TransactionViewController.SMALL_PADDING))
+            } else {
+                constraints.append(NSLayoutConstraint(
+                    item: subtitleLabel, attribute: .Top,
+                    relatedBy: .Equal,
+                    toItem: self.subtitleLabels[index - 1], attribute: .Bottom,
+                    multiplier: 1.0, constant: TransactionViewController.SMALL_PADDING))
+            }
             constraints.append(NSLayoutConstraint(
                 item: subtitleLabel, attribute: .Right,
                 relatedBy: .Equal,
                 toItem: self.subtitleView, attribute: .Right,
                 multiplier: 1.0, constant: -TransactionViewController.PADDING))
-            constraints.append(NSLayoutConstraint(
-                item: subtitleLabel, attribute: .Bottom,
-                relatedBy: .Equal,
-                toItem: next, attribute: .Top,
-                multiplier: 1.0, constant: 0))
+            if index == self.subtitleLabels.count - 1 {
+                constraints.append(NSLayoutConstraint(
+                    item: subtitleLabel, attribute: .Bottom,
+                    relatedBy: .Equal,
+                    toItem: self.bottomView, attribute: .Top,
+                    multiplier: 1.0, constant: 0))
+            } else {
+                constraints.append(NSLayoutConstraint(
+                    item: subtitleLabel, attribute: .Bottom,
+                    relatedBy: .Equal,
+                    toItem: self.subtitleLabels[index + 1], attribute: .Top,
+                    multiplier: 1.0, constant: 0))
+            }
             constraints.append(NSLayoutConstraint(
                 item: subtitleLabel, attribute: .Left,
                 relatedBy: .Equal,
