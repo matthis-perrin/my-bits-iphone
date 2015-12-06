@@ -58,6 +58,22 @@ class TransactionViewController: UIViewController {
         self.setTx(self.tx)
     }
 
+    private func getTitle() -> String {
+        if let title = TransactionViewController.TITLES[self.tx.getType()] {
+            return title
+        } else {
+            return TransactionViewController.UNKNOWN_TITLE
+        }
+    }
+
+    private func getSubtitles() -> [(prefix: String, amount: BitcoinAmount?, suffix: String?)] {
+        return [("Subtitle - coming soon", nil, nil)]
+    }
+
+    private func getAmount() -> BitcoinAmount {
+        return self.tx.txInfo.withoutChange().getBalanceDelta()
+    }
+
     func createComponents() {
 
 //        let BORDER_WIDTH: CGFloat = 1.0
@@ -100,14 +116,34 @@ class TransactionViewController: UIViewController {
         self.titleView.addSubview(self.titleLabel)
 
         // Subtitle labels
-        self.subtitleLabels = self.getSubtitles()
-        for subtitle in subtitleLabels {
-            subtitle.textAlignment = .Left
-            subtitle.font = UIFont(name: subtitle.font!.fontName, size: TransactionViewController.SMALL_TEXT_FONT_SIZE)
-            subtitle.textColor = TransactionViewController.DARK_TEXT_COLOR
-            subtitle.translatesAutoresizingMaskIntoConstraints = false
-            subtitle.backgroundColor = BACKGROUND_COLOR
-            self.subtitleView.addSubview(subtitle)
+        self.subtitleLabels = [UILabel]()
+        for subtitleMetadata in self.getSubtitles() {
+            var subtitle: UILabel? = nil
+            if let amount = subtitleMetadata.amount {
+                let currencySubtitle = UICurrencyLabel(fromBtcAmount: amount)
+                currencySubtitle.setPrefix(subtitleMetadata.prefix)
+                if let suffix = subtitleMetadata.suffix {
+                    currencySubtitle.setSuffix(suffix)
+                }
+                subtitle = currencySubtitle
+            } else {
+                let textSubtitle = UILabel(frame: CGRectZero)
+                var text = subtitleMetadata.prefix
+                if let suffix = subtitleMetadata.suffix {
+                    text += suffix
+                }
+                textSubtitle.text = text
+                subtitle = textSubtitle
+            }
+            if let subtitle = subtitle {
+                subtitleLabels.append(subtitle)
+                subtitle.textAlignment = .Left
+                subtitle.font = UIFont(name: subtitle.font!.fontName, size: TransactionViewController.SMALL_TEXT_FONT_SIZE)
+                subtitle.textColor = TransactionViewController.DARK_TEXT_COLOR
+                subtitle.translatesAutoresizingMaskIntoConstraints = false
+                subtitle.backgroundColor = BACKGROUND_COLOR
+                self.subtitleView.addSubview(subtitle)
+            }
         }
 
         // Amount label
@@ -355,30 +391,45 @@ class TransactionViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(constraints)
     }
 
-    private func getTitleText() -> String {
-        if let title = TransactionViewController.TITLES[self.tx.getType()] {
-            return title
-        } else {
-            return TransactionViewController.UNKNOWN_TITLE
-        }
-    }
-
-    private func getSubtitles() -> [UILabel] {
-        var labels = [UILabel]()
-
-        let subtitleLabel1 = UILabel(frame: CGRectZero)
-        subtitleLabel1.text = "Subtitle - coming soon"
-        labels.append(subtitleLabel1)
-
-        return labels
-    }
-
     func setTx(tx: BitcoinTx) {
         self.tx = tx
-        let balanceDelta = self.tx.txInfo.getBalanceDelta()
-        self.titleLabel.text = self.getTitleText()
-        self.amountLabel.setAmount(balanceDelta.getBitcoinAmount(), amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
-        self.amountLabel.textColor = balanceDelta > 0 ? TransactionViewController.GREEN_TEXT_COLOR : balanceDelta < 0 ? TransactionViewController.RED_TEXT_COLOR : TransactionViewController.DARK_TEXT_COLOR
+        let amount = self.getAmount()
+
+        // Title
+        self.titleLabel.text = self.getTitle()
+
+        // Subtitles
+        let subtitles = self.getSubtitles()
+        if self.subtitleLabels.count != subtitles.count {
+            NSLog("Inconsistency between subtitles count (\(subtitles.count)) and labels count (\(self.subtitleLabels))")
+        } else {
+            for (index, subtitle) in subtitles.enumerate() {
+                let subtitleLabel = self.subtitleLabels[index]
+                if let subtitleLabel = subtitleLabel as? UICurrencyLabel {
+                    if let amount = subtitle.amount {
+                        subtitleLabel.setPrefix(subtitle.prefix)
+                        subtitleLabel.setAmount(amount.getBitcoinAmount(), amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
+                        if let suffix = subtitle.suffix {
+                            subtitleLabel.setSuffix(suffix)
+                        }
+                    } else {
+                        NSLog("Inconsistency with subtitle label at index \(index). Got UICurrencyLabel without an amount for the subtitle.")
+                    }
+                } else {
+                    if let _ = subtitle.amount {
+                        NSLog("Inconsistency with subtitle label at index \(index). Got UILabel with an amount for the subtitle.")
+                    } else {
+                        subtitleLabel.text = subtitle.prefix
+                    }
+                }
+            }
+        }
+
+        // Amount
+        self.amountLabel.setAmount(amount.getBitcoinAmount(), amountCurrency: .Bitcoin, displayCurrency: .Bitcoin)
+        self.amountLabel.textColor = amount > 0 ? TransactionViewController.GREEN_TEXT_COLOR : amount < 0 ? TransactionViewController.RED_TEXT_COLOR : TransactionViewController.DARK_TEXT_COLOR
+
+        // Confirmations
         self.confirmationIcon.image = UIImage(named: self.tx.isConfirmed ? "Transaction_Check" : "Transaction_Clock")
         var confirmationText = ""
         if self.tx.confirmations.value == 0 {
@@ -390,6 +441,8 @@ class TransactionViewController: UIViewController {
             confirmationText = String(format: NSLocalizedString("confirmation.several", comment: "Number of confirmation (>1) of the transaction"), arguments: [confirmationCount])
         }
         self.confirmationLabel.text = confirmationText
+
+        // Date
         self.dateLabel.text = tx.receptionTime.userFriendlyDescription
     }
 
