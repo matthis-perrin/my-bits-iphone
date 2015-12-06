@@ -8,6 +8,7 @@ target 'MyBits' do
   pod 'QRCodeReader.swift'
   pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
   pod 'Alamofire', '~> 3.0'
+  pod 'ReachabilitySwift', git: 'https://github.com/ashleymills/Reachability.swift'
 end
 
 target 'MyBitsTests' do

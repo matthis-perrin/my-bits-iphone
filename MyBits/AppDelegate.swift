@@ -11,6 +11,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Crashlytics
         Fabric.with([Crashlytics.self])
 
+        // Initialize connection detection
+        InternetService.start()
+
         // Initialize DB and load data in memory
         DB.initialize()
 

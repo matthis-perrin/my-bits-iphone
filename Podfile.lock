@@ -5,6 +5,7 @@ PODS:
   - Fabric (1.6.1)
   - KeychainAccess (2.3.1)
   - QRCodeReader.swift (5.2.1)
+  - ReachabilitySwift (2.3)
   - SQLite.swift (1.0.0)
 
 DEPENDENCIES:
@@ -13,13 +14,19 @@ DEPENDENCIES:
   - Fabric
   - KeychainAccess
   - QRCodeReader.swift
+  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
   - SQLite.swift (from `https://github.com/stephencelis/SQLite.swift.git`)
 
 EXTERNAL SOURCES:
+  ReachabilitySwift:
+    :git: https://github.com/ashleymills/Reachability.swift
   SQLite.swift:
     :git: https://github.com/stephencelis/SQLite.swift.git
 
 CHECKOUT OPTIONS:
+  ReachabilitySwift:
+    :commit: 35aa812197a0f5f964febfe74be6c000edc8f850
+    :git: https://github.com/ashleymills/Reachability.swift
   SQLite.swift:
     :commit: 0913f5d356eb4a0a467236078d472a40f6d0520f
     :git: https://github.com/stephencelis/SQLite.swift.git
@@ -30,6 +37,7 @@ SPEC CHECKSUMS:
   Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
   KeychainAccess: d54b31c75745cfa595b3654590e8cb491a75d411
   QRCodeReader.swift: 671627ada6872fbdc75bc99442f53f7fd81646aa
+  ReachabilitySwift: 2ac9df18a443901f06caae38a9f5431219a4c36a
   SQLite.swift: 3bb75f5a650f08673276bc6d3fb1de1b542b8f4d
 
 COCOAPODS: 0.39.0

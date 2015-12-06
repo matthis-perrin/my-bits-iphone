@@ -1,4 +1,5 @@
 import Foundation
+import ReachabilitySwift
 
 class TransactionFetcher {
 
@@ -8,7 +9,9 @@ class TransactionFetcher {
 
     private static var addressesQueue = [BitcoinAddress]()
     private static let lockQueue = dispatch_queue_create("TransactionFetcherLockQueue", nil)
+    private static let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     private static var readyForRefresh = false
+    private static var waitingForConnection = false
 
     static func queueAddresses(addresses: [BitcoinAddress]) {
         log("Queuing \(addresses.count) bitcoin addresses")
@@ -58,7 +61,15 @@ class TransactionFetcher {
             dispatch_sync(lockQueue) {
                 addressesQueue.append(address)
             }
-            delayRunQueue(REQUEST_DELAY * 2)
+            if InternetService.hasConnection() {
+                delayRunQueue(REQUEST_DELAY * 2)
+            } else if !waitingForConnection {
+                waitingForConnection = true
+                NSNotificationCenter.defaultCenter().addObserverForName(ReachabilityChangedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+                    waitingForConnection = false
+                    delayRunQueue(REQUEST_DELAY)
+                }
+            }
         }
     }
 
@@ -67,7 +78,7 @@ class TransactionFetcher {
             dispatch_time(
                 DISPATCH_TIME_NOW,
                 Int64(delay * Double(NSEC_PER_SEC))
-            ), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), closure)
+            ), backgroundQueue, closure)
     }
 
     private static func log(message: String) {
