@@ -83,9 +83,74 @@ class TransactionViewController: UIViewController {
         if type == .Empty {
             return []
         } else if type == .Sent {
-            return [
-                ("From \(getEntity(txInfo.inputTxIO[0])) to \(getEntity(txInfo.outputTxIO[0]))", nil, nil)
-            ]
+            let relevantSources = txInfo.inputTxIO.filter() { return $0 as? ExternalAddressTxIO == nil }
+            let relevantDestinations = txInfo.outputTxIO.filter() { return $0 as? ExternalAddressTxIO != nil }
+            if relevantSources.count == 1 && relevantDestinations.count == 1 {
+                return [
+                    ("From \(getEntity(relevantSources[0])) to \(getEntity(relevantDestinations[0]))", nil, nil)
+                ]
+            } else if relevantSources.count == 1 {
+                var subtitles = [(prefix: String, amount: BitcoinAmount?, suffix: String?)]()
+                for destination in relevantDestinations {
+                    subtitles.append(("", destination.amount, " from \(getEntity(relevantSources[0])) to \(getEntity(destination))"))
+                }
+                return subtitles
+            } else if relevantDestinations.count == 1 {
+                var subtitles = [(prefix: String, amount: BitcoinAmount?, suffix: String?)]()
+                for source in relevantSources {
+                    subtitles.append(("", source.amount, " from \(getEntity(source)) to \(getEntity(relevantDestinations[0]))"))
+                }
+                return subtitles
+            } else {
+                return [("Not implemented yet", nil, nil)]
+            }
+        } else if type == .Received {
+            let relevantSources = txInfo.inputTxIO.filter() { return $0 as? ExternalAddressTxIO != nil }
+            let relevantDestinations = txInfo.outputTxIO.filter() { return $0 as? ExternalAddressTxIO == nil }
+            if relevantSources.count == 1 && relevantDestinations.count == 1 {
+                return [
+                    ("In \(getEntity(relevantDestinations[0])) from \(getEntity(relevantSources[0]))", nil, nil)
+                ]
+            } else if relevantSources.count == 1 {
+                var subtitles = [(prefix: String, amount: BitcoinAmount?, suffix: String?)]()
+                for destination in relevantDestinations {
+                    subtitles.append(("", destination.amount, " in \(getEntity(destination)) to \(getEntity(relevantSources[0]))"))
+                }
+                return subtitles
+            } else if relevantDestinations.count == 1 {
+                var subtitles = [(prefix: String, amount: BitcoinAmount?, suffix: String?)]()
+                for source in relevantSources {
+                    subtitles.append(("", source.amount, " from \(getEntity(relevantDestinations[0])) to \(getEntity(source))"))
+                }
+                return subtitles
+            } else {
+                return [("Not implemented yet", nil, nil)]
+            }
+        } else if type == .InAccount {
+            func getAccountName(txIO: TxIO) -> String? {
+                if let txIO = txIO as? AccountAddressTxIO {
+                    return txIO.getAccount().getName()
+                } else if let txIO = txIO as? AccountXpubTxIO {
+                    return txIO.getAccount().getName()
+                } else {
+                    return nil
+                }
+            }
+            let relevantSources = txInfo.inputTxIO.filter() { return $0 as? ExternalAddressTxIO == nil }
+            let relevantDestinations = txInfo.outputTxIO.filter() { return $0 as? ExternalAddressTxIO == nil }
+            if (relevantSources.count == 1 && relevantDestinations.count == 1) {
+                let sourceAccount = getAccountName(relevantSources[0])
+                let destinationAccount = getAccountName(relevantDestinations[0])
+                guard let source = sourceAccount else {
+                    NSLog("Invalid source (\(relevantSources[0].amount) \(relevantSources[0].address)), not in an account")
+                    return []
+                }
+                guard let destination = destinationAccount else {
+                    NSLog("Invalid destination (\(relevantDestinations[0].amount) \(relevantDestinations[0].address)), not in an account")
+                    return []
+                }
+                return [("", relevantDestinations[0].amount, " from \(source) to \(destination)")]
+            }
         }
 
         return []
