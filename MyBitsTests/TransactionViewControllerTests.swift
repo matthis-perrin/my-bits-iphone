@@ -71,7 +71,7 @@ class MyBitsTests: XCTestCase {
 
         let a1_1 = "15djifdURkQwpLcfshfZuF6SMcdAAMNTQt"
         let a1_2 = "1K4GFCayY3VW8AjaY4HWrj2dcRBWW47vDA"
-        //        let a3 = "17YcSFaVXEjr1ZsSS95uhw25imqk1gX6XH"
+        let a2_1 = "17YcSFaVXEjr1ZsSS95uhw25imqk1gX6XH"
         //        let a4 = "1MvDpc1PPkXrgTyZfdX185L7H28vAnyorU"
         //        let a5 = "1ACm6vMGNihmiBreLe9ZNF1ro3yo6Gi55A"
 
@@ -79,6 +79,10 @@ class MyBitsTests: XCTestCase {
         try! AccountStore.addAccount(account1)
         try! AccountStore.addAddress(account1, accountAddress: getAccountAddress(a1_1))
         try! AccountStore.addAddress(account1, accountAddress: getAccountAddress(a1_2))
+
+        let account2 = getAccount("Account #2")
+        try! AccountStore.addAccount(account2)
+        try! AccountStore.addAddress(account2, accountAddress: getAccountAddress(a2_1))
 
         let t1 = getTx([a1_1: 100], [a1_1: 100])
         let t1Info = t1.txInfo.withoutChange()
@@ -128,6 +132,13 @@ class MyBitsTests: XCTestCase {
         XCTAssertEqual(TransactionViewController.getTitle(t7Info), "In-account transfer")
         let subtitles7 = TransactionViewController.getSubtitles(t7Info)
         XCTAssertSubtitle(subtitles7[0], ("", BitcoinAmount(satoshis: 100), " from Account #1 to Account #1"))
+
+        let t8 = getTx([a1_1: 100], [a2_1: 100])
+        let t8Info = t8.txInfo.withoutChange()
+        XCTAssertEqual(TransactionViewController.getAmount(t8Info).getSatoshiAmount(), 0)
+        XCTAssertEqual(TransactionViewController.getTitle(t8Info), "In-account transfer")
+        let subtitles8 = TransactionViewController.getSubtitles(t8Info)
+        XCTAssertSubtitle(subtitles8[0], ("", BitcoinAmount(satoshis: 100), " from Account #1 to Account #2"))
 
     }
 

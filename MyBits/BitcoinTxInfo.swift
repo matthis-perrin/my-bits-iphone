@@ -197,8 +197,9 @@ class BitcoinTxInfo: CustomStringConvertible {
         }
 
         // Generates all the TxIO for this transaction
+        let accountCount = AccountStore.getAccounts().count
         for input in tx.inputs {
-            for account in AccountStore.getAccounts() {
+            for (index, account) in AccountStore.getAccounts().enumerate() {
                 var found = false
                 for address in input.sourceAddresses {
                     if let txIO = getTxIO(account, bitcoinAddress: address, amount: input.linkedOutputValue) {
@@ -211,8 +212,10 @@ class BitcoinTxInfo: CustomStringConvertible {
                     }
                 }
                 if !found {
-                    if let address = input.sourceAddresses.first {
-                        inputIO.append(ExternalAddressTxIO(amount: input.linkedOutputValue, address: address))
+                    if index == accountCount - 1 {
+                        if let address = input.sourceAddresses.first {
+                            inputIO.append(ExternalAddressTxIO(amount: input.linkedOutputValue, address: address))
+                        }
                     }
                 } else {
                     break
@@ -220,7 +223,7 @@ class BitcoinTxInfo: CustomStringConvertible {
             }
         }
         for output in tx.outputs {
-            for account in AccountStore.getAccounts() {
+            for (index, account) in AccountStore.getAccounts().enumerate() {
                 var found = false
                 for address in output.destinationAddresses {
                     if let txIO = getTxIO(account, bitcoinAddress: address, amount: output.value) {
@@ -233,8 +236,10 @@ class BitcoinTxInfo: CustomStringConvertible {
                     }
                 }
                 if !found {
-                    if let address = output.destinationAddresses.first {
-                        outputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
+                    if index == accountCount - 1 {
+                        if let address = output.destinationAddresses.first {
+                            outputIO.append(ExternalAddressTxIO(amount: output.value, address: address))
+                        }
                     }
                 } else {
                     break
